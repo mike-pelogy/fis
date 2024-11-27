@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --white: 255 255 255;
+    --black: 0 0 0;
+    --background-gray: 249 249 249;
+
+    --text-black: 43 43 43;
+
+    --blue: 30 117 237;
+    --teal: 66 223 255;
+    --purple: 51 78 207;
+  }
+}
+
+body {
+  color: var(--text-black);
+  background: var(--background-primary);
+  font-family: "Lato, sans-serif";
+}

@@ -6,21 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.17.10",
+    "@tanstack/react-query": "^5.61.0",
+    "axios": "^1.7.7",
+    "classnames": "^2.5.1",
+    "csv-parser": "^3.0.0",
+    "graphql-request": "^7.1.2",
+    "graphql-tag": "^2.12.6",
+    "next": "14.2.18",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.18"
+    "react-hook-form": "^7.53.2",
+    "swr": "^2.2.5",
+    "three": "^0.170.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@graphql-codegen/cli": "5.0.3",
+    "@graphql-codegen/client-preset": "4.5.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.18",
+    "eslint-config-prettier": "^9.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.18"
+    "typescript": "^5"
   }
 }

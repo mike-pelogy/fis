@@ -9,11 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        'fis-blue': 'rgb(var(--blue))',
+        'fis-teal': 'rgb(var(--teal))',
+        'fis-purple': 'rgb(var(--purple))',
+      },
+      fontFamily: {
+        sans: 'Lato',
       },
     },
   },
   plugins: [],
 };
+
 export default config;
