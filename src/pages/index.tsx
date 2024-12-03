@@ -37,7 +37,7 @@ const LandingAndAbout = ({
         <FunBackground />
       </div>
       <div className="relative z-100">
-        <section className="container flex py-fis-2">
+        <section className="container flex justify-center items-center py-fis-2">
           <div className="w-1/2 flex flex-col gap-6 items-start">
             <h1
               className="[&>p]:text-5xl [&>p]:leading-[1.1] [&>p]:font-bold [&>p>strong:first-child]:text-fis-purple [&>p>strong]:text-fis-blue"
@@ -57,7 +57,7 @@ const LandingAndAbout = ({
             <div className="w-full aspect-video bg-slate-500 rounded-lg" />
           </div>
         </section>
-        <section className="container rounded-lg flex relative before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0 before:z-[-1]">
+        <section className="container rounded-lg flex relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
           <div className="w-1/2 relative">
             <div className="w-full h-full bg-slate-500 rounded-l-lg" />
           </div>
@@ -97,7 +97,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
           dangerouslySetInnerHTML={{ __html: services.title as string }}
         />
         <div className="flex">
-          <div className="w-1/2 pr-fis-1">
+          <div className="w-1/2 pr-fis-2">
             <h3
               className="text-fis-blue text-2xl mb-6"
               dangerouslySetInnerHTML={{
@@ -151,7 +151,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
         <div className="w-1/2">
           <div className="w-full aspect-video bg-slate-500 rounded-lg" />
         </div>
-        <div className="w-1/2 pl-fis-1">
+        <div className="w-1/2 pl-fis-2">
           <h3
             className="text-fis-blue text-2xl mb-6"
             dangerouslySetInnerHTML={{
@@ -177,7 +177,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
   );
 };
 
-const dummyPosts: {
+export const dummyPosts: {
   categories?: { label: string; path: string }[];
   img: string;
   title: string;
@@ -237,7 +237,7 @@ const LatestNewAndHighlights = ({
           <hr className="mt-4 mb-6" />
           <div className="grid grid-cols-3 gap-4">
             {dummyPosts.map((post) => {
-              return <PostCard key={post.url} post={post} />;
+              return <PostCard key={post.url} post={post} showButton showImage />;
             })}
           </div>
         </WhiteContainer>

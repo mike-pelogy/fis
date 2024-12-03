@@ -4,7 +4,7 @@ import Button from "./Button";
 import classNames from "classnames";
 
 const radialBg =
-  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.3)_0%,rgba(256,256,256,1)_50%)]";
+  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.3)_0%,rgba(256,256,256,1)_70%)]";
 
 const radialBgInner =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.45)_0%,rgba(256,256,256,1)_60%)]";
@@ -15,13 +15,11 @@ export default function ConnectWithUs({
   connectWithUs: Page_Homepage_ContactUsCtaSimple;
 }) {
   return (
-    <div className="w-full pt-fis-2">
+    <div className={classNames("w-full pt-fis-2", radialBg,
+      'bg-[length:50%] bg-no-repeat bg-center',
+    )}>
       <section
-        className={classNames(
-          "relative w-full max-h-[400px] h-screen flex justify-center items-end overflow-hidden",
-          radialBg,
-          'bg-[length:50%]',
-        )}
+        className={classNames( "relative w-full max-h-[400px] h-screen flex justify-center items-end overflow-hidden")}
       >
         <div
           className={classNames(

@@ -13,6 +13,7 @@ import classNames from "classnames";
 import { useEffect } from "react";
 import FunBackground from "./FunBackground";
 import WhiteContainer from "./WhiteContainer";
+import { NavBar } from "./NavBar";
 
 type SectionTypes =
   | "Overview"
@@ -24,6 +25,7 @@ type SectionTypes =
 
 interface INavBar {
   title: string;
+  href?: string;
 }
 
 const navBar: INavBar[] = [
@@ -34,29 +36,6 @@ const navBar: INavBar[] = [
   { title: "Holdings" },
   { title: "Documents" },
 ];
-
-const NavBar = ({
-  navBar,
-  className,
-}: {
-  navBar: INavBar[];
-  className?: string;
-}) => (
-  <div className={classNames("container py-fis-1", className)}>
-    <ul className="w-full border-b-[1px] border-slate-100 flex gap-6">
-      {navBar.map(({ title }) => (
-        <li key={title} className="leading-[0]">
-          <a
-            className="text-lg text-fis-blue block leading-[2em] hover:text-fis-purple transition-all hover:border-fis-purple border-b-2 border-transparent"
-            href={`#${title}`}
-          >
-            {title}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
 
 const Overview = ({
   overview,
