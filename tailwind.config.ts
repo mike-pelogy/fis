@@ -16,6 +16,12 @@ const config: Config = {
       fontFamily: {
         sans: 'Lato',
       },
+      spacing: {
+        'fis-1': '30px',
+        'fis-2': '60px',
+        'fis-3': '90px',
+        'fis-4': '120px',
+      },
     },
   },
   plugins: [],

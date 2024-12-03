@@ -104,7 +104,7 @@ export const SocialAndPhone = () => {
 // and make mobile menu :D
 export default function Header() {
   return (
-    <header className="flex justify-center h-[100px] p-4 sticky top-0 left-0 bg-white relative z-10">
+    <header className="flex justify-center h-[100px] p-4 sticky top-0 left-0 bg-white relative z-[1000]">
       <div className="container w-full flex items-center justify-between">
         <Link href="/">
           <Logo dimensions={{ width: 237, height: 57 }} />

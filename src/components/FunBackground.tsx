@@ -1,26 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 
-function Box(props) {
-  // This reference will give us direct access to the mesh
+const fragmentShader = `
+varying vec2 vUv;
+
+vec3 colorA = vec3(0.912,0.191,0.652);
+vec3 colorB = vec3(1.000,0.777,0.052);
+
+void main() {
+  vec3 color = mix(colorA, colorB, vUv.x);
+
+  gl_FragColor = vec4(color,1.0);
+}
+`;
+
+const vertexShader = `
+void main() {
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+  vec4 viewPosition = viewMatrix * modelPosition;
+  vec4 projectedPosition = projectionMatrix * viewPosition;
+
+  gl_Position = projectedPosition;
+}`;
+
+function Plane(props) {
   const meshRef = useRef();
-  // Set up state for the hovered and active state
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((_, delta) => (meshRef.current.rotation.x += delta));
-  // Return view, these are regular three.js elements expressed in JSX
+  useFrame((_, delta) => {});
   return (
-    <mesh
-      {...props}
-      ref={meshRef}
-      scale={active ? 1.5 : 1}
-      onClick={() => setActive(!active)}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+    <mesh {...props} ref={meshRef}>
+      <planeGeometry />
+      <shaderMaterial
+        fragmentShader={fragmentShader}
+        vertexShader={vertexShader}
+      />
     </mesh>
   );
 }
@@ -37,8 +53,7 @@ export default function FunBackground() {
         intensity={Math.PI}
       />
       <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      <Plane position={[-1.2, 0, 0]} />
     </Canvas>
   );
 }

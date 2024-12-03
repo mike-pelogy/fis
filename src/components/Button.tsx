@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { PropsWithChildren } from "react";
 import NativeButton from "./NativeButton";
 
-type ButtonVariant = "primary" | "secondary" | "tertiary" | "neutral";
+type ButtonVariant = "primary" | "secondary" | "tertiary" | "neutral" | "white";
 type ButtonSize = "small" | "regular";
 
 export interface IButtonProps extends PropsWithChildren {
@@ -29,6 +29,9 @@ const tertiaryClass =
 const neutralClass =
   "bg-transparent text-fis-purple hover:bg-fis-blue/5 hover:text-fis-blue";
 
+const whiteClass =
+  "bg-white text-fis-purple hover:text-fis-blue hover:border-fis-blue/90 hover:bg-fis-blue/15";
+
 const getVariantClassNames = (variant: ButtonVariant) => {
   switch (variant) {
     case "primary":
@@ -39,12 +42,14 @@ const getVariantClassNames = (variant: ButtonVariant) => {
       return tertiaryClass;
     case "neutral":
       return neutralClass;
+    case "white":
+      return whiteClass;
     default:
       return primaryClass;
   }
 };
 
-const smallClass = "px-[8px] py-[8px] text-sm !rounded-2lg";
+const smallClass = "px-[12px] py-[8px] text-sm !rounded-2lg";
 const regularClass = "px-[25px] py-[8px] text-xl";
 
 const getSizeClassName = (size: ButtonSize) => {
@@ -87,7 +92,7 @@ export default function Button({
   if (onClick) {
     return (
       <NativeButton onClick={onClick} className={finalClassNames}>
-        {children}className
+        {children}
       </NativeButton>
     );
   }

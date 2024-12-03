@@ -2,7 +2,11 @@ import Button from "@/components/Button";
 import ETF from "@/components/ETF";
 import { API } from "@/constants";
 import { prayPageQuery } from "@/data/prayPageQuery";
-import { Page_Kocg_Overview, Page_Pray, Page_Pray_Landing } from "@/gql/graphql";
+import {
+  Page_Kocg_Overview,
+  Page_Pray,
+  Page_Pray_Landing,
+} from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import request from "graphql-request";
 
@@ -26,18 +30,24 @@ const Landing = ({
   title: string;
 }) => {
   return (
-    <section>
-      <div>
-        <h1>{title}</h1>
-        <span
-          dangerouslySetInnerHTML={{ __html: landing.description as string }}
-        />
-        <Button variant="primary" href={landing.cta?.url as string}>
-          {landing.cta?.title}
-        </Button>
-      </div>
-      <div>video</div>
-    </section>
+    <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
+      <section className="container flex items-center">
+        <div className="w-1/2 pr-fis-2">
+          <h1 className="text-5xl mb-8">{title}</h1>
+          <h3 className="text-fis-blue text-2xl">FIS Christian Stock Fund</h3>
+          <hr className="mt-4 mb-6" />
+          <span
+            dangerouslySetInnerHTML={{ __html: landing.description as string }}
+          />
+          <Button variant="primary" href={landing.cta?.url as string}>
+            {landing.cta?.title}
+          </Button>
+        </div>
+        <div className="w-1/2">
+          <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+        </div>
+      </section>
+    </div>
   );
 };
 
@@ -48,7 +58,7 @@ const PrayPage: NextPageWithLayout = ({
   data: Page_Pray;
   title: string;
 }) => {
-  console.log(data)
+  console.log(data);
   return (
     <>
       {data.landing && title && (
