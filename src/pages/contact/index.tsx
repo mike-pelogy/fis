@@ -97,9 +97,9 @@ const ContactForm = () => {
 export const SubscribeSection = () => {
   return (
     <div className="flex justify-center">
-      <section className="flex pt-fis-2 container px-fis-2">
+      <section className="flex pt-fis-2 container px-fis-2 items-center">
         <div className="w-1/2">
-          <div className="rounded-lg bg-slate-500 w-full h-full" />
+          <div className="rounded-lg aspect-video bg-slate-500 w-full" />
         </div>
         <div className="w-1/2 pl-fis-2">
           <h3 className="text-2xl text-fis-blue mb-4">
