@@ -13,6 +13,7 @@ import type {
   Page_Homepage_Services,
 } from "@/gql/graphql";
 import request from "graphql-request";
+import Image from "next/image";
 
 export async function getStaticProps() {
   const data = await request(API, homePageQuery);
@@ -54,12 +55,18 @@ const LandingAndAbout = ({
             </Button>
           </div>
           <div className="w-1/2 pl-fis-2">
-            <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+            <Image
+              src="/Splash1.jpg"
+              alt="nice"
+              width={1500}
+              height={1500}
+              className="rounded-lg"
+            />
           </div>
         </section>
-        <section className="container rounded-lg flex relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
+        <section className="container rounded-lg overflow-hidden flex relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
           <div className="w-1/2 relative">
-            <div className="w-full h-full bg-slate-500 rounded-l-lg" />
+            <Image src="/HomeAbout.jpg" alt="nice" width={1500} height={1500} />
           </div>
           <div className="p-fis-2 w-1/2 relative">
             <h2
@@ -237,7 +244,9 @@ const LatestNewAndHighlights = ({
           <hr className="mt-4 mb-6" />
           <div className="grid grid-cols-3 gap-4">
             {dummyPosts.map((post) => {
-              return <PostCard key={post.url} post={post} showButton showImage />;
+              return (
+                <PostCard key={post.url} post={post} showButton showImage />
+              );
             })}
           </div>
         </WhiteContainer>

@@ -109,7 +109,7 @@ const InvestmentManagementPage: NextPageWithLayout = () => {
             </p>
           </div>
           <div className="w-1/2 pl-fis-2">
-          <div className="bg-slate-500 w-full aspect-video rounded-lg" />
+            <div className="bg-slate-500 w-full aspect-video rounded-lg" />
           </div>
         </div>
       </section>

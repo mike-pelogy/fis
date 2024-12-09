@@ -33,7 +33,9 @@ const MissionAndValues = ({
         <FunBackground />
       </div>
       <section className="container px-fis-2 relative">
-        <div className="overflow-hidden relative rounded-lg before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0">
+        <div
+          id="mission"
+          className="overflow-hidden relative rounded-lg before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0">
           <div className="flex">
             <div className="flex relative flex-col w-1/2 p-fis-2">
               <div>
@@ -47,7 +49,9 @@ const MissionAndValues = ({
                   }}
                 />
               </div>
-              <hr className="my-fis-2" />
+              <hr className="my-fis-2"
+                id="values"
+              />
               <div>
                 <h3
                   className="text-fis-blue text-2xl mb-4"
@@ -127,7 +131,7 @@ const TeamCard = (team: ITeamMember) => {
 
 const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
   return (
-    <div className="flex justify-center px-fis-3 py-fis-2">
+    <div className="flex justify-center px-fis-3 py-fis-2"id="team" >
       <section className="container">
         <div className="w-1/2">
           <h3

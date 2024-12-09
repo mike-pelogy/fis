@@ -72,28 +72,35 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
               <section>
                 <h3 className="text-2xl text-fis-blue mb-4">Collaboration</h3>
                 <div className="flex">
-                <div className="w-1/2 pr-fis-2">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
-                </div>
-                <div className="w-1/2">
+                  <div className="w-1/2 pr-fis-2">
+                    <p>
+                      FIS believes a well-crafted financial plan expresses your
+                      most meaningful values and goals. Our process drives to
+                      your clear goals and helps focus your actions thus
+                      allowing you to proceed with confidence. Life is
+                      unpredictable. It is our goal for you to go forward with a
+                      sense of confidence. With Faith Investor Services, you
+                      have a team of professionals by your side to guide you
+                      through life’s challenges and uncover opportunities. We
+                      guide you in planning for life’s unexpected events:
+                    </p>
+                  </div>
+                  <div className="w-1/2">
                     <div className="bg-slate-500 rounded-lg w-full aspect-video" />
-                </div>
+                  </div>
                 </div>
               </section>
             </WhiteContainer>
           </div>
         </div>
       </div>
-      <ConnectWithUs connectWithUs={{link: {title: 'Connect with us', url: '/contact'}, title: 'Interested in more information?', description: 'Reach out and let’s explore how we can support you.'}} />
+      <ConnectWithUs
+        connectWithUs={{
+          link: { title: "Connect with us", url: "/contact" },
+          title: "Interested in more information?",
+          description: "Reach out and let’s explore how we can support you.",
+        }}
+      />
     </>
   );
 };
@@ -108,9 +115,12 @@ export const Nav = () => {
         },
         {
           title: "Companies & Not-For-Profit Organizations",
-              href: "/services/companies-not-for-profit-organizations/retirement-plans",
+          href: "/services/companies-not-for-profit-organizations/retirement-plans",
         },
-        { title: "Separately Managed Accounts (SMA)", href: "/" },
+        {
+          title: "Separately Managed Accounts (SMA)",
+          href: "/services/separately-managed-accounts",
+        },
       ]}
     />
   );
@@ -159,7 +169,6 @@ export const subLayout = (page: ReactElement) => {
     </div>
   );
 };
-
 
 FinancialPlanningPage.getSubLayout = subLayout;
 
