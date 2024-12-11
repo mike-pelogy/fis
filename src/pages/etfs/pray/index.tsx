@@ -3,15 +3,22 @@ import ETF from "@/components/ETF";
 import { API } from "@/constants";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
+  Page_Kocg_Documents,
+  Page_Kocg_Holdings,
   Page_Kocg_Overview,
+  Page_Kocg_Performance,
+  Page_Kocg_Pricing,
   Page_Pray,
   Page_Pray_Landing,
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
+import ArrowRight from "@/svgs/ArrowRight";
 import request from "graphql-request";
+import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  const data = await request(API, prayPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, prayPageQuery);
   console.log(data);
 
   return {
@@ -30,20 +37,24 @@ const Landing = ({
   title: string;
 }) => {
   return (
-    <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
-      <section className="container flex items-center">
-        <div className="w-1/2 pr-fis-2">
-          <h1 className="text-5xl mb-8">{title}</h1>
+    <div className="bg-slate-50 w-full py-fis-2 flex justify-center px-4 md:px-0">
+      <section className="container flex flex-col md:flex-row items-center">
+        <div className="w-full md:w-1/2 md:pr-fis-2 pr-0">
+          <h1 className="text-3xl md:text-5xl mb-8">{title}</h1>
           <h3 className="text-fis-blue text-2xl">FIS Christian Stock Fund</h3>
           <hr className="mt-4 mb-6" />
           <span
             dangerouslySetInnerHTML={{ __html: landing.description as string }}
           />
-          <Button variant="primary" href={landing.cta?.url as string}>
+          <Button
+            variant="primary"
+            href={landing.cta?.url as string}
+            IconButton={<ArrowRight />}
+          >
             {landing.cta?.title}
           </Button>
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
           <div className="w-full aspect-video bg-slate-500 rounded-lg" />
         </div>
       </section>
@@ -51,13 +62,10 @@ const Landing = ({
   );
 };
 
-const PrayPage: NextPageWithLayout = ({
-  data,
-  title,
-}: {
+const PrayPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
-}) => {
+}> = ({ data, title }) => {
   console.log(data);
   return (
     <>
@@ -71,12 +79,13 @@ const PrayPage: NextPageWithLayout = ({
         data.distributionsCopy &&
         data.documents && (
           <ETF
-            overview={data.overview}
-            pricing={data.pricing}
-            performance={data.performance}
+            overview={data.overview as Page_Kocg_Overview}
+            pricing={data.pricing as Page_Kocg_Pricing}
+            performance={data.performance as Page_Kocg_Performance}
             distributions={data.distributions}
-            holdings={data.distributionsCopy}
-            documents={data.documents}
+            holdings={data.distributionsCopy as Page_Kocg_Holdings}
+            documents={data.documents as Page_Kocg_Documents}
+            dataReference={{}}
           />
         )}
     </>

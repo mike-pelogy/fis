@@ -2,6 +2,7 @@ import React from "react";
 import { Page_Homepage_ContactUsCtaSimple } from "@/gql/graphql";
 import Button from "./Button";
 import classNames from "classnames";
+import ArrowRight from "@/svgs/ArrowRight";
 
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.3)_0%,rgba(256,256,256,1)_70%)]";
@@ -40,7 +41,9 @@ export default function ConnectWithUs({
                 __html: connectWithUs.description as string,
               }}
             />
-            <Button variant="white" href={connectWithUs.link?.url as string}>
+            <Button
+              IconButton={<ArrowRight />}
+            variant="white" href={connectWithUs.link?.url as string}>
               {connectWithUs.link?.title}
             </Button>
           </div>

@@ -7,7 +7,8 @@ import { subLayout } from "../financial-planning";
 import { SubscribeSection } from "@/pages/contact";
 
 export async function getStaticProps() {
-  const data = await request(API, kocgPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, kocgPageQuery);
 
   return {
     props: {
@@ -23,9 +24,11 @@ export const radialBg =
 const InvestmentManagementPage: NextPageWithLayout = () => {
   return (
     <>
-      <section className={classNames("container px-fis-2 py-fis-2", radialBg)}>
-        <div className="flex">
-          <div className="w-1/2">
+      <section
+        className={classNames("container px-4 md:px-fis-2 py-fis-2", radialBg)}
+      >
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2">
             <p>
               FIS believes a well-crafted financial plan expresses your most
               meaningful values and goals. Our process drives to your clear
@@ -60,9 +63,9 @@ const InvestmentManagementPage: NextPageWithLayout = () => {
         </div>
       </section>
       <div className="w-full py-fis-2 bg-slate-100 flex justify-center">
-        <section className="container px-fis-2">
-          <div className="flex">
-            <div className="w-1/2 pr-fis-2">
+        <section className="container px-4 md:px-fis-2">
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
               <h3 className="text-2xl text-fis-blue mb-4">Wealth Transition</h3>
               <p>
                 FIS believes a well-crafted financial plan expresses your most
@@ -75,7 +78,7 @@ const InvestmentManagementPage: NextPageWithLayout = () => {
                 guide you in planning for life’s unexpected events:
               </p>
             </div>
-            <div className="w-1/2 pl-fis-2">
+            <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
               <h3 className="text-2xl text-fis-blue mb-4">
                 Investment Philosophy
               </h3>
@@ -93,9 +96,9 @@ const InvestmentManagementPage: NextPageWithLayout = () => {
           </div>
         </section>
       </div>
-      <section className="container p-fis-2">
-        <div className="flex">
-          <div className="w-1/2 pr-fis-2">
+      <section className="container px-4 md:px-fis-2 p-fis-2">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
             <h3 className="text-2xl text-fis-blue mb-4">Wealth Transition</h3>
             <p>
               FIS believes a well-crafted financial plan expresses your most
@@ -108,7 +111,7 @@ const InvestmentManagementPage: NextPageWithLayout = () => {
               you in planning for life’s unexpected events:
             </p>
           </div>
-          <div className="w-1/2 pl-fis-2">
+          <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
             <div className="bg-slate-500 w-full aspect-video rounded-lg" />
           </div>
         </div>

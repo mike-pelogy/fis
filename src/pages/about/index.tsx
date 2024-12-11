@@ -9,9 +9,12 @@ import {
 } from "@/gql/graphql";
 import request from "graphql-request";
 import { TeamDetails } from "../team/[name]";
+import Link from "next/link";
+import classNames from "classnames";
 
 export async function getStaticProps() {
-  const data = await request(API, aboutPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data:any = await request(API, aboutPageQuery);
 
   return {
     props: {
@@ -19,6 +22,11 @@ export async function getStaticProps() {
     },
   };
 }
+
+export const fancyBulletPoints = '[&_li]:relative [&_li]:pl-[1.25rem] [&_ul]:space-y-1 [&_li]:before:content-[""] [&_li]:before:fb-tri [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.5em] [&_li]:before:bg-fis-purple [&_li]:before:block [&_li]:before:h-2 [&_li]:before:w-2';
+
+const bg =
+  "before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0";
 
 const MissionAndValues = ({
   mission,
@@ -32,12 +40,13 @@ const MissionAndValues = ({
       <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[-1]">
         <FunBackground />
       </div>
-      <section className="container px-fis-2 relative">
+      <section className="container px-4 md:px-fis-2 relative">
         <div
           id="mission"
-          className="overflow-hidden relative rounded-lg before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0">
-          <div className="flex">
-            <div className="flex relative flex-col w-1/2 p-fis-2">
+          className={classNames("overflow-hidden relative rounded-lg", bg)}
+        >
+          <div className="flex flex-col md:flex-row">
+            <div className="flex relative flex-col w-full md:w-1/2 px-4 p-fis-2 md:px-fis-2">
               <div>
                 <h3
                   className="text-fis-blue text-2xl mb-4"
@@ -49,22 +58,21 @@ const MissionAndValues = ({
                   }}
                 />
               </div>
-              <hr className="my-fis-2"
-                id="values"
-              />
+              <hr className="my-fis-1 md:my-fis-2" id="values" />
               <div>
                 <h3
                   className="text-fis-blue text-2xl mb-4"
                   dangerouslySetInnerHTML={{ __html: values.title as string }}
                 />
                 <span
+                className={classNames("[&_strong]:text-fis-purple", fancyBulletPoints)}
                   dangerouslySetInnerHTML={{
                     __html: values.description as string,
                   }}
                 />
               </div>
             </div>
-            <div className="w-1/2 h-full bg-slate-500 relative" />
+            <div className="w-full md:w-1/2 h-full bg-slate-500 relative" />
           </div>
         </div>
       </section>
@@ -119,9 +127,11 @@ const teamMembers: ITeamMember[] = [
 const TeamCard = (team: ITeamMember) => {
   return (
     <article>
-      <div className="mb-4">
-        <div className="w-full max-w-[230px] aspect-square rounded-lg bg-slate-500" />
-      </div>
+      <Link href={team.url}>
+        <div className="pb-4">
+          <div className="w-full max-w-[230px] aspect-square rounded-lg bg-slate-500" />
+        </div>
+      </Link>
       <div className="flex flex-col gap-2">
         <TeamDetails {...team} />
       </div>
@@ -131,9 +141,9 @@ const TeamCard = (team: ITeamMember) => {
 
 const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
   return (
-    <div className="flex justify-center px-fis-3 py-fis-2"id="team" >
-      <section className="container">
-        <div className="w-1/2">
+    <div className="flex justify-center px-4 md:px-fis-3 py-fis-2" id="team">
+      <section className="container flex flex-col">
+        <div className="w-full md:w-1/2">
           <h3
             className="text-fis-blue text-2xl mb-4"
             dangerouslySetInnerHTML={{ __html: about.title as string }}
@@ -142,7 +152,7 @@ const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
             dangerouslySetInnerHTML={{ __html: about.description as string }}
           />
         </div>
-        <div className="mt-fis-1 grid grid-cols-3 gap-y-fis-2 gap-x-fis-1">
+        <div className="mt-fis-1 grid grid-cols-1 md:grid-cols-3 gap-y-fis-2 gap-x-fis-1">
           {teamMembers.map((teamMember) => (
             <TeamCard key={teamMember.url} {...teamMember} />
           ))}

@@ -9,6 +9,10 @@ import type {
 } from "next";
 import Link from "next/link";
 import { SubscribeSection } from "../contact";
+import Plus from "@/svgs/Plus";
+import Search from "@/svgs/Search";
+import Mail from "@/svgs/Mail";
+import classNames from "classnames";
 
 interface ICategory {
   label: string;
@@ -68,9 +72,9 @@ export const getStaticProps = (async ({ params }) => {
         { label: "Test", url: "/news-and-insights" },
       ],
       relatedPosts: [
-        { title: "test title 1", url: "#" },
-        { title: "test title 2", url: "#" },
-        { title: "test title 3", url: "#" },
+        { title: "Faith & Retirement – Episode 25: An Inside Look at the FIS Christian Stock Fund (PRAY) – How to get good returns and invest in good companies!", url: "#" },
+        { title: "Faith & Retirement – Episode 24: The Five Key Factors to Help You Become a Better Investor!", url: "#" },
+        { title: "Faith & Retirement – Episode 23: Does a 60/40 Balanced Portfolio Still Make Sense?", url: "#" },
       ],
     },
   };
@@ -88,7 +92,7 @@ const Categories = ({ categories }: { categories: ICategory[] }) => {
   if (!categories.length) return null;
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       {categories.map(({ label, url }) => {
         return (
           <Button key={url} variant="tertiary" size="small" href={url}>
@@ -101,6 +105,7 @@ const Categories = ({ categories }: { categories: ICategory[] }) => {
 };
 
 const Author = ({ name, img }: IAuthorProps) => {
+console.log(img);
   return (
     <div className="flex items-center gap-4">
       <div className="rounded-[100%] border-[1px] border-slate-200 w-[50px] aspect-square bg-slate-100" />
@@ -117,10 +122,10 @@ const Share = ({ url }: { url: string }) => {
       <p className="text-slate-600">Share:</p>
       <div className="flex items-center gap-6">
         <a
-          className={aClass}
+          className={classNames(aClass, 'text-2xl')}
           href={`mailto:?subject=Shared%20from%20Faith%20Investors%20Services&body=${url}`}
         >
-          Mail
+          <Mail width="24px" height="24px" />
         </a>
         <a
           className={aClass}
@@ -159,14 +164,13 @@ export default function Post({
   categories,
   relatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log({ url });
   return (
     <>
       <div className="flex items-center w-full relative flex-col">
-        <section className="container p-fis-2 flex flex-col w-full relative">
+        <section className="container px-4 md:px-fis-2 p-fis-2 flex flex-col w-full relative">
           <h3 className="text-2xl text-fis-blue mb-fis-1">{title}</h3>
-          <div className="w-full flex justify-between">
-            <div className="flex items-center gap-4">
+          <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <Author {...author} />
               <Categories categories={categories} />
               <p className="text-slate-600">{date}</p>
@@ -174,12 +178,19 @@ export default function Post({
             <Share url={url} />
           </div>
           <hr className="mt-4" />
-          <div className="flex pt-fis-2">
-            <article className="w-2/3 pr-fis-2">{content}</article>
-            <aside className="w-1/3 flex flex-col">
+          <div className="flex flex-col md:flex-row pt-fis-2">
+            <article className="w-full md:w-2/3 pr-0 md:pr-fis-2">{content}</article>
+            <aside className="w-full md:w-1/3 flex flex-col pt-fis-2 md:pt-0">
               <div></div>
               <div>
-                <h4 className="text-2xl mb-4 text-fis-blue">More news</h4>
+              <div className="mb-4 flex gap-2 justify-between items-center">
+              <h4 className="text-2xl text-fis-blue">More news</h4>
+                <button className="text-fis-blue hover:text-fis-purple transition-all" onClick={() => {
+                  document.dispatchEvent(new CustomEvent('opensearch'));
+                }}>
+                  <Search />
+                </button>
+              </div>
                 <ul className="flex flex-col gap-4">
                   {relatedPosts.map(({ title, url }) => (
                     <li key={url}>
@@ -192,7 +203,7 @@ export default function Post({
                     </li>
                   ))}
                 </ul>
-                <Button variant="tertiary" href="#" className="mt-fis-1">
+                <Button variant="tertiary" href="#" className="mt-fis-1" IconButton={<Plus />}>
                   See More
                 </Button>
               </div>

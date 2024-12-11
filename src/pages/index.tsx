@@ -12,11 +12,18 @@ import type {
   Page_Homepage_LatestNewAndInsights,
   Page_Homepage_Services,
 } from "@/gql/graphql";
+import ArrowRight from "@/svgs/ArrowRight";
 import request from "graphql-request";
 import Image from "next/image";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useEffect, useState } from "react";
+import { fancyBulletPoints } from "./about";
 
 export async function getStaticProps() {
-  const data = await request(API, homePageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, homePageQuery);
 
   return {
     props: {
@@ -38,10 +45,10 @@ const LandingAndAbout = ({
         <FunBackground />
       </div>
       <div className="relative z-100">
-        <section className="container flex justify-center items-center py-fis-2">
-          <div className="w-1/2 flex flex-col gap-6 items-start">
+        <section className="container flex flex-col md:flex-row justify-center items-center py-fis-2 px-4 md:px-0 ">
+          <div className="w-full md:w-1/2 flex flex-col gap-6 items-start">
             <h1
-              className="[&>p]:text-5xl [&>p]:leading-[1.1] [&>p]:font-bold [&>p>strong:first-child]:text-fis-purple [&>p>strong]:text-fis-blue"
+              className="[&>p]:text-3xl md:[&>p]:text-5xl [&>p]:leading-[1.1] [&>p]:font-bold [&>p>strong:first-child]:text-fis-purple [&>p>strong]:text-fis-blue"
               dangerouslySetInnerHTML={{ __html: landing.title as string }}
             />
             <span
@@ -50,11 +57,16 @@ const LandingAndAbout = ({
                 __html: landing.description as string,
               }}
             />
-            <Button variant="white" href={landing.callToAction?.url as string}>
+            <Button
+              variant="white"
+              href={landing.callToAction?.url as string}
+              className="hover:!bg-slate-50/90"
+              IconButton={<ArrowRight />}
+            >
               {landing.callToAction?.title}
             </Button>
           </div>
-          <div className="w-1/2 pl-fis-2">
+          <div className="w-full md:w-1/2 pl-0 pt-fis-2 md:pt-0 md:pl-fis-2">
             <Image
               src="/Splash1.jpg"
               alt="nice"
@@ -64,11 +76,11 @@ const LandingAndAbout = ({
             />
           </div>
         </section>
-        <section className="container rounded-lg overflow-hidden flex relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
-          <div className="w-1/2 relative">
+        <section className="container rounded-lg overflow-hidden flex flex-col-reverse md:flex-row items-center relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
+          <div className="w-full md:w-1/2 relative">
             <Image src="/HomeAbout.jpg" alt="nice" width={1500} height={1500} />
           </div>
-          <div className="p-fis-2 w-1/2 relative">
+          <div className="px-4 p-fis-2 md:p-fis-2 w-full md:w-1/2 relative">
             <h2
               className="text-fis-blue text-2xl"
               dangerouslySetInnerHTML={{ __html: aboutSection.title as string }}
@@ -97,14 +109,14 @@ const LandingAndAbout = ({
 
 const Services = ({ services }: { services: Page_Homepage_Services }) => {
   return (
-    <div className="container py-fis-2">
+    <div className="container py-fis-2 px-4 md:px-0">
       <section>
         <h2
           className="text-5xl font-bold mb-fis-2"
           dangerouslySetInnerHTML={{ __html: services.title as string }}
         />
-        <div className="flex">
-          <div className="w-1/2 pr-fis-2">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
             <h3
               className="text-fis-blue text-2xl mb-6"
               dangerouslySetInnerHTML={{
@@ -117,7 +129,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
                 __html: services.wealthManagement?.description as string,
               }}
             />
-            <div className="grid grid-cols-2 gap-2 pointer">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pointer">
               {services.wealthManagement?.services?.map((service) => {
                 return (
                   <div
@@ -125,13 +137,13 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
                     key={service?.title}
                   >
                     <h4
-                      className="font-bold"
+                      className="font-bold mb-2"
                       dangerouslySetInnerHTML={{
                         __html: service?.title as string,
                       }}
                     />
                     <span
-                      // TODO: fix the list styles
+                      className={fancyBulletPoints}
                       dangerouslySetInnerHTML={{
                         __html: service?.description as string,
                       }}
@@ -142,6 +154,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
             </div>
             <div className="flex justify-end mt-fis-1">
               <Button
+                IconButton={<ArrowRight />}
                 variant="primary"
                 href={services.wealthManagement?.callToAction?.url as string}
               >
@@ -149,16 +162,16 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
               </Button>
             </div>
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
             <div className="w-full aspect-video bg-slate-500 rounded-lg" />
           </div>
         </div>
       </section>
-      <section className="pt-fis-2 flex">
-        <div className="w-1/2">
+      <section className="pt-fis-2 flex flex-col-reverse md:flex-row">
+        <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <div className="w-full aspect-video bg-slate-500 rounded-lg" />
         </div>
-        <div className="w-1/2 pl-fis-2">
+        <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
           <h3
             className="text-fis-blue text-2xl mb-6"
             dangerouslySetInnerHTML={{
@@ -172,6 +185,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
           />
           <div className="flex justify-end mt-fis-1">
             <Button
+              IconButton={<ArrowRight />}
               variant="primary"
               href={services.investment?.callToAction?.url as string}
             >
@@ -207,6 +221,20 @@ export const dummyPosts: {
     date: new Date().getDate().toString(),
   },
   {
+    categories: [],
+    img: "image",
+    url: "/",
+    title: "title",
+    date: new Date().getDate().toString(),
+  },
+  {
+    categories: [],
+    img: "image",
+    url: "/",
+    title: "title",
+    date: new Date().getDate().toString(),
+  },
+  {
     categories: [{ label: "Articles", path: "/" }],
     img: "image",
     url: "/",
@@ -215,11 +243,39 @@ export const dummyPosts: {
   },
 ];
 
+function useMediaQuery() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth > 768);
+    const updateSize = () => {
+      setIsMobile(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", updateSize);
+
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
+  }, []);
+
+  return isMobile;
+}
+
 const LatestNewAndHighlights = ({
   latestNewAndInsights,
 }: {
   latestNewAndInsights: Page_Homepage_LatestNewAndInsights;
 }) => {
+  const isDesktop = useMediaQuery();
+
+  const finalSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: isDesktop ? 3 : 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <div className="flex justify-center relative w-full pt-fis-2">
       <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
@@ -227,7 +283,7 @@ const LatestNewAndHighlights = ({
       </div>
       <div className="container w-full">
         <WhiteContainer>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row gap-2 items-start md:items-center justify-between">
             <h3
               className="text-fis-blue text-2xl"
               dangerouslySetInnerHTML={{
@@ -235,6 +291,7 @@ const LatestNewAndHighlights = ({
               }}
             />
             <Button
+              IconButton={<ArrowRight />}
               variant="neutral"
               href={latestNewAndInsights.link?.url as string}
             >
@@ -242,12 +299,16 @@ const LatestNewAndHighlights = ({
             </Button>
           </div>
           <hr className="mt-4 mb-6" />
-          <div className="grid grid-cols-3 gap-4">
-            {dummyPosts.map((post) => {
-              return (
-                <PostCard key={post.url} post={post} showButton showImage />
-              );
-            })}
+          <div className="w-full relative">
+            <Slider {...finalSettings}>
+              {dummyPosts.map((post) => {
+                return (
+                  <div key={post.url} className="px-4">
+                    <PostCard post={post} showButton showImage />
+                  </div>
+                );
+              })}
+            </Slider>
           </div>
         </WhiteContainer>
       </div>

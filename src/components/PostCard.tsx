@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./Button";
 import Link from "next/link";
 import classNames from "classnames";
+import Plus from "@/svgs/Plus";
 
 interface IPostCardProps {
   post: {
@@ -25,7 +26,7 @@ export default function PostCard({
   const { categories, title, url, img, date } = post;
   return (
     <article className={className}>
-      <Link href={url} className="hover:text-fis-purple transition-all">
+      <Link href={url} draggable onDragStart={(e) => e.preventDefault()} className="hover:text-fis-purple transition-all">
         {showImage && (
           <div className="rounded-lg w-full aspect-video bg-slate-500">
             {img}
@@ -48,7 +49,7 @@ export default function PostCard({
         ))}
       </div>
       {showButton && (
-        <Button href={url} variant="secondary">
+        <Button href={url} variant="secondary" IconButton={<Plus />}>
           Read more
         </Button>
       )}

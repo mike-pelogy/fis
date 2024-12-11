@@ -6,10 +6,15 @@ import WhiteContainer from "@/components/WhiteContainer";
 import { API } from "@/constants";
 import { aboutPageQuery } from "@/data/aboutPageQuery";
 import { Page_Aboutpage } from "@/gql/graphql";
+import Plus from "@/svgs/Plus";
 import request from "graphql-request";
+import { NextPageWithLayout } from "../_app";
+import { ReactElement } from "react";
+import Search from "@/svgs/Search";
 
 export async function getStaticProps() {
-  const data = await request(API, aboutPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, aboutPageQuery);
 
   return {
     props: {
@@ -19,19 +24,24 @@ export async function getStaticProps() {
 }
 
 const navBar = [
-  { title: "Tips", href: "/news-and-insights/tips" },
-  { title: "Articles" },
-  { title: "Videos" },
-  { title: "Faith & Retirement" },
+  { title: "Tips", href: "/news-and-insights/category/tips" },
+  { title: "Articles", href: "/news-and-insights/category/articles" },
+  { title: "Videos", href: "/news-and-insights/category/videos" },
+  {
+    title: "Faith & Retirement",
+    href: "/news-and-insights/category/faith-retirement",
+  },
 ];
 
-export const dummyPosts: {
+interface IDummyPost {
   categories?: { label: string; path: string }[];
   img: string;
   title: string;
   date: string;
   url: string;
-}[] = [
+}
+
+export const dummyPosts: IDummyPost[] = [
   {
     categories: [],
     img: "image",
@@ -75,8 +85,50 @@ export const dummyPosts: {
 ];
 
 // TODO: create pagination
-export default function AboutPage() {
+export const Cat = ({ cat, posts }: { cat?: string; posts?: IDummyPost[] }) => {
+  console.log(cat);
   const page = 1;
+
+  return (
+    <>
+      {page === 1 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {dummyPosts.slice(0, 2).map((post) => {
+                return <PostCard key={post.url} post={post} showImage />;
+              })}
+            </div>
+            <div className="grid md:grid-rows-3 gap-8">
+              {dummyPosts.slice(2).map((post) => {
+                return <PostCard key={post.url} post={post} />;
+              })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="grid grid-rows-3 grid-cols-3 gap-8">
+            {posts?.map((post) => {
+              return <PostCard key={post.url} post={post} />;
+            })}
+          </div>
+        </>
+      )}
+      <div className="flex justify-center mt-fis-1 gap-4">
+        <Button variant="tertiary" href="#" IconButton={<Plus />}>
+          Load more
+        </Button>
+      </div>
+    </>
+  );
+};
+
+const NewsAndInsightsPage: NextPageWithLayout = () => {
+  return <Cat />;
+};
+
+export const subLayout = (page: ReactElement) => {
   return (
     <div className="bg-slate-100 w-full pb-fis-2">
       <div className="flex justify-center relative w-full pt-fis-2">
@@ -96,45 +148,26 @@ export default function AboutPage() {
                   and content about faith-based investing.
                 </p>
               </div>
-              <NavBar navBar={navBar} />
-              {page === 1 ? (
-                <>
-                  <div className="grid grid-cols-[2fr_1fr] gap-8 items-start">
-                    <div className="grid grid-cols-2 gap-8">
-                      {dummyPosts.slice(0, 2).map((post) => {
-                        return (
-                          <PostCard key={post.url} post={post} showImage />
-                        );
-                      })}
-                    </div>
-                    <div className="grid grid-rows-3 gap-8">
-                      {dummyPosts.slice(2).map((post) => {
-                        return <PostCard key={post.url} post={post} />;
-                      })}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="grid grid-rows-3 grid-cols-3 gap-8">
-                    {dummyPosts.map((post) => {
-                      return <PostCard key={post.url} post={post} />;
-                    })}
-                  </div>
-                </>
-              )}
-              <div className="flex justify-end mt-fis-1 gap-4">
-                <Button variant="tertiary" href="#">
-                  Back
-                </Button>
-                <Button variant="tertiary" href="#">
-                  More
-                </Button>
+              <div className="relative">
+                <button
+                  className="absolute right-4 top-fis-1 h-[38px] text-fis-blue hover:text-fis-purple transition-all"
+                  onClick={() => {
+                    document.dispatchEvent(new CustomEvent("opensearch"));
+                  }}
+                >
+                  <Search />
+                </button>
+                <NavBar navBar={navBar} />
               </div>
+              <div>{page}</div>
             </div>
           </WhiteContainer>
         </div>
       </div>
     </div>
   );
-}
+};
+
+NewsAndInsightsPage.getSubLayout = subLayout;
+
+export default NewsAndInsightsPage;

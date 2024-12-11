@@ -83,8 +83,10 @@ void main() {
 }
 `;
 
-function Plane(props) {
-  const meshRef = useRef();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Plane(props: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const meshRef = useRef<any>();
 
   const uniforms = useMemo(
     () => ({
@@ -112,9 +114,11 @@ function Plane(props) {
     }
   });
 
-  const viewport = useThree((state) => state.viewport);
+  const { width, height } = useThree((state) => state.viewport);
+  const finalScale = width > height ? width : height;
+
   return (
-    <mesh {...props} ref={meshRef} scale={[viewport.width, viewport.height, 1]}>
+    <mesh {...props} ref={meshRef} scale={[finalScale, finalScale, 1]}>
       <planeGeometry args={[1, 1, 32, 32]} />
       <shaderMaterial
         fragmentShader={fragmentShader}

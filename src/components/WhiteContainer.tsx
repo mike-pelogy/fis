@@ -6,8 +6,8 @@ const bgBeforeClass =
 
 export default function WhiteContainer({ children }: PropsWithChildren) {
   return (
-    <div className={classNames("p-fis-1 relative z-10", bgBeforeClass)}>
-      <section className="p-fis-1 bg-white rounded-lg relative">
+    <div className={classNames("p-4 md:p-fis-1 relative z-10", bgBeforeClass)}>
+      <section className="p-4 md:p-fis-1 bg-white rounded-lg relative">
         {children}
       </section>
     </div>

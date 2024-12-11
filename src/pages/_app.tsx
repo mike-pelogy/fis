@@ -12,7 +12,7 @@ const lato = Lato({
   subsets: ["latin"],
 });
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
   getSubLayout?: (page: ReactElement) => ReactNode;
 };
@@ -27,11 +27,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <div className={lato.className}>
-      {getLayout(
-        <Layout>
-          {getSubLayout(<Component {...pageProps} />)}
-        </Layout>
-      )}
+      {getLayout(<Layout>{getSubLayout(<Component {...pageProps} />)}</Layout>)}
     </div>
   );
 }

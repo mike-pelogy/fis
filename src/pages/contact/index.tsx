@@ -9,9 +9,13 @@ import { Page_Aboutpage } from "@/gql/graphql";
 import Phone from "@/svgs/Phone";
 import classNames from "classnames";
 import request from "graphql-request";
+import ArrowRight from "@/svgs/ArrowRight";
+import Mail from "@/svgs/Mail";
+import LocationMarker from "@/svgs/LocationMarker";
 
 export async function getStaticProps() {
-  const data = await request(API, aboutPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data:any = await request(API, aboutPageQuery);
 
   return {
     props: {
@@ -52,31 +56,31 @@ const ContactForm = () => {
       data-netlify="true"
       className="flex flex-col gap-4"
     >
-      <div className="flex gap-4">
-        <div className="w-1/2">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
+        <div className="w-full md:w-1/2">
           <TextField name="firstName" label="First Name:" />
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <TextField name="lastName" label="Last Name:" />
         </div>
       </div>
-      <div className="flex gap-4">
-        <div className="w-1/2">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
+        <div className="w-full md:w-1/2">
           <TextField name="email" label="Email:" type="email" />
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <TextField name="company" label="Company:" />
         </div>
       </div>
-      <div className="flex gap-4">
-        <div className="w-1/2">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
+        <div className="w-full md:w-1/2">
           <TextField name="state" label="State:" />
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <TextField name="phone" label="Phone Number:" />
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full">
           <TextField
             name="message"
@@ -97,11 +101,11 @@ const ContactForm = () => {
 export const SubscribeSection = () => {
   return (
     <div className="flex justify-center">
-      <section className="flex pt-fis-2 container px-fis-2 items-center">
-        <div className="w-1/2">
+      <section className="flex flex-col-reverse md:flex-row pt-fis-2 container px-4 md:px-fis-2 items-center">
+        <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <div className="rounded-lg aspect-video bg-slate-500 w-full" />
         </div>
-        <div className="w-1/2 pl-fis-2">
+        <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
           <h3 className="text-2xl text-fis-blue mb-4">
             Subscribe for Faith Investor Services Insights
           </h3>
@@ -110,16 +114,20 @@ export const SubscribeSection = () => {
             Investor Services.
           </p>
           <form>
-            <div className="flex gap-4">
-              <div className="w-1/2">
+            <div className="flex flex-wrap gap-4">
+              <div className="w-full md:w-1/2">
                 <TextField name="name" label="Name:" />
               </div>
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <TextField name="email" label="Email:" type="email" />
               </div>
             </div>
             <div className="flex mt-fis-1">
-              <Button variant="secondary" onClick={() => {}}>
+              <Button
+                variant="secondary"
+                onClick={() => {}}
+                IconButton={<ArrowRight />}
+              >
                 Subsribe
               </Button>
             </div>
@@ -141,11 +149,11 @@ export default function ContactPage() {
           <WhiteContainer>
             <div className="flex flex-col">
               <NavBar navBar={navBar} className="!pt-0" />
-              <section className="flex">
-                <div className="w-1/2 pr-fis-2">
+              <section className="flex flex-col md:flex-row">
+                <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
                   <ContactForm />
                 </div>
-                <div className="w-1/2 flex flex-col gap-fis-2">
+                <div className="w-full md:w-1/2 flex flex-col pt-fis-1 md:pt-0 gap-fis-1 md:gap-fis-2">
                   {locations.map(({ phone, email, location }) => (
                     <div key={phone} className="flex flex-col gap-2">
                       <a
@@ -159,14 +167,14 @@ export default function ContactPage() {
                         className={classNames("flex items-center", buttons)}
                         href={`mailto:${email}`}
                       >
-                        <Phone />
+                        <Mail />
                         <div className="ml-2">{email}</div>
                       </a>
                       <a
                         className={classNames("flex items-center", buttons)}
                         href="#"
                       >
-                        <Phone />
+                        <LocationMarker />
                         <div className="ml-2">{location}</div>
                       </a>
                     </div>

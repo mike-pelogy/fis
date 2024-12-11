@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, ReactElement } from "react";
 import NativeButton from "./NativeButton";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "neutral" | "white";
@@ -12,6 +12,8 @@ export interface IButtonProps extends PropsWithChildren {
   variant: ButtonVariant;
   className?: string;
   size?: ButtonSize;
+  LeadingIconButton?: ReactElement;
+  IconButton?: ReactElement;
 }
 
 const baseClass =
@@ -70,21 +72,29 @@ export default function Button({
   onClick,
   variant,
   className,
+  IconButton,
+LeadingIconButton,
 }: IButtonProps) {
   const variantClassNames = getVariantClassNames(variant);
   const sizeClassNames = getSizeClassName(size);
 
   const finalClassNames = classNames(
-    className,
     baseClass,
     sizeClassNames,
-    variantClassNames
+    variantClassNames,
+    className,
   );
 
   if (href) {
     return (
       <Link href={href} className={finalClassNames}>
-        {children}
+        <div className="flex items-center">
+          {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
+          <span>
+            {children}
+          </span>
+          {IconButton && <div className="ml-2 w-[16px]">{IconButton}</div>}
+        </div>
       </Link>
     );
   }
@@ -92,7 +102,13 @@ export default function Button({
   if (onClick) {
     return (
       <NativeButton onClick={onClick} className={finalClassNames}>
-        {children}
+        <div className="flex items-center">
+          {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
+          <span>
+            {children}
+          </span>
+          {IconButton && <div className="ml-2 w-[16px]">{IconButton}</div>}
+          </div>
       </NativeButton>
     );
   }

@@ -7,7 +7,8 @@ import ConnectWithUs from "@/components/ConnectWithUs";
 import classNames from "classnames";
 
 export async function getStaticProps() {
-  const data = await request(API, kocgPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, kocgPageQuery);
 
   return {
     props: {
@@ -20,14 +21,18 @@ export async function getStaticProps() {
 export const radialBg =
   "bg-[radial-gradient(at_top_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
-
 // TODO: finish middle section
 const EndowmentsPage: NextPageWithLayout = () => {
   return (
     <>
-      <section className={classNames("w-full p-fis-2 flex justify-center", radialBg)}>
-        <div className="container flex justify-center">
-          <div className="w-1/2">
+      <section
+        className={classNames(
+          "w-full px-4 md:px-fis-2 p-fis-2 flex justify-center",
+          radialBg
+        )}
+      >
+        <div className="container flex flex-col md:flex-row justify-center">
+          <div className="w-full md:w-1/2">
             <p>
               FIS believes a well-crafted financial plan expresses your most
               meaningful values and goals. Our process drives to your clear
@@ -41,9 +46,9 @@ const EndowmentsPage: NextPageWithLayout = () => {
           </div>
         </div>
       </section>
-      <section className="w-full p-fis-2 flex justify-center">
-        <div className="container flex items-center bg-slate-100 rounded-lg">
-          <div className="w-1/2 p-fis-2">
+      <section className="w-full flex justify-center">
+        <div className="container flex flex-col md:flex-row items-center bg-slate-100 rounded-lg">
+          <div className="w-full md:w-1/2 px-4 md:p-fis-2 p-fis-2">
             <p>
               FIS believes a well-crafted financial plan expresses your most
               meaningful values and goals. Our process drives to your clear
@@ -60,7 +65,13 @@ const EndowmentsPage: NextPageWithLayout = () => {
           </div>
         </div>
       </section>
-      <ConnectWithUs connectWithUs={{link: {title: 'Connect with us', url: '/contact'}, title: 'Interested in more information?', description: 'Reach out and let’s explore how we can support you.'}} />
+      <ConnectWithUs
+        connectWithUs={{
+          link: { title: "Connect with us", url: "/contact" },
+          title: "Interested in more information?",
+          description: "Reach out and let’s explore how we can support you.",
+        }}
+      />
     </>
   );
 };
@@ -68,4 +79,3 @@ const EndowmentsPage: NextPageWithLayout = () => {
 EndowmentsPage.getSubLayout = subLayout;
 
 export default EndowmentsPage;
-

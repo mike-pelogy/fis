@@ -10,7 +10,8 @@ import request from "graphql-request";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  const data = await request(API, kocgPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, kocgPageQuery);
 
   return {
     props: {
@@ -26,9 +27,11 @@ export const radialBg =
 const FinancialPlanningPage: NextPageWithLayout = () => {
   return (
     <>
-      <section className={classNames("container px-fis-2 py-fis-2", radialBg)}>
-        <div className="flex">
-          <div className="w-1/2">
+      <section
+        className={classNames("container px-4 md:px-fis-2 py-fis-2", radialBg)}
+      >
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2">
             <p>
               FIS believes a well-crafted financial plan expresses your most
               meaningful values and goals. Our process drives to your clear
@@ -71,8 +74,8 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
             <WhiteContainer>
               <section>
                 <h3 className="text-2xl text-fis-blue mb-4">Collaboration</h3>
-                <div className="flex">
-                  <div className="w-1/2 pr-fis-2">
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
                     <p>
                       FIS believes a well-crafted financial plan expresses your
                       most meaningful values and goals. Our process drives to
@@ -85,7 +88,7 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
                       guide you in planning for life’s unexpected events:
                     </p>
                   </div>
-                  <div className="w-1/2">
+                  <div className="w-full md:w-1/2 mt-fis-2 md-mt-0">
                     <div className="bg-slate-500 rounded-lg w-full aspect-video" />
                   </div>
                 </div>
@@ -132,8 +135,8 @@ export const subLayout = (page: ReactElement) => {
       <div className="container w-full">
         <Nav />
       </div>
-      <section className="container w-full px-fis-2 py-fis-1 flex items-center">
-        <div className="w-1/2 pr-fis-2">
+      <section className="container w-full px-4 md:px-fis-2 py-fis-1 flex flex-col md:flex-row items-center">
+        <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
           <h3 className="text-2xl text-fis-blue">
             You worked hard to secure your wealth.
           </h3>
@@ -146,7 +149,7 @@ export const subLayout = (page: ReactElement) => {
             management for individuals and business owners.
           </p>
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <div className="bg-slate-500 w-full aspect-video rounded-lg" />
         </div>
       </section>

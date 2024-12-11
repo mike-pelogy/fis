@@ -9,7 +9,8 @@ import { Nav } from "../../individuals/financial-planning";
 import { SubscribeSection } from "@/pages/contact";
 
 export async function getStaticProps() {
-  const data = await request(API, kocgPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, kocgPageQuery);
 
   return {
     props: {
@@ -29,10 +30,10 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
         <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[-1]">
           <FunBackground />
         </div>
-        <section className="container px-fis-2 relative">
+        <section className="container px-4 md:px-fis-2 relative">
           <div className="overflow-hidden relative rounded-lg before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0">
-            <div className="flex p-fis-2 relative">
-              <div className="w-1/2 pr-fis-1">
+            <div className="flex flex-col md:flex-row px-4 md:px-fis-2 p-fis-2 relative">
+              <div className="w-full md:w-1/2 pr-0 md:pr-fis-1">
                 <p>
                   FIS believes a well-crafted financial plan expresses your most
                   meaningful values and goals. Our process drives to your clear
@@ -45,7 +46,7 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
                   events:
                 </p>
               </div>
-              <div className="w-1/2 pl-fis-1">
+              <div className="w-full md:w-1/2 pl-0 md:pl-fis-1 mt-fis-2 md:mt-0">
                 <p>
                   FIS believes a well-crafted financial plan expresses your most
                   meaningful values and goals. Our process drives to your clear
@@ -62,12 +63,12 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
           </div>
         </section>
       </div>
-      <section className="container p-fis-2">
-        <div className="w-1/2 pr-fis-2 mb-4">
+      <section className="container px-4 md:px-fis-2 p-fis-2">
+        <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mb-4">
           <p>this is a test</p>
         </div>
-        <div className="flex">
-          <div className="w-1/2 pr-fis-2">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
             <p>
               FIS believes a well-crafted financial plan expresses your most
               meaningful values and goals. Our process drives to your clear
@@ -79,7 +80,7 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
               you in planning for life’s unexpected events:
             </p>
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
             <div className="bg-slate-500 rounded-lg w-full aspect-video" />
           </div>
         </div>

@@ -1,13 +1,9 @@
 import Field, { IFieldProps } from "./Field";
+import React from "react";
 
-const inputClass = "border-[1px] rounded border-slate-200 p-2";
+type ITextFieldProps = Omit<IFieldProps, "children">;
 
-interface ITextFieldProps extends Omit<IFieldProps, "children"> { }
-
-export default function FileField({
-  label,
-  name,
-}: ITextFieldProps) {
+export default function FileField({ label, name }: ITextFieldProps) {
   return (
     <Field label={label} name={name}>
       <input name="file" type="file" />
