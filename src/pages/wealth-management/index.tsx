@@ -6,7 +6,8 @@ import request from "graphql-request";
 import { fancyBulletPoints } from "../about";
 
 export async function getStaticProps() {
-  const data = await request(API, kocgPageQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await request(API, kocgPageQuery);
 
   return {
     props: {
