@@ -1,1 +1,1 @@
-export const API = "https://fis.lndo.site/graphql";
+export const API = "https://old-earth.localsite.io/graphql";
