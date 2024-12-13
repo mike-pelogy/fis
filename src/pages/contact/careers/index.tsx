@@ -4,15 +4,13 @@ import FileField from "@/components/Forms/FileField";
 import TextField from "@/components/Forms/TextField";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
 import { aboutPageQuery } from "@/data/aboutPageQuery";
 import { Page_Aboutpage } from "@/gql/graphql";
-import request from "graphql-request";
 import { navBar, SubscribeSection } from "..";
+import getGqlRequest from "@/data/getGqlRequest";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data:any = await request(API, aboutPageQuery);
+  const { data } = await getGqlRequest(aboutPageQuery);
 
   return {
     props: {
@@ -33,7 +31,7 @@ const CareerForm = () => {
       data-netlify="true"
       className="flex flex-col gap-4"
     >
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="firstName" label="First Name:" />
         </div>
@@ -41,7 +39,7 @@ const CareerForm = () => {
           <TextField name="lastName" label="Last Name:" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="email" label="Email:" type="email" />
         </div>
@@ -49,16 +47,16 @@ const CareerForm = () => {
           <TextField name="company" label="Company:" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="state" label="State:" />
         </div>
         <div className="w-full md:w-1/2">
-          <TextField name="phone" label="Phone Number:" />
+          <TextField name="phone" type="tel" label="Phone Number:" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
-        <div className="w-full md:w-1/2">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
+        <div className="w-full">
           <TextField
             name="message"
             label="Comment or Message:"
@@ -66,7 +64,7 @@ const CareerForm = () => {
           />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <FileField name="resume" label="Upload Resume:" />
         </div>

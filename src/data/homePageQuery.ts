@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const homePageQuery = gql(`
 query Homepage {
-page(idType: DATABASE_ID, id: "2") {
+page(idType: DATABASE_ID, id: "6") {
 homepage {
       aboutSection {
         callToAction {

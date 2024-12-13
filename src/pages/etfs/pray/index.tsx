@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import ETF from "@/components/ETF";
-import { API } from "@/constants";
+import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
   Page_Kocg_Documents,
@@ -13,13 +13,10 @@ import {
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
-import request from "graphql-request";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, prayPageQuery);
-  console.log(data);
+  const { data } = await getGqlRequest(prayPageQuery);
 
   return {
     props: {

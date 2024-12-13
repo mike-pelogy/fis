@@ -1,5 +1,4 @@
 import FunBackground from "@/components/FunBackground";
-import { API } from "@/constants";
 import { aboutPageQuery } from "@/data/aboutPageQuery";
 import {
   Page_Aboutpage,
@@ -7,14 +6,13 @@ import {
   Page_Aboutpage_Mission,
   Page_Aboutpage_Values,
 } from "@/gql/graphql";
-import request from "graphql-request";
 import { TeamDetails } from "../team/[name]";
 import Link from "next/link";
 import classNames from "classnames";
+import getGqlRequest from "@/data/getGqlRequest";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data:any = await request(API, aboutPageQuery);
+  const { data } = await getGqlRequest(aboutPageQuery);
 
   return {
     props: {
@@ -23,7 +21,8 @@ export async function getStaticProps() {
   };
 }
 
-export const fancyBulletPoints = '[&_li]:relative [&_li]:pl-[1.25rem] [&_ul]:space-y-1 [&_li]:before:content-[""] [&_li]:before:fb-tri [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.5em] [&_li]:before:bg-fis-purple [&_li]:before:block [&_li]:before:h-2 [&_li]:before:w-2';
+export const fancyBulletPoints =
+  '[&_li]:relative [&_li]:pl-[1.25rem] [&_ul]:space-y-1 [&_li]:before:content-[""] [&_li]:before:fb-tri [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.5em] [&_li]:before:bg-fis-purple [&_li]:before:block [&_li]:before:h-2 [&_li]:before:w-2';
 
 const bg =
   "before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0";
@@ -65,7 +64,10 @@ const MissionAndValues = ({
                   dangerouslySetInnerHTML={{ __html: values.title as string }}
                 />
                 <span
-                className={classNames("[&_strong]:text-fis-purple", fancyBulletPoints)}
+                  className={classNames(
+                    "[&_strong]:text-fis-purple",
+                    fancyBulletPoints
+                  )}
                   dangerouslySetInnerHTML={{
                     __html: values.description as string,
                   }}

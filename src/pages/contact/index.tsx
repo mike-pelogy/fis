@@ -3,19 +3,17 @@ import { NavBar } from "@/components/NavBar";
 import TextField from "@/components/Forms/TextField";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
 import { aboutPageQuery } from "@/data/aboutPageQuery";
 import { Page_Aboutpage } from "@/gql/graphql";
 import Phone from "@/svgs/Phone";
 import classNames from "classnames";
-import request from "graphql-request";
 import ArrowRight from "@/svgs/ArrowRight";
 import Mail from "@/svgs/Mail";
 import LocationMarker from "@/svgs/LocationMarker";
+import getGqlRequest from "@/data/getGqlRequest";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data:any = await request(API, aboutPageQuery);
+  const { data } = await getGqlRequest(aboutPageQuery);
 
   return {
     props: {
@@ -114,7 +112,7 @@ export const SubscribeSection = () => {
             Investor Services.
           </p>
           <form>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
               <div className="w-full md:w-1/2">
                 <TextField name="name" label="Name:" />
               </div>

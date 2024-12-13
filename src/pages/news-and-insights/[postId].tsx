@@ -2,17 +2,22 @@ import Button from "@/components/Button";
 import Facebook from "@/svgs/Facebook";
 import Linkedin from "@/svgs/Linkedin";
 import Twitter from "@/svgs/Twitter";
-import type {
-  InferGetStaticPropsType,
-  GetStaticProps,
-  GetStaticPaths,
-} from "next";
+import type { InferGetStaticPropsType, GetStaticPaths } from "next";
 import Link from "next/link";
 import { SubscribeSection } from "../contact";
 import Plus from "@/svgs/Plus";
 import Search from "@/svgs/Search";
 import Mail from "@/svgs/Mail";
 import classNames from "classnames";
+import getGqlRequest from "@/data/getGqlRequest";
+import { postsQuery } from "@/data/postsQuery";
+import type { Post } from "@/gql/graphql";
+import { postQuery } from "@/data/postQuery";
+import { relatedPostsQuery } from "@/data/relatedPostsQuery";
+import { useState } from "react";
+import Image from "next/image";
+import formatDate from "@/utils/formatDate";
+import { BASE_URL } from "@/constants";
 
 interface ICategory {
   label: string;
@@ -24,30 +29,38 @@ interface IAuthorProps {
   img: string;
 }
 
-interface IParams {
-  params: {
-    postId: string;
-  };
-}
-
 export const getStaticPaths = (async () => {
-  // TODO: get all the posts from wordpress
-  const posts: IParams[] = [
-    { uri: "post-tester" },
-    { uri: "post-tester-2" },
-    { uri: "post-tester-3" },
-    { uri: "post-tester-4" },
-  ].map(({ uri }) => ({
-    params: { postId: uri },
-  }));
+  const { data } = await getGqlRequest(postsQuery);
+
+  const posts = data.posts.edges.map(({ node }) => {
+    return {
+      slug: node.slug,
+    };
+  });
 
   return {
-    paths: posts,
+    paths: posts.map(({ slug }: { slug: string }) => ({
+      params: { postId: slug },
+    })),
     fallback: false,
   };
 }) satisfies GetStaticPaths;
 
-export const getStaticProps = (async ({ params }) => {
+const normalizeRelatedPosts = (data: any) => {
+  return data.posts.edges.map((e) => {
+    const node = e.node as Post;
+
+    const { title, slug } = node;
+
+    return {
+      title,
+      url: slug,
+      cursor: e.cursor,
+    };
+  });
+};
+
+export const getStaticProps = async ({ params }) => {
   const { postId } = params || {};
 
   if (!postId) {
@@ -56,37 +69,49 @@ export const getStaticProps = (async ({ params }) => {
     };
   }
 
+  const { data } = await getGqlRequest(postQuery, { slug: postId });
+
+  const postBy = data.postBy as Post;
+  const {
+    title,
+    categories: catEdges,
+    content,
+    author,
+    slug,
+    date,
+    databaseId,
+  } = postBy;
+
+  const categories = catEdges?.edges.map(({ node }) => {
+    return {
+      label: node.name || "",
+      url: node.slug || "",
+    };
+  });
+
+  const authorDone = {
+    name: author?.node.name || "",
+    img: author?.node.avatar?.url || "",
+  };
+
+  const { data: relatedData } = await getGqlRequest(relatedPostsQuery, {
+    notIn: [databaseId],
+  });
+  const relatedPosts = normalizeRelatedPosts(relatedData);
+
   return {
     props: {
-      title: "this is the title",
-      content:
-        "ttthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the conten this is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contenttthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the conten this is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contenttthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the conten this is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contenttthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the conten this is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the conten this is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the contentthis is the content",
-      url: "url",
-      author: {
-        name: "author name",
-        img: "#",
-      },
-      date: Date.now().toString(),
-      categories: [
-        { label: "Articles", url: "/news-and-insights" },
-        { label: "Test", url: "/news-and-insights" },
-      ],
-      relatedPosts: [
-        { title: "Faith & Retirement – Episode 25: An Inside Look at the FIS Christian Stock Fund (PRAY) – How to get good returns and invest in good companies!", url: "#" },
-        { title: "Faith & Retirement – Episode 24: The Five Key Factors to Help You Become a Better Investor!", url: "#" },
-        { title: "Faith & Retirement – Episode 23: Does a 60/40 Balanced Portfolio Still Make Sense?", url: "#" },
-      ],
+      id: databaseId,
+      title,
+      content,
+      url: slug,
+      author: authorDone,
+      date: formatDate(new Date(date || "")),
+      categories,
+      relatedPosts,
     },
   };
-}) satisfies GetStaticProps<{
-  title: string;
-  content: string;
-  author: IAuthorProps;
-  date: string;
-  url: string;
-  categories?: ICategory[];
-  relatedPosts?: { title: string; url: string }[];
-}>;
+};
 
 const Categories = ({ categories }: { categories: ICategory[] }) => {
   if (!categories.length) return null;
@@ -105,10 +130,11 @@ const Categories = ({ categories }: { categories: ICategory[] }) => {
 };
 
 const Author = ({ name, img }: IAuthorProps) => {
-console.log(img);
   return (
     <div className="flex items-center gap-4">
-      <div className="rounded-[100%] border-[1px] border-slate-200 w-[50px] aspect-square bg-slate-100" />
+      <div className="rounded-[100%] border-[1px] w-[50px] aspect-square overflow-hidden">
+        <Image src={img} width={50} height={50} alt={name} />
+      </div>
       <p className="text-lg">{name}</p>
     </div>
   );
@@ -116,13 +142,19 @@ console.log(img);
 
 const aClass = "text-fis-purple hover:text-fis-blue transition-all";
 
-const Share = ({ url }: { url: string }) => {
+const createPostShareUrl = (url: string) => {
+  return `${BASE_URL}/news-and-insights/${url}`;
+}
+
+const Share = ({ url: propsUrl }: { url: string }) => {
+  const url = createPostShareUrl(propsUrl);
+
   return (
     <div className="flex items-center gap-4">
       <p className="text-slate-600">Share:</p>
       <div className="flex items-center gap-6">
         <a
-          className={classNames(aClass, 'text-2xl')}
+          className={classNames(aClass, "text-2xl")}
           href={`mailto:?subject=Shared%20from%20Faith%20Investors%20Services&body=${url}`}
         >
           <Mail width="24px" height="24px" />
@@ -163,7 +195,24 @@ export default function Post({
   date,
   categories,
   relatedPosts,
+  id,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [moreRelatedPosts, setMoreRelatedPosts] = useState([]);
+  const [loadingMoreRelatedPosts, setLoadingMoreRelatedPosts] = useState(false);
+
+  const handleLoadMore = async () => {
+    setLoadingMoreRelatedPosts(true);
+
+    const { data: relatedData } = await getGqlRequest(relatedPostsQuery, {
+      notIn: [id],
+      after: relatedPosts[relatedPosts.length - 1].cursor,
+    }).finally(() => {
+      setLoadingMoreRelatedPosts(false);
+    });
+
+    setMoreRelatedPosts(normalizeRelatedPosts(relatedData || []));
+  };
+
   return (
     <>
       <div className="flex items-center w-full relative flex-col">
@@ -172,40 +221,67 @@ export default function Post({
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <Author {...author} />
-              <Categories categories={categories} />
+              <Categories categories={categories || []} />
               <p className="text-slate-600">{date}</p>
             </div>
-            <Share url={url} />
+            <Share url={url || ""} />
           </div>
           <hr className="mt-4" />
           <div className="flex flex-col md:flex-row pt-fis-2">
-            <article className="w-full md:w-2/3 pr-0 md:pr-fis-2">{content}</article>
+            <article className="w-full md:w-2/3 pr-0 md:pr-fis-2">
+              <div dangerouslySetInnerHTML={{ __html: content || "" }} />
+            </article>
             <aside className="w-full md:w-1/3 flex flex-col pt-fis-2 md:pt-0">
               <div></div>
               <div>
-              <div className="mb-4 flex gap-2 justify-between items-center">
-              <h4 className="text-2xl text-fis-blue">More news</h4>
-                <button className="text-fis-blue hover:text-fis-purple transition-all" onClick={() => {
-                  document.dispatchEvent(new CustomEvent('opensearch'));
-                }}>
-                  <Search />
-                </button>
-              </div>
+                <div className="mb-4 flex gap-2 justify-between items-center">
+                  <h4 className="text-2xl text-fis-blue">More news</h4>
+                  <button
+                    className="text-fis-blue hover:text-fis-purple transition-all"
+                    onClick={() => {
+                      document.dispatchEvent(new CustomEvent("opensearch"));
+                    }}
+                  >
+                    <Search />
+                  </button>
+                </div>
                 <ul className="flex flex-col gap-4">
-                  {relatedPosts.map(({ title, url }) => (
-                    <li key={url}>
-                      <Link
-                        className="text-xl font-bold hover:text-fis-purple transition-all"
-                        href={url}
-                      >
-                        {title}
-                      </Link>
-                    </li>
-                  ))}
+                  {relatedPosts.map(
+                    ({ title, url }: { title: string; url: string }) => (
+                      <li key={url}>
+                        <Link
+                          className="text-xl font-bold hover:text-fis-purple transition-all"
+                          href={url}
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    )
+                  )}
+                  {moreRelatedPosts.map(
+                    ({ title, url }: { title: string; url: string }) => (
+                      <li key={url}>
+                        <Link
+                          className="text-xl font-bold hover:text-fis-purple transition-all"
+                          href={url}
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    )
+                  )}
                 </ul>
-                <Button variant="tertiary" href="#" className="mt-fis-1" IconButton={<Plus />}>
-                  See More
-                </Button>
+                {!moreRelatedPosts.length && (
+                  <Button
+                    variant="tertiary"
+                    onClick={handleLoadMore}
+                    className="mt-fis-1"
+                    IconButton={<Plus />}
+                    disabled={loadingMoreRelatedPosts}
+                  >
+                    {loadingMoreRelatedPosts ? "Loading" : "See More"}
+                  </Button>
+                )}
               </div>
             </aside>
           </div>

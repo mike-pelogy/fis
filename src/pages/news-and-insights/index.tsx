@@ -3,22 +3,46 @@ import FunBackground from "@/components/FunBackground";
 import { NavBar } from "@/components/NavBar";
 import PostCard from "@/components/PostCard";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
-import { aboutPageQuery } from "@/data/aboutPageQuery";
-import { Page_Aboutpage } from "@/gql/graphql";
 import Plus from "@/svgs/Plus";
-import request from "graphql-request";
 import { NextPageWithLayout } from "../_app";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import Search from "@/svgs/Search";
+import getGqlRequest from "@/data/getGqlRequest";
+import {
+  moreNewsInsightsQuery,
+  newsInsightsQuery,
+} from "@/data/newsInsightsPosts";
+import { Post } from "@/gql/graphql";
+
+interface PostWithCursor extends Post {
+  cursor?: string;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const normalizePosts = (data: any) => {
+  return data.posts.edges.map(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ({ node, cursor }: { node: any; cursor: string }) => ({
+      ...node,
+      cursor,
+    })
+  ) as PostWithCursor[];
+};
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, aboutPageQuery);
+  // TODO: get the categories
+  // get the id of the tips cat
+  const catId = 2;
+
+  const { data } = await getGqlRequest(newsInsightsQuery, {
+    categoryId: catId,
+  });
+  const posts = normalizePosts(data);
 
   return {
     props: {
-      data: data.page.aboutPage as Page_Aboutpage,
+      posts,
+      hasNextPage: !!data.posts.pageInfo.hasNextPage,
+      categoryId: catId,
     },
   };
 }
@@ -33,99 +57,92 @@ const navBar = [
   },
 ];
 
-interface IDummyPost {
-  categories?: { label: string; path: string }[];
-  img: string;
-  title: string;
-  date: string;
-  url: string;
-}
-
-export const dummyPosts: IDummyPost[] = [
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: "Jul 04, 23",
-  },
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [{ label: "Articles", path: "/" }],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [{ label: "Articles", path: "/" }],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [{ label: "Articles", path: "/" }],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: new Date().getDate().toString(),
-  },
-];
-
 // TODO: create pagination
-export const Cat = ({ cat, posts }: { cat?: string; posts?: IDummyPost[] }) => {
-  console.log(cat);
-  const page = 1;
+export const Cat = ({
+  catId,
+  posts,
+  hasNextPage,
+}: {
+  catId: number;
+  posts?: PostWithCursor[];
+  hasNextPage: boolean;
+}) => {
+  const [additionalPosts, setAdditionalPosts] = useState<PostWithCursor[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canLoadMore, setCanLoadMore] = useState(hasNextPage);
+
+  const handleOnClick = async () => {
+    setIsLoading(true);
+
+    const arr = additionalPosts.length ? additionalPosts : posts;
+
+    if (arr) {
+      const { data } = await getGqlRequest(moreNewsInsightsQuery, {
+        after: arr[arr.length - 1].cursor,
+        categoryId: catId,
+      }).finally(() => {
+        setIsLoading(false);
+      });
+      setAdditionalPosts((prev) => [...prev, ...normalizePosts(data)]);
+      setCanLoadMore(!!data.posts.pageInfo.hasNextPage);
+    } else {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
-      {page === 1 ? (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 items-start">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {dummyPosts.slice(0, 2).map((post) => {
-                return <PostCard key={post.url} post={post} showImage />;
-              })}
-            </div>
+      <div className="flex flex-col gap-8">
+        {!!posts?.length && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            {posts.slice(0, 1).map((post) => {
+              return <PostCard key={post.slug} post={post} showImage />;
+            })}
+            {posts.slice(1, 2).map((post) => {
+              return <PostCard key={post.slug} post={post} showImage />;
+            })}
             <div className="grid md:grid-rows-3 gap-8">
-              {dummyPosts.slice(2).map((post) => {
-                return <PostCard key={post.url} post={post} />;
+              {posts.slice(2).map((post) => {
+                return <PostCard key={post.slug} post={post} />;
               })}
             </div>
           </div>
-        </>
-      ) : (
-        <>
+        )}
+        {!!additionalPosts.length && (
           <div className="grid grid-rows-3 grid-cols-3 gap-8">
-            {posts?.map((post) => {
-              return <PostCard key={post.url} post={post} />;
+            {additionalPosts?.map((post) => {
+              return <PostCard key={post.slug} post={post} />;
             })}
           </div>
-        </>
-      )}
-      <div className="flex justify-center mt-fis-1 gap-4">
-        <Button variant="tertiary" href="#" IconButton={<Plus />}>
-          Load more
-        </Button>
+        )}
       </div>
+      {!!posts?.length && canLoadMore && (
+        <div className="flex justify-center mt-fis-1 gap-4">
+          <Button
+            variant="tertiary"
+            onClick={handleOnClick}
+            disabled={isLoading}
+            IconButton={<Plus />}
+          >
+            {isLoading ? "Loading more" : "Load more"}
+          </Button>
+        </div>
+      )}
+      {!posts?.length && (
+        <div className="my-fis-2">
+          <p>No posts found</p>
+        </div>
+      )}
     </>
   );
 };
 
-const NewsAndInsightsPage: NextPageWithLayout = () => {
-  return <Cat />;
+const NewsAndInsightsPage: NextPageWithLayout<{
+  posts: PostWithCursor[];
+  categoryId: number;
+  hasNextPage: boolean;
+}> = ({ posts, categoryId, hasNextPage }) => {
+  return <Cat catId={categoryId} posts={posts} hasNextPage={hasNextPage} />;
 };
 
 export const subLayout = (page: ReactElement) => {

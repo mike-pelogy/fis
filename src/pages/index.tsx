@@ -3,7 +3,6 @@ import ConnectWithUs from "@/components/ConnectWithUs";
 import FunBackground from "@/components/FunBackground";
 import PostCard from "@/components/PostCard";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
 import { homePageQuery } from "@/data/homePageQuery";
 import type {
   Page_Homepage,
@@ -13,17 +12,16 @@ import type {
   Page_Homepage_Services,
 } from "@/gql/graphql";
 import ArrowRight from "@/svgs/ArrowRight";
-import request from "graphql-request";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
 import { fancyBulletPoints } from "./about";
+import getGqlRequest from "@/data/getGqlRequest";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, homePageQuery);
+  const { data } = await getGqlRequest(homePageQuery);
 
   return {
     props: {

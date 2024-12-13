@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import ETF from "@/components/ETF";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
+import getGqlRequest from "@/data/getGqlRequest";
 import { kocgPageQuery } from "@/data/kocgPageQuery";
 import {
   Page_Kocg,
@@ -12,12 +12,10 @@ import {
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
-import request from "graphql-request";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, kocgPageQuery);
+  const { data } = await getGqlRequest(kocgPageQuery);
 
   return {
     props: {

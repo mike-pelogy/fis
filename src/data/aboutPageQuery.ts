@@ -5,16 +5,16 @@ query Aboutpage {
 page(idType: DATABASE_ID, id: "52") {
   aboutPage {
       valuesCopy {
-        description
         title
+        description
       }
       values {
-        description
         title
+        description
       }
       mission {
-        description
         title
+        description
       }
     }
   }

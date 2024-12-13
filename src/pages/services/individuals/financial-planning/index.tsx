@@ -2,16 +2,14 @@ import ConnectWithUs from "@/components/ConnectWithUs";
 import FunBackground from "@/components/FunBackground";
 import { NavBar } from "@/components/NavBar";
 import WhiteContainer from "@/components/WhiteContainer";
-import { API } from "@/constants";
+import getGqlRequest from "@/data/getGqlRequest";
 import { kocgPageQuery } from "@/data/kocgPageQuery";
 import { NextPageWithLayout } from "@/pages/_app";
 import classNames from "classnames";
-import request from "graphql-request";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, kocgPageQuery);
+  const { data } = await getGqlRequest(kocgPageQuery);
 
   return {
     props: {

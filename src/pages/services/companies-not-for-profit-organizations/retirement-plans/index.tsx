@@ -1,16 +1,14 @@
 import FunBackground from "@/components/FunBackground";
 import { NavBar } from "@/components/NavBar";
-import { API } from "@/constants";
 import { kocgPageQuery } from "@/data/kocgPageQuery";
 import { NextPageWithLayout } from "@/pages/_app";
-import request from "graphql-request";
 import { ReactElement } from "react";
 import { Nav } from "../../individuals/financial-planning";
 import { SubscribeSection } from "@/pages/contact";
+import getGqlRequest from "@/data/getGqlRequest";
 
 export async function getStaticProps() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = await request(API, kocgPageQuery);
+  const { data } = await getGqlRequest(kocgPageQuery);
 
   return {
     props: {

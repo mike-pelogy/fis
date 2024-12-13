@@ -6,7 +6,7 @@ type ITextFieldProps = Omit<IFieldProps, "children">;
 export default function FileField({ label, name }: ITextFieldProps) {
   return (
     <Field label={label} name={name}>
-      <input name="file" type="file" />
+      <input name="file" type="file" required />
     </Field>
   );
 }

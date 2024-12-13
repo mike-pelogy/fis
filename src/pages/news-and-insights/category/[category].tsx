@@ -1,10 +1,8 @@
-import type {
-  InferGetStaticPropsType,
-  GetStaticProps,
-  GetStaticPaths,
-} from "next";
+import type { InferGetStaticPropsType, GetStaticPaths } from "next";
 import { NextPageWithLayout } from "../../_app";
-import { Cat, dummyPosts, subLayout } from "..";
+import { Cat, normalizePosts, subLayout } from "..";
+import getGqlRequest from "@/data/getGqlRequest";
+import { catIdQuery, newsInsightsQuery } from "@/data/newsInsightsPosts";
 
 interface IParams {
   params: {
@@ -13,7 +11,7 @@ interface IParams {
 }
 
 export const getStaticPaths = (async () => {
-  // TODO: get all the posts from wordpress
+  // TODO: get all the categories from wordpress
   const posts: IParams[] = [
     { uri: "tips" },
     { uri: "articles" },
@@ -29,7 +27,8 @@ export const getStaticPaths = (async () => {
   };
 }) satisfies GetStaticPaths;
 
-export const getStaticProps = (async ({ params }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getStaticProps = async ({ params }: { params: any }) => {
   const { category } = params || {};
 
   if (!category) {
@@ -38,27 +37,35 @@ export const getStaticProps = (async ({ params }) => {
     };
   }
 
+  const slug = "research";
+  const { data: catData } = await getGqlRequest(catIdQuery, {
+    slug,
+  });
+  const id = catData.categories.edges.map(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ({ node }: { node: any }) => node.databaseId
+  )[0];
+
+  const { data } = await getGqlRequest(newsInsightsQuery, {
+    categoryId: id,
+  });
+  const posts = normalizePosts(data);
+
   return {
     props: {
-      title: "this is the title",
-      posts: [
-        { title: "test title 1", url: "#" },
-        { title: "test title 2", url: "#" },
-        { title: "test title 3", url: "#" },
-      ],
+      posts,
+      hasNextPage: !!data.posts.pageInfo.hasNextPage,
+      categoryId: id,
+      slug,
     },
   };
-}) satisfies GetStaticProps<{
-  title: string;
-  posts?: { title: string; url: string }[];
-}>;
+};
 
 const CategoryPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ title, posts }) => {
-  console.log(posts);
+> = ({ slug, posts, categoryId, hasNextPage }) => {
   const getSectionHeader = () => {
-    if (title === "faith-retirement") {
+    if (slug === "faith-retirement") {
       return (
         <div className="mb-4">
           <div className="bg-slate-500 w-[100px] aspect-video rounded" />
@@ -71,7 +78,7 @@ const CategoryPage: NextPageWithLayout<
   return (
     <>
       {getSectionHeader()}
-      <Cat posts={dummyPosts} />
+      <Cat posts={posts} catId={categoryId} hasNextPage={hasNextPage} />
     </>
   );
 };
