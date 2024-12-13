@@ -3,13 +3,14 @@ import ConnectWithUs from "@/components/ConnectWithUs";
 import FunBackground from "@/components/FunBackground";
 import PostCard from "@/components/PostCard";
 import WhiteContainer from "@/components/WhiteContainer";
-import { homePageQuery } from "@/data/homePageQuery";
+import { homePagePostsQuery, homePageQuery } from "@/data/homePageQuery";
 import type {
   Page_Homepage,
   Page_Homepage_AboutSection,
   Page_Homepage_Landing,
   Page_Homepage_LatestNewAndInsights,
   Page_Homepage_Services,
+  Post,
 } from "@/gql/graphql";
 import ArrowRight from "@/svgs/ArrowRight";
 import Image from "next/image";
@@ -19,13 +20,17 @@ import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
 import { fancyBulletPoints } from "./about";
 import getGqlRequest from "@/data/getGqlRequest";
+import { normalizePosts } from "./news-and-insights";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(homePageQuery);
+const {data: postsData} = await getGqlRequest(homePagePostsQuery)
+  const posts = normalizePosts(postsData);
 
   return {
     props: {
       data: data.page.homepage as Page_Homepage,
+      posts,
     },
   };
 }
@@ -196,51 +201,6 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
   );
 };
 
-export const dummyPosts: {
-  categories?: { label: string; path: string }[];
-  img: string;
-  title: string;
-  date: string;
-  url: string;
-}[] = [
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title:
-      "Whether you come to us with an existing portfolio, low-basis/concentrated positions, or with cash proceeds from a business sale or inheritance.",
-    date: "Jul 04, 23",
-  },
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title: "title",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title: "title",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [],
-    img: "image",
-    url: "/",
-    title: "title",
-    date: new Date().getDate().toString(),
-  },
-  {
-    categories: [{ label: "Articles", path: "/" }],
-    img: "image",
-    url: "/",
-    title: "title",
-    date: new Date().getDate().toString(),
-  },
-];
-
 function useMediaQuery() {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -262,8 +222,10 @@ function useMediaQuery() {
 
 const LatestNewAndHighlights = ({
   latestNewAndInsights,
+  posts,
 }: {
   latestNewAndInsights: Page_Homepage_LatestNewAndInsights;
+  posts: Post[],
 }) => {
   const isDesktop = useMediaQuery();
 
@@ -299,9 +261,9 @@ const LatestNewAndHighlights = ({
           <hr className="mt-4 mb-6" />
           <div className="w-full relative">
             <Slider {...finalSettings}>
-              {dummyPosts.map((post) => {
+              {posts.map((post) => {
                 return (
-                  <div key={post.url} className="px-4">
+                  <div key={post.slug} className="px-4">
                     <PostCard post={post} showButton showImage />
                   </div>
                 );
@@ -314,7 +276,7 @@ const LatestNewAndHighlights = ({
   );
 };
 
-export default function HomePage({ data }: { data: Page_Homepage }) {
+export default function HomePage({ data, posts }: { data: Page_Homepage; posts: Post[] }) {
   return (
     <>
       {data.landing && data.aboutSection && (
@@ -326,6 +288,7 @@ export default function HomePage({ data }: { data: Page_Homepage }) {
       {data.services && <Services services={data.services} />}
       {data.latestNewAndInsights && (
         <LatestNewAndHighlights
+        posts={posts}
           latestNewAndInsights={data.latestNewAndInsights}
         />
       )}

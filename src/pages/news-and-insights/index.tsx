@@ -17,15 +17,12 @@ import { Post } from "@/gql/graphql";
 interface PostWithCursor extends Post {
   cursor?: string;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export const normalizePosts = (data: any) => {
-  return data.posts.edges.map(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ({ node, cursor }: { node: any; cursor: string }) => ({
-      ...node,
-      cursor,
-    })
-  ) as PostWithCursor[];
+  return data.posts.edges.map(({ node, cursor }) => ({
+    ...node,
+    cursor: cursor || null,
+  })) as PostWithCursor[];
 };
 
 export async function getStaticProps() {
@@ -93,28 +90,28 @@ export const Cat = ({
   return (
     <>
       <div className="flex flex-col gap-8">
-        {!!posts?.length && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+      {!!posts?.length && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             {posts.slice(0, 1).map((post) => {
               return <PostCard key={post.slug} post={post} showImage />;
             })}
             {posts.slice(1, 2).map((post) => {
               return <PostCard key={post.slug} post={post} showImage />;
             })}
-            <div className="grid md:grid-rows-3 gap-8">
-              {posts.slice(2).map((post) => {
-                return <PostCard key={post.slug} post={post} />;
-              })}
-            </div>
-          </div>
-        )}
-        {!!additionalPosts.length && (
-          <div className="grid grid-rows-3 grid-cols-3 gap-8">
-            {additionalPosts?.map((post) => {
+          <div className="grid md:grid-rows-3 gap-8">
+            {posts.slice(2).map((post) => {
               return <PostCard key={post.slug} post={post} />;
             })}
           </div>
-        )}
+        </div>
+      )}
+      {!!additionalPosts.length && (
+        <div className="grid grid-rows-3 grid-cols-3 gap-8">
+          {additionalPosts?.map((post) => {
+            return <PostCard key={post.slug} post={post} />;
+          })}
+        </div>
+      )}
       </div>
       {!!posts?.length && canLoadMore && (
         <div className="flex justify-center mt-fis-1 gap-4">
@@ -188,3 +185,5 @@ export const subLayout = (page: ReactElement) => {
 NewsAndInsightsPage.getSubLayout = subLayout;
 
 export default NewsAndInsightsPage;
+
+

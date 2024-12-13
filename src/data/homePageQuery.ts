@@ -1,5 +1,34 @@
 import gql from "graphql-tag";
 
+export const homePagePostsQuery = gql(`
+query relatedPostQuery($first: Int = 5) {
+  posts(first: $first) {
+    edges {
+      node {
+        title
+        slug
+        date
+        categories {
+          edges {
+            node {
+              slug
+              name
+            }
+          }
+        }
+        featuredImage {
+          node {
+            altText
+            title
+            mediaItemUrl
+          }
+        }
+      }
+    }
+  }
+}
+`);
+
 export const homePageQuery = gql(`
 query Homepage {
 page(idType: DATABASE_ID, id: "6") {
