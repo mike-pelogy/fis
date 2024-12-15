@@ -234,10 +234,10 @@ export default function Header() {
     <>
       <header className="flex justify-center h-[80px] lg:h-[100px] p-4 sticky top-0 left-0 bg-white relative z-[1000]">
         <div className="container w-full flex items-center justify-between">
-          <Link href="/" className="h-full">
+          <Link href="/" className="h-full flex justify-center items-center">
             <Logo
-              dimensions={{ width: 237, height: 57 }}
-              className="h-full w-auto"
+              dimensions={{ width: 200, height: 57 }}
+              className="h-auto w-full max-w-[200px]"
             />
           </Link>
           <div></div>

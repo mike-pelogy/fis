@@ -17,6 +17,15 @@ import WhiteContainer from "./WhiteContainer";
 import { NavBar } from "./NavBar";
 import ArrowRight from "@/svgs/ArrowRight";
 import Pdf from "@/svgs/Pdf";
+// @ts-expect-error file import
+import dailyNav from "../../public/FaithInvSvrs.40KF.KF_DailyNAV.csv";
+// @ts-expect-error file import
+import monthlyPerf from "../../public/FaithInvSvrs.40KF.KF_MonthlyPerformance.csv";
+// @ts-expect-error file import
+import quarterlyPerf from "../../public/FaithInvSvrs.40KF.KF_QuarterlyPerformance.csv";
+// @ts-expect-error file import
+import topHoldings from "../../public/FaithInvSvrs.40KF.TOP10_Holdings.csv";
+import { getPerfList } from "@/utils/performanceData";
 
 type SectionTypes =
   | "Overview"
@@ -40,25 +49,97 @@ const navBar: INavBar[] = [
   { title: "Documents" },
 ];
 
+const dataBinding = [
+  {
+    FundInception: "7/14/2021",
+    ISIN: "US78433H1059",
+    Gross: "0.75%",
+    PrimaryExchange: "NYSE Arca",
+    Index: "MSCI ACWI Index",
+    DistributionFrequency: "Annually",
+  },
+];
+
+const getDailyData = (data: any) => {
+  const {
+    "Rate Date": rateDate,
+    "Fund Ticker": fundTicker,
+    CUSIP,
+    "Net Assets": netAssets,
+    "Shares Outstanding": shares,
+    "Market Price": marketPrice,
+    "Market Price Change Dollars": marketPriceChangeDollars,
+    "Market Price Change Percentage": marketPriceChangePercentage,
+    "Median 30 Day Spread Percentage": medium30DaySpreadPercentage,
+    NAV,
+    "NAV Change Dollars": NavChangeDollars,
+    "NAV Change Percentage": NavChangePercentage,
+    "Premium/Discount Percentage": PremiumDiscountPercentage,
+    "Shares Outstanding": SharesOutstanding,
+  } = data;
+
+  return {
+    rateDate,
+    fundTicker,
+    CUSIP,
+    netAssets,
+    shares,
+    marketPrice,
+    marketPriceChangeDollars,
+    marketPriceChangePercentage,
+    medium30DaySpreadPercentage,
+    NAV,
+    NavChangeDollars,
+    NavChangePercentage,
+    PremiumDiscountPercentage,
+    SharesOutstanding,
+  };
+};
+
+interface ITypeIndex {
+  /**
+   * 0 - KOCG
+   * 1 - PRAY
+   */
+  typeIndex: 0 | 1;
+}
+
 const Overview = ({
   overview,
   id,
-  daily,
-}: {
+  typeIndex = 0,
+}: //  daily,
+{
   overview: Page_Kocg_Overview;
   id: SectionTypes;
   daily: MediaItem;
-}) => {
-  const { data, error } = useFetch(daily.mediaItemUrl || "");
+} & ITypeIndex) => {
+  const data = dailyNav[typeIndex];
+  const d = dataBinding[typeIndex];
 
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
+  const {
+    FundInception,
+    ISIN,
+    Gross,
+    PrimaryExchange,
+    Index,
+    DistributionFrequency,
+  } = d;
 
-  // TODO: use data for dynamic table
-  console.log(data);
+  const { rateDate, fundTicker, CUSIP, netAssets, shares } = getDailyData(data);
+
+  const info = [
+    { title: "Fund Inception", value: FundInception },
+    { title: "Fund Ticker", value: fundTicker },
+    { title: "CUSIP", value: CUSIP },
+    { title: "ISIN", value: ISIN },
+    { title: "Gross Expense Ratio", value: Gross },
+    { title: "Net Assets", value: netAssets },
+    { title: "Shares Outstanding", value: shares },
+    { title: "Primary Exchange", value: PrimaryExchange },
+    { title: "Index", value: Index },
+    { title: "Distribution Frequency", value: DistributionFrequency },
+  ];
 
   return (
     <div className="flex justify-center pt-fis-1">
@@ -86,20 +167,9 @@ const Overview = ({
             <div className="rounded-lg bg-slate-50 p-8 flex flex-col gap-2">
               <div className="flex justify-between">
                 <p className="font-bold text-lg">Funding Details</p>
-                <p className="font-bold text-lg">As of DATE</p>
+                <p className="font-bold text-lg">As of {rateDate}</p>
               </div>
-              {[
-                { title: "Fund Inception", value: "7/14/2021" },
-                { title: "Fund Ticker", value: "KOCG" },
-                { title: "Fund Inception", value: "7/14/2021" },
-                { title: "Fund Ticker", value: "KOCG" },
-                { title: "Fund Inception", value: "7/14/2021" },
-                { title: "Fund Ticker", value: "KOCG" },
-                { title: "Fund Inception", value: "7/14/2021" },
-                { title: "Fund Ticker", value: "KOCG" },
-                { title: "Fund Inception", value: "7/14/2021" },
-                { title: "Fund Ticker", value: "KOCG" },
-              ].map(({ title, value }) => {
+              {info.map(({ title, value }) => {
                 return (
                   <div key={title} className="flex justify-between">
                     <p className="text-slate-500">{title}</p>
@@ -110,18 +180,21 @@ const Overview = ({
             </div>
             <div className="mt-8">
               <h4 className="font-bold text-lg mb-4">Fund Resources</h4>
+              <div className="flex flex-col gap-2 items-start">
               {overview?.fundResources?.map((f) => {
                 return (
                   <Button
                     key={f?.file?.mediaItemUrl as string}
                     href={f?.file?.mediaItemUrl as string}
                     variant="neutral"
+                    target="_blank"
                     IconButton={<Pdf />}
                   >
                     {f?.title}
                   </Button>
                 );
               })}
+            </div>
             </div>
           </div>
         </div>
@@ -160,10 +233,25 @@ const SimpleDataTable = ({
 const Pricing = ({
   pricing,
   id,
+  typeIndex = 0,
 }: {
   pricing: Page_Kocg_Pricing;
   id: SectionTypes;
-}) => {
+} & ITypeIndex) => {
+  const data = dailyNav[typeIndex];
+
+  const {
+    rateDate,
+    NAV,
+    NavChangePercentage,
+    NavChangeDollars,
+    marketPrice,
+    marketPriceChangePercentage,
+    marketPriceChangeDollars,
+    PremiumDiscountPercentage,
+    medium30DaySpreadPercentage,
+  } = getDailyData(data);
+
   return (
     <div className="flex justify-center w-full">
       <section
@@ -175,7 +263,7 @@ const Pricing = ({
             className="text-fis-blue text-2xl"
             dangerouslySetInnerHTML={{ __html: pricing.title as string }}
           />
-          <p className="ml-4 text-slate-600">data as of</p>
+          <p className="ml-4 text-slate-600">Data as of {rateDate}</p>
         </div>
         <div className="flex flex-col md:flex-row gap-4 md:gap-fis-1">
           <div className="w-full md:w-1/3">
@@ -183,8 +271,12 @@ const Pricing = ({
               className="rounded-lg bg-slate-100 p-8"
               title="Closing NAV Price"
               labelValues={[
-                { label: "Net Asset Value", value: "$27.45" },
-                { label: "Net Asset Value", value: "$27.45" },
+                { label: "Net Asset Value", value: `$${marketPrice}` },
+                { label: "Daily Change ($)", value: marketPriceChangeDollars },
+                {
+                  label: "Daily Change (%)",
+                  value: marketPriceChangePercentage,
+                },
               ]}
             />
           </div>
@@ -193,8 +285,9 @@ const Pricing = ({
               className="rounded-lg p-8"
               title="Closing Market Price"
               labelValues={[
-                { label: "Net Asset Value", value: "$27.45" },
-                { label: "Net Asset Value", value: "$27.45" },
+                { label: "Net Asset Value", value: `$${NAV}` },
+                { label: "Daily Change ($)", value: NavChangeDollars },
+                { label: "Daily Change (%)", value: NavChangePercentage },
               ]}
             />
           </div>
@@ -203,8 +296,14 @@ const Pricing = ({
               className="rounded-lg bg-slate-100 p-8 mb-8 w-full"
               title="Premium / Discount"
               labelValues={[
-                { label: "Net Asset Value", value: "$27.45" },
-                { label: "Net Asset Value", value: "$27.45" },
+                {
+                  label: "Premium Discount (%)",
+                  value: PremiumDiscountPercentage,
+                },
+                {
+                  label: "30-Day Median Bid-Ask Spread (%)",
+                  value: medium30DaySpreadPercentage,
+                },
               ]}
             />
             <Button
@@ -235,100 +334,32 @@ const Column = ({ value, className }: { value: any; className?: string }) => {
   );
 };
 
-const perfItems = [
-  {
-    name: "",
-    oneMo: "1 Mo",
-    threeMo: "3 Mo",
-    ytd: "YTD",
-    firstSinceInception: (
-      <div>
-        <span>Cumulative</span>
-        <div>Since Inception</div>
-      </div>
-    ),
-    oneY: "1 Yr",
-    threeY: "3 Yr",
-    fiveY: "5 Yr",
-    secondSinceInception: (
-      <div>
-        <span>Annualized</span>
-        <div>Since Inception</div>
-      </div>
-    ),
-  },
-  {
-    name: "Nav Performance",
-    oneMo: "3.47%",
-    threeMo: "9.08%",
-    ytd: "12.78%",
-    firstSinceInception: "17.68%",
-    oneY: "3.47%",
-    threeY: "",
-    fiveY: "",
-    secondSinceInception: "6.79%",
-  },
-  {
-    name: "Nav Performance",
-    oneMo: "3.47%",
-    threeMo: "9.08%",
-    ytd: "12.78%",
-    firstSinceInception: "17.68%",
-    oneY: "3.47%",
-    threeY: "",
-    fiveY: "",
-    secondSinceInception: "6.79%",
-  },
-  {
-    name: "Nav Performance",
-    oneMo: "3.47%",
-    threeMo: "9.08%",
-    ytd: "12.78%",
-    firstSinceInception: "17.68%",
-    oneY: "3.47%",
-    threeY: "",
-    fiveY: "",
-    secondSinceInception: "6.79%",
-  },
+const perfNav = [
+  { title: "Monthly Performance" },
+  { title: "Quarterly Performance" },
 ];
 
 const Performance = ({
   performance,
   id,
-  monthly,
-  quarterly,
+  typeIndex = 0,
 }: {
   performance: Page_Kocg_Performance;
   id: SectionTypes;
   monthly: MediaItem;
   quarterly: MediaItem;
-}) => {
-  const { data: monthlyData, error: monthlyError } = useFetch(
-    monthly.mediaItemUrl || ""
-  );
-  const { data: quarterlyData, error: quarterlyError } = useFetch(
-    quarterly.mediaItemUrl || ""
-  );
+} & ITypeIndex) => {
+  const { rateDate } = getDailyData(dailyNav);
 
-  useEffect(() => {
-    if (monthlyData) {
-      console.error(monthlyError);
-    }
-    if (quarterlyError) {
-      console.error(quarterlyError);
-    }
-  }, [monthlyError, quarterlyError]);
+  const [active, setActive] = useState(perfNav[0].title);
 
-  // TODO: use data for dynamic table
-  console.log(monthlyData, quarterlyData);
+  const monthlyList = getPerfList(typeIndex, monthlyPerf);
+  const quarterlyList = getPerfList(typeIndex, quarterlyPerf);
 
-  const nav = [
-    { title: "Monthly Performance" },
-    { title: "Quarterly Performance" },
-  ];
-
-  const [active, setActive] = useState(nav[0].title);
-  // TODO: sync up active tab with correct data
+  const toShow = {
+    [perfNav[0].title]: monthlyList,
+    [perfNav[1].title]: quarterlyList,
+  };
 
   return (
     <div className="flex justify-center w-full">
@@ -338,15 +369,15 @@ const Performance = ({
       >
         <NavBar
           className="[&>ul>li>a]:text-2xl [&>ul>li>a]:whitespace-nowrap px-0 pt-0"
-          navBar={nav}
+          navBar={perfNav}
           active={active}
           handleOnClick={(v) => setActive(v)}
         />
         <div>
-          <p className="text-slate-600 mb-4">data as of</p>
+          <p className="text-slate-600 mb-4">Data as of {rateDate}</p>
           <div className="mb-fis-2 overflow-x-auto">
             <div className="flex flex-col gap-4 w-full min-w-[900px]">
-              {perfItems.map((item, i) => {
+              {toShow[active].map((item, i) => {
                 const headerClass = i === 0 ? "!text-black" : "";
                 return (
                   <div
@@ -436,13 +467,36 @@ const Performance = ({
   );
 };
 
+const DistributionsMap = [
+  {
+    "30 Day SEC Yield": "1.56%",
+    "Ex-Div Date": ["12/29/2021", "12/29/2022"],
+    "Record Date": ["12/30/2021", "12/30/2022"],
+    "Payable Date": ["01/03/2022", "01/03/2023"],
+    "Amount ($)": ["$0.07221", "$0.39647"],
+  },
+  {
+    "30 Day SEC Yield": "1.56%",
+    "Ex-Div Date": ["12/29/2021", "12/29/2022"],
+    "Record Date": ["12/30/2021", "12/30/2022"],
+    "Payable Date": ["01/03/2022", "01/03/2023"],
+    "Amount ($)": ["$0.07221", "$0.39647"],
+  },
+];
+
 const Distributions = ({
   distributions,
   id,
+  typeIndex,
 }: {
   distributions: string;
   id: SectionTypes;
-}) => {
+} & ITypeIndex) => {
+  const data = DistributionsMap[typeIndex];
+
+  const d = dailyNav[typeIndex];
+  const { rateDate } = getDailyData(d);
+
   return (
     <div className="flex justify-center w-full bg-slate-100">
       <section
@@ -454,25 +508,32 @@ const Distributions = ({
           <div className="w-full md:w-1/3">
             <div className="w-full max-w-[320px]">
               <SimpleDataTable
-                title="As of DATE"
-                labelValues={[{ label: "30 Day SEC Yeild", value: "1.56%" }]}
+                title={`As of ${rateDate}`}
+                labelValues={[
+                  {
+                    label: "30 Day SEC Yeild",
+                    value: data["30 Day SEC Yield"],
+                  },
+                ]}
               />
             </div>
           </div>
           <div className="w-full md:w-2/3 mt-fis-1 md:mt-0">
             <div className="bg-white rounded-lg p-8">
-              <p className="font-bold text-lg mb-4">As of DATE</p>
+              <p className="font-bold text-lg mb-4">As of {rateDate}</p>
               <div className="flex flex-col md:flex-row gap-4 md:gap-fis-1 justify-between">
                 {[
-                  { title: "Ex-Div Date", value: "12/29/2022" },
-                  { title: "Record Date", value: "12/29/2022" },
-                  { title: "Payable Date", value: "12/29/2022" },
-                  { title: "Amount ($)", value: "12/29/2022" },
-                ].map(({ title, value }) => (
+                  { title: "Ex-Div Date", values: data["Ex-Div Date"] },
+                  { title: "Record Date", values: data["Record Date"] },
+                  { title: "Payable Date", values: data["Payable Date"] },
+                  { title: "Amount ($)", values: data["Amount ($)"] },
+                ].map(({ title, values }) => (
                   <SimpleDataTable
                     key={title}
                     title={title}
-                    labelValues={[{ label: "", value }]}
+                    labelValues={values.map((v) => {
+                      return { label: "", value: v };
+                    })}
                   />
                 ))}
               </div>
@@ -487,41 +548,38 @@ const Distributions = ({
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
+const filterMap = ["KOCG", "PRAY"];
+
+const getTopHoldingsData = (indexFilter: number) => {
+  return topHoldings
+    .filter(
+      ({ Account }: Record<string, string>) =>
+        Account === filterMap[indexFilter]
+    )
+    .map(({ NAME, IDENTIFIER, Weightings }: Record<string, string>) => {
+      return {
+        name: NAME,
+        ticker: IDENTIFIER,
+        weight: Weightings,
+      };
+    });
+};
+
 const Holdings = ({
   holdings,
   id,
-  top10,
+  typeIndex = 0,
 }: {
   holdings: Page_Kocg_Holdings;
   id: SectionTypes;
-  top10: MediaItem;
-}) => {
-  const { data, error } = useFetch(top10.mediaItemUrl || "");
-
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
-
-  // TODO: use data for dynamic table
-  console.log(data);
-
+} & ITypeIndex) => {
   const items = [
     { name: "", ticker: "Ticker", weight: "Weighting (%)" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
-    { name: "Microsoft Corp", ticker: "MSFT", weight: "4.88%" },
-    { name: "Nvidia Corp", ticker: "NVDA", weight: "4.65%" },
+    ...getTopHoldingsData(typeIndex),
   ];
+
+  const data = dailyNav[typeIndex];
+  const { rateDate } = getDailyData(data);
 
   return (
     <div className="flex justify-center w-full">
@@ -538,7 +596,7 @@ const Holdings = ({
               className="text-fis-blue text-2xl"
               dangerouslySetInnerHTML={{ __html: holdings.title as string }}
             />
-            <p className="ml-4 text-slate-600">data as of</p>
+            <p className="ml-4 text-slate-600">Data as of {rateDate}</p>
           </div>
           <Button
             href={holdings.download?.url as string}
@@ -550,7 +608,7 @@ const Holdings = ({
         </div>
         <div className="flex flex-col gap-3">
           {items.map(({ name, ticker, weight }, i) => (
-            <div key={ticker} className="flex justify-between">
+            <div key={`${ticker}-${i}`} className="flex justify-between">
               <p className="w-1/2 md:w-1/3 text-slate-500">{name}</p>
               <p
                 className={classNames(
@@ -617,11 +675,13 @@ const Documents = ({
                 return (
                   <div key={title} className="w-full md:w-1/2">
                     <h3 className="font-bold text-xl mb-4">{title}</h3>
+                    <div className="flex flex-col gap-2 items-start">
                     {items?.map((f) => {
                       return (
                         <Button
                           key={f?.file?.mediaItemUrl as string}
                           href={f?.file?.mediaItemUrl as string}
+                          target="_blank"
                           variant="neutral"
                           IconButton={<Pdf />}
                         >
@@ -629,6 +689,7 @@ const Documents = ({
                         </Button>
                       );
                     })}
+                  </div>
                   </div>
                 );
               })}
@@ -648,6 +709,7 @@ export default function ETF({
   holdings,
   documents,
   dataReference,
+  typeIndex,
 }: {
   overview: Page_Kocg_Overview;
   pricing: Page_Kocg_Pricing;
@@ -656,34 +718,35 @@ export default function ETF({
   holdings: Page_Kocg_Holdings;
   documents: Page_Kocg_Documents;
   dataReference: Page_Kocg_DataReference;
-}) {
+} & ITypeIndex) {
   return (
     <>
       <NavBar navBar={navBar} />
-      {dataReference?.daily && (
+      {dataReference.dailyNav && (
         <Overview
+          typeIndex={typeIndex}
           overview={overview}
           id="Overview"
-          daily={dataReference.daily}
+          daily={dataReference?.dailyNav}
         />
       )}
-      <Pricing pricing={pricing} id="Pricing" />
-      {dataReference?.monthly && dataReference?.quarterly && (
-        <Performance
-          performance={performance}
-          id="Performance"
-          monthly={dataReference.monthly}
-          quarterly={dataReference.quarterly}
-        />
-      )}
-      <Distributions distributions={distributions} id="Distributions" />
-      {dataReference?.top10Holdings && (
-        <Holdings
-          holdings={holdings}
-          id="Holdings"
-          top10={dataReference.top10Holdings}
-        />
-      )}
+      <Pricing pricing={pricing} id="Pricing" typeIndex={typeIndex} />
+      {dataReference?.monthlyPerformance &&
+        dataReference?.quarterlyPerformance && (
+          <Performance
+            typeIndex={typeIndex}
+            performance={performance}
+            id="Performance"
+            monthly={dataReference.monthlyPerformance}
+            quarterly={dataReference.quarterlyPerformance}
+          />
+        )}
+      <Distributions
+        distributions={distributions}
+        id="Distributions"
+        typeIndex={typeIndex}
+      />
+      <Holdings holdings={holdings} id="Holdings" typeIndex={typeIndex} />
       <Documents documents={documents} id="Documents" />
     </>
   );

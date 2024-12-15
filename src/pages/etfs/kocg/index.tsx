@@ -35,7 +35,7 @@ const Landing = ({
   return (
     <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
       <section className="container flex flex-col px-4 md:px-0 md:flex-row items-center">
-        <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
+        <div className="w-full md:w-1/2 pr-0 md:pr-fis-4">
           <h1 className="text-3xl md:text-5xl mb-8">{title}</h1>
           <h3 className="text-fis-blue text-2xl">
             FIS Knights of Columbus Global Belief ETF
@@ -48,7 +48,7 @@ const Landing = ({
           <div className="flex justify-end mt-8">
             <Button
               variant="primary"
-              href={landing.cta?.url as string}
+              href={landing.cta?.url || ''}
               IconButton={<ArrowRight />}
             >
               {landing.cta?.title}
@@ -116,16 +116,16 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
     <div className="bg-slate-50 w-full pt-fis-2 flex justify-center">
       <section className="container flex flex-col px-4 md:px-0 md:flex-row justify-center">
         <div className="pb-fis-2 flex flex-col pr-0 md:pr-fis-2 max-w-[630px]">
-          <p
+          <div
             className="text-2xl text-fis-purple"
-            dangerouslySetInnerHTML={{ __html: quote.quote as string }}
+            dangerouslySetInnerHTML={{ __html: quote.quote || "" }}
           />
           <div className="flex items-center gap-8 mt-8">
             <div>
               <div className="w-[168px] h-[60px] bg-slate-500 rounded-lg" />
             </div>
             <div
-              dangerouslySetInnerHTML={{ __html: quote.description as string }}
+              dangerouslySetInnerHTML={{ __html: quote.description || "" }}
             />
           </div>
         </div>
@@ -156,6 +156,7 @@ const KocgPage: NextPageWithLayout<{
         data.documents &&
         data.dataReference && (
           <ETF
+            typeIndex={0}
             overview={data.overview}
             pricing={data.pricing}
             performance={data.performance}

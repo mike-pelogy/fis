@@ -1,19 +1,20 @@
 import FunBackground from "@/components/FunBackground";
 import { NavBar } from "@/components/NavBar";
-import { kocgPageQuery } from "@/data/kocgPageQuery";
 import { NextPageWithLayout } from "@/pages/_app";
 import { ReactElement } from "react";
 import { Nav } from "../../individuals/financial-planning";
 import { SubscribeSection } from "@/pages/contact";
 import getGqlRequest from "@/data/getGqlRequest";
+import { retirementPlansPageQuery } from "@/data/retirementPlansPageQuery";
+import { Page_Retirementplans } from "@/gql/graphql";
+import { fancyBulletPoints } from "@/pages/about";
 
 export async function getStaticProps() {
-  const { data } = await getGqlRequest(kocgPageQuery);
+  const { data } = await getGqlRequest(retirementPlansPageQuery);
 
   return {
     props: {
-      data: data.page.kocg,
-      title: data.page.title,
+      data: data.page.retirementPlans,
     },
   };
 }
@@ -21,7 +22,11 @@ export async function getStaticProps() {
 export const radialBg =
   "bg-[radial-gradient(at_top_center,rgba(var(--purple)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
-const FinancialPlanningPage: NextPageWithLayout = () => {
+const FinancialPlanningPage: NextPageWithLayout<{
+  data: Page_Retirementplans;
+}> = ({ data }) => {
+  const { introduction, servicesBenefits } = data;
+
   return (
     <>
       <div className="flex justify-center relative w-full pt-fis-2 pb-fis-2">
@@ -32,30 +37,24 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
           <div className="overflow-hidden relative rounded-lg before:content-[''] before:absolute before:w-full before:h-full before:bg-slate-100 before:opacity-95 before:rounded-lg before:left-0 before:right-0">
             <div className="flex flex-col md:flex-row px-4 md:px-fis-2 p-fis-2 relative">
               <div className="w-full md:w-1/2 pr-0 md:pr-fis-1">
-                <p>
-                  FIS believes a well-crafted financial plan expresses your most
-                  meaningful values and goals. Our process drives to your clear
-                  goals and helps focus your actions thus allowing you to
-                  proceed with confidence. Life is unpredictable. It is our goal
-                  for you to go forward with a sense of confidence. With Faith
-                  Investor Services, you have a team of professionals by your
-                  side to guide you through life’s challenges and uncover
-                  opportunities. We guide you in planning for life’s unexpected
-                  events:
-                </p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: introduction?.intro || "",
+                  }}
+                />
               </div>
               <div className="w-full md:w-1/2 pl-0 md:pl-fis-1 mt-fis-2 md:mt-0">
-                <p>
-                  FIS believes a well-crafted financial plan expresses your most
-                  meaningful values and goals. Our process drives to your clear
-                  goals and helps focus your actions thus allowing you to
-                  proceed with confidence. Life is unpredictable. It is our goal
-                  for you to go forward with a sense of confidence. With Faith
-                  Investor Services, you have a team of professionals by your
-                  side to guide you through life’s challenges and uncover
-                  opportunities. We guide you in planning for life’s unexpected
-                  events:
-                </p>
+                <div
+                  className="text-2xl font-bold text-fis-purple mb-2"
+                  dangerouslySetInnerHTML={{
+                    __html: introduction?.quote || "",
+                  }}
+                />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: introduction?.intro2 || "",
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -63,20 +62,38 @@ const FinancialPlanningPage: NextPageWithLayout = () => {
       </div>
       <section className="container px-4 md:px-fis-2 p-fis-2">
         <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mb-4">
-          <p>this is a test</p>
+          <div
+            className="text-lg mb-4"
+            dangerouslySetInnerHTML={{
+              __html: servicesBenefits?.title || "",
+            }}
+          />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: servicesBenefits?.description || "",
+            }}
+          />
         </div>
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
+            {servicesBenefits?.servicesAndBenefits?.map((sandb) => {
+              return (
+                <div key={sandb?.title}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: sandb?.title || "",
+                    }}
+                  />
+
+                  <div
+                    className={fancyBulletPoints}
+                    dangerouslySetInnerHTML={{
+                      __html: sandb?.description || "",
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
             <div className="bg-slate-500 rounded-lg w-full aspect-video" />

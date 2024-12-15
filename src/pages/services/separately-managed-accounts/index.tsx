@@ -1,4 +1,3 @@
-import { kocgPageQuery } from "@/data/kocgPageQuery";
 import { NextPageWithLayout } from "@/pages/_app";
 import { ReactElement } from "react";
 import { Nav } from "../individuals/financial-planning";
@@ -7,14 +6,16 @@ import FunBackground from "@/components/FunBackground";
 import TextField from "@/components/Forms/TextField";
 import Button from "@/components/Button";
 import getGqlRequest from "@/data/getGqlRequest";
+import { separatelyManageAccountsPageQuery } from "@/data/separatelyManageAccountsPageQuery";
+import { Page_Separatelymanagedaccountssma } from "@/gql/graphql";
+import { fancyBulletPoints } from "@/pages/about";
 
 export async function getStaticProps() {
-  const { data } = await getGqlRequest(kocgPageQuery);
+  const { data } = await getGqlRequest(separatelyManageAccountsPageQuery);
 
   return {
     props: {
-      data: data.page.kocg,
-      title: data.page.title,
+      data: data.page.separatelyManagedAccountsSma,
     },
   };
 }
@@ -68,22 +69,36 @@ const AccessFISForm = () => {
   );
 };
 
-const EndowmentsPage: NextPageWithLayout = () => {
+const EndowmentsPage: NextPageWithLayout<{
+  data: Page_Separatelymanagedaccountssma;
+}> = ({ data }) => {
+  const {
+    top5Reasons,
+    howToAccessFisForSmas,
+    dueDiligence,
+    dueDiligenceForFinancialAdvisors,
+  } = data;
+
   return (
     <>
       <section className="w-full pt-fis-1 pb-fis-2 flex justify-center bg-slate-100">
         <div className="container px-4 md:px-0 flex flex-col md:flex-row items-center">
           <div className="w-full md:w-1/2">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
+            <div
+              className="text-2xl text-fis-blue mb-4"
+              dangerouslySetInnerHTML={{ __html: top5Reasons?.title || "" }}
+            />
+            <div
+              className="mb-4"
+              dangerouslySetInnerHTML={{
+                __html: top5Reasons?.reasons || "",
+              }}
+            />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: top5Reasons?.reasonsCopy || "",
+              }}
+            />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
             <div className="w-full aspect-square bg-slate-500 rounded" />
@@ -96,66 +111,65 @@ const EndowmentsPage: NextPageWithLayout = () => {
             <div className="w-full aspect-square bg-slate-500 rounded" />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
+            <div
+              className="text-2xl text-fis-blue mb-4"
+              dangerouslySetInnerHTML={{ __html: dueDiligenceForFinancialAdvisors?.title || "" }}
+            />
+            <div
+              className={fancyBulletPoints}
+              dangerouslySetInnerHTML={{
+                __html: dueDiligenceForFinancialAdvisors?.description || "",
+              }}
+            />
           </div>
         </div>
       </section>
       <section className="w-full py-fis-2 flex justify-center bg-slate-100">
         <div className="container px-4 md:px-0 flex flex-col md:flex-row items-center">
           <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
+            <div
+              className="text-2xl text-fis-blue mb-4"
+              dangerouslySetInnerHTML={{ __html: dueDiligence?.title || "" }}
+            />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: dueDiligence?.description || "",
+              }}
+            />
+            <div
+              className="text-2xl text-fis-purple font-bold mt-4"
+              dangerouslySetInnerHTML={{
+                __html: dueDiligence?.quote || "",
+              }}
+            />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
-            <p>
-              FIS believes a well-crafted financial plan expresses your most
-              meaningful values and goals. Our process drives to your clear
-              goals and helps focus your actions thus allowing you to proceed
-              with confidence. Life is unpredictable. It is our goal for you to
-              go forward with a sense of confidence. With Faith Investor
-              Services, you have a team of professionals by your side to guide
-              you through life’s challenges and uncover opportunities. We guide
-              you in planning for life’s unexpected events:
-            </p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: dueDiligence?.descriptionMore || "",
+              }}
+            />
           </div>
         </div>
       </section>
-      <div className="flex justify-center relative w-full pt-fis-2 pb-fis-2">
-        <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[-1]">
+      <div className="flex justify-center relative w-full pt-fis-2 pb-fis-2 bg-slate-100">
+        <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[0]">
           <FunBackground />
         </div>
         <div className="container w-full">
           <WhiteContainer>
             <section className="flex container w-full flex-col md:flex-row px-0 md:px-fis-1">
               <div className="w-full md:w-1/2 pr-0 md:pr-fis-1">
-                <p>
-                  FIS believes a well-crafted financial plan expresses your most
-                  meaningful values and goals. Our process drives to your clear
-                  goals and helps focus your actions thus allowing you to
-                  proceed with confidence. Life is unpredictable. It is our goal
-                  for you to go forward with a sense of confidence. With Faith
-                  Investor Services, you have a team of professionals by your
-                  side to guide you through life’s challenges and uncover
-                  opportunities. We guide you in planning for life’s unexpected
-                  events:
-                </p>
+            <div
+              className="text-2xl text-fis-blue mb-4"
+              dangerouslySetInnerHTML={{ __html: howToAccessFisForSmas?.title || "" }}
+            />
+            <div
+              className={fancyBulletPoints}
+              dangerouslySetInnerHTML={{
+                __html: howToAccessFisForSmas?.description || "",
+              }}
+            />
               </div>
               <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
                 <div className="pl-0 md:pl-fis-1">

@@ -4376,12 +4376,11 @@ export type Page_Kocg = AcfFieldGroup & {
 /** Field Group */
 export type Page_Kocg_DataReference = AcfFieldGroup & {
   __typename?: 'Page_Kocg_DataReference';
-  daily?: Maybe<MediaItem>;
+  dailyNav?: Maybe<MediaItem>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  monthly?: Maybe<MediaItem>;
-  quarterly?: Maybe<MediaItem>;
-  top10Holdings?: Maybe<MediaItem>;
+  monthlyPerformance?: Maybe<MediaItem>;
+  quarterlyPerformance?: Maybe<MediaItem>;
 };
 
 /** Field Group */
@@ -4417,6 +4416,7 @@ export type Page_Kocg_Holdings = AcfFieldGroup & {
   download?: Maybe<AcfLink>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4507,12 +4507,11 @@ export type Page_Pray = AcfFieldGroup & {
 /** Field Group */
 export type Page_Pray_DataReference = AcfFieldGroup & {
   __typename?: 'Page_Pray_DataReference';
-  daily?: Maybe<MediaItem>;
+  dailyNav?: Maybe<MediaItem>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  monthly?: Maybe<MediaItem>;
-  quarterly?: Maybe<MediaItem>;
-  top10Holdings?: Maybe<MediaItem>;
+  monthlyPerformance?: Maybe<MediaItem>;
+  quarterlyPerformance?: Maybe<MediaItem>;
 };
 
 /** Field Group */
@@ -4520,16 +4519,7 @@ export type Page_Pray_Documents = AcfFieldGroup & {
   __typename?: 'Page_Pray_Documents';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  fundResources?: Maybe<Array<Maybe<Page_Pray_Documents_FundResources>>>;
   legal?: Maybe<Array<Maybe<Page_Pray_Documents_Legal>>>;
-};
-
-/** Field Group */
-export type Page_Pray_Documents_FundResources = AcfFieldGroup & {
-  __typename?: 'Page_Pray_Documents_fundResources';
-  /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<MediaItem>;
 };
 
 /** Field Group */
@@ -4537,7 +4527,6 @@ export type Page_Pray_Documents_Legal = AcfFieldGroup & {
   __typename?: 'Page_Pray_Documents_legal';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  file?: Maybe<MediaItem>;
 };
 
 /** Field Group */
@@ -4546,6 +4535,7 @@ export type Page_Pray_Holdings = AcfFieldGroup & {
   download?: Maybe<AcfLink>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4563,12 +4553,10 @@ export type Page_Pray_Landing = AcfFieldGroup & {
 /** Field Group */
 export type Page_Pray_Overview = AcfFieldGroup & {
   __typename?: 'Page_Pray_Overview';
-  description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   fundResources?: Maybe<Array<Maybe<Page_Pray_Overview_FundResources>>>;
   investmentObjectives?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4594,7 +4582,6 @@ export type Page_Pray_Pricing = AcfFieldGroup & {
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   premiumOrDiscountInfo?: Maybe<AcfLink>;
-  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4649,29 +4636,29 @@ export type Page_Separatelymanagedaccountssma = AcfFieldGroup & {
 /** Field Group */
 export type Page_Separatelymanagedaccountssma_DueDiligence = AcfFieldGroup & {
   __typename?: 'Page_Separatelymanagedaccountssma_DueDiligence';
+  description?: Maybe<Scalars['String']['output']>;
   descriptionMore?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   quote?: Maybe<Scalars['String']['output']>;
-  reasonsCopy?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type Page_Separatelymanagedaccountssma_DueDiligenceForFinancialAdvisors = AcfFieldGroup & {
   __typename?: 'Page_Separatelymanagedaccountssma_DueDiligenceForFinancialAdvisors';
+  description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  reasonsCopy?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type Page_Separatelymanagedaccountssma_HowToAccessFisForSmas = AcfFieldGroup & {
   __typename?: 'Page_Separatelymanagedaccountssma_HowToAccessFisForSmas';
+  description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  reasonsCopy?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4801,8 +4788,6 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
    * @deprecated This content type is not hierarchical and typically will not have ancestors
    */
   ancestors?: Maybe<PostToPostConnection>;
-  /** Added to the GraphQL Schema because the ACF Field Group &quot;asdf&quot; was set to Show in GraphQL. */
-  asdf?: Maybe<Post_Asdf>;
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
@@ -6152,13 +6137,6 @@ export type PostTypeLabelDetails = {
   viewItem?: Maybe<Scalars['String']['output']>;
   /** Label for viewing post type archives. */
   viewItems?: Maybe<Scalars['String']['output']>;
-};
-
-/** Field Group */
-export type Post_Asdf = AcfFieldGroup & {
-  __typename?: 'Post_Asdf';
-  /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Nodes that can be seen in a preview (unpublished) state. */

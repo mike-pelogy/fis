@@ -15,6 +15,7 @@ export interface IButtonProps extends PropsWithChildren {
   LeadingIconButton?: ReactElement;
   IconButton?: ReactElement;
   disabled?: boolean;
+  target?: string;
 }
 
 const baseClass =
@@ -76,6 +77,7 @@ export default function Button({
   IconButton,
 LeadingIconButton,
 disabled,
+  target,
 }: IButtonProps) {
   const variantClassNames = getVariantClassNames(variant);
   const sizeClassNames = getSizeClassName(size);
@@ -89,7 +91,7 @@ disabled,
 
   if (href) {
     return (
-      <Link href={href} className={finalClassNames}>
+      <Link href={href} className={finalClassNames} target={target}>
         <div className="flex items-center">
           {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
           <span>

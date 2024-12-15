@@ -5,16 +5,13 @@ query KocgPage {
 page(idType: DATABASE_ID, id: "63") {
   kocg {
       dataReference {
-        daily {
+        dailyNav {
           mediaItemUrl
         }
-        monthly {
+        monthlyPerformance {
           mediaItemUrl
         }
-        quarterly {
-          mediaItemUrl
-        }
-        top10Holdings {
+        quarterlyPerformance {
           mediaItemUrl
         }
       }
@@ -88,6 +85,9 @@ page(idType: DATABASE_ID, id: "63") {
         download {
           url
           title
+        }
+        file {
+          mediaItemUrl
         }
       }
       distributions
