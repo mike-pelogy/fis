@@ -28,6 +28,7 @@ const CareerForm = () => {
       data-netlify="true"
       className="flex flex-col gap-4"
     >
+      <input type="hidden" name="form-name" value="career" />
       <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="firstName" label="First Name:" />

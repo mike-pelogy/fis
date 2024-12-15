@@ -51,6 +51,7 @@ const ContactForm = () => {
       data-netlify="true"
       className="flex flex-col gap-4"
     >
+      <input type="hidden" name="form-name" value="contactForm" />
       <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="firstName" label="First Name:" />
@@ -109,6 +110,7 @@ export const SubscribeSection = () => {
             Investor Services.
           </p>
           <form onSubmit={handleSubmit} name="subscribe" data-netlify="true">
+            <input type="hidden" name="form-name" value="subscribe" />
             <div className="flex flex-wrap md:flex-nowrap gap-4">
               <div className="w-full md:w-1/2">
                 <TextField name="name" label="Name:" />
