@@ -32,6 +32,7 @@ const AccessFISForm = () => {
       data-netlify
       className="flex flex-col gap-4"
     >
+      <input type="hidden" name="form-name" value="separatelyManagedAccounts" />
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:w-1/2">
           <TextField name="firstName" label="First Name:" />
