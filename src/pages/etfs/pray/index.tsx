@@ -3,6 +3,7 @@ import ETF from "@/components/ETF";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
+    Page_Kocg_DataReference,
   Page_Kocg_Documents,
   Page_Kocg_Holdings,
   Page_Kocg_Overview,
@@ -36,7 +37,7 @@ const Landing = ({
   return (
     <div className="bg-slate-50 w-full py-fis-2 flex justify-center px-4 md:px-0">
       <section className="container flex flex-col md:flex-row items-center">
-        <div className="w-full md:w-1/2 md:pr-fis-2 pr-0">
+        <div className="w-full md:w-1/2 md:pr-fis-4 pr-0">
           <h1 className="text-3xl md:text-5xl mb-8">{title}</h1>
           <h3 className="text-fis-blue text-2xl">FIS Christian Stock Fund</h3>
           <hr className="mt-4 mb-6" />
@@ -63,7 +64,6 @@ const PrayPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
 }> = ({ data, title }) => {
-  console.log(data);
   return (
     <>
       {data.landing && title && (
@@ -76,13 +76,14 @@ const PrayPage: NextPageWithLayout<{
         data.distributionsCopy &&
         data.documents && (
           <ETF
+            typeIndex={1}
             overview={data.overview as Page_Kocg_Overview}
             pricing={data.pricing as Page_Kocg_Pricing}
             performance={data.performance as Page_Kocg_Performance}
             distributions={data.distributions}
             holdings={data.distributionsCopy as Page_Kocg_Holdings}
             documents={data.documents as Page_Kocg_Documents}
-            dataReference={{}}
+            dataReference={data.dataReference as Page_Kocg_DataReference}
           />
         )}
     </>

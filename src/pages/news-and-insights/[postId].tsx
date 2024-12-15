@@ -2,7 +2,11 @@ import Button from "@/components/Button";
 import Facebook from "@/svgs/Facebook";
 import Linkedin from "@/svgs/Linkedin";
 import Twitter from "@/svgs/Twitter";
-import type { InferGetStaticPropsType, GetStaticPaths } from "next";
+import type {
+  InferGetStaticPropsType,
+  GetStaticPaths,
+  GetStaticProps,
+} from "next";
 import Link from "next/link";
 import { SubscribeSection } from "../contact";
 import Plus from "@/svgs/Plus";
@@ -32,7 +36,8 @@ interface IAuthorProps {
 export const getStaticPaths = (async () => {
   const { data } = await getGqlRequest(postsQuery);
 
-  const posts = data.posts.edges.map(({ node }) => {
+  // eslint-disable-next-line
+  const posts = data.posts.edges.map(({ node }: { node: any }) => {
     return {
       slug: node.slug,
     };
@@ -46,8 +51,10 @@ export const getStaticPaths = (async () => {
   };
 }) satisfies GetStaticPaths;
 
+// eslint-disable-next-line
 const normalizeRelatedPosts = (data: any) => {
-  return data.posts.edges.map((e) => {
+  // eslint-disable-next-line
+  return data.posts.edges.map((e: any) => {
     const node = e.node as Post;
 
     const { title, slug } = node;
@@ -60,7 +67,10 @@ const normalizeRelatedPosts = (data: any) => {
   });
 };
 
-export const getStaticProps = async ({ params }) => {
+// eslint-disable-next-line
+export const getStaticProps: GetStaticProps<any, { postId?: string }> = async ({
+  params,
+}) => {
   const { postId } = params || {};
 
   if (!postId) {
@@ -144,7 +154,7 @@ const aClass = "text-fis-purple hover:text-fis-blue transition-all";
 
 const createPostShareUrl = (url: string) => {
   return `${BASE_URL}/news-and-insights/${url}`;
-}
+};
 
 const Share = ({ url: propsUrl }: { url: string }) => {
   const url = createPostShareUrl(propsUrl);

@@ -62,8 +62,14 @@ query PrayPage {
       }
       distributions
       dataReference {
-        quarterly {
-          id
+        dailyNav {
+          mediaItemUrl
+        }
+        monthlyPerformance {
+          mediaItemUrl
+        }
+        quarterlyPerformance {
+          mediaItemUrl
         }
       }
     }

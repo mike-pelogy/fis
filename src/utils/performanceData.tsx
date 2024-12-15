@@ -2,8 +2,10 @@ import React from "react";
 
 const fundTickerMap = [
   { nav: "KOCG NAV", market: "KOCG MKT", mwi: "NDUEACWF" },
+  { nav: "PRAY NAV", market: "PRAY MKT", mwi: "NDDUWI" },
 ];
 
+// eslint-disable-next-line
 const getPerfData = (data: any) => {
   const {
     "1 Month": oneMonth,
@@ -13,7 +15,6 @@ const getPerfData = (data: any) => {
     "5 Year": fiveYear,
     "6 Month": sixMonth,
     YTD,
-    Date,
     "Fund Name": fundName,
     "Fund Ticker": fundTicker,
     "Since Inception Annualized": sinceInceptionAnnualized,
@@ -28,7 +29,6 @@ const getPerfData = (data: any) => {
     fiveYear,
     sixMonth,
     YTD,
-    Date,
     fundName,
     fundTicker,
     sinceInceptionAnnualized,
@@ -59,38 +59,11 @@ const buildPerfData = ({
   marketData: IPerfData;
   MWI: IPerfData;
 }) => {
-  const {
-    oneMonth,
-    oneYear,
-    threeMonth,
-    threeYear,
-    fiveYear,
-    YTD,
-    sinceInceptionAnnualized,
-    sinceInceptionCumulative,
-  } = navData;
-
-  const {
-    oneMonth: moneMonth,
-    oneYear: moneYear,
-    threeMonth: mthreeMonth,
-    threeYear: mthreeYear,
-    fiveYear: mfiveYear,
-    YTD: mYTD,
-    sinceInceptionAnnualized: msinceInceptionAnnualized,
-    sinceInceptionCumulative: msinceInceptionCumulative,
-  } = marketData;
-
-  const {
-    oneMonth: woneMonth,
-    oneYear: woneYear,
-    threeMonth: wthreeMonth,
-    threeYear: wthreeYear,
-    fiveYear: wfiveYear,
-    YTD: wYTD,
-    sinceInceptionAnnualized: wsinceInceptionAnnualized,
-    sinceInceptionCumulative: wsinceInceptionCumulative,
-  } = MWI;
+  const dArray = [
+    { name: "NAV Performance", data: navData },
+    { name: "Market Price Performance", data: marketData },
+    { name: "MSCI World Index (Benchmark)", data: MWI },
+  ];
 
   return [
     {
@@ -114,54 +87,49 @@ const buildPerfData = ({
         </div>
       ),
     },
-    {
-      name: "NAV Performance",
-      oneMo: oneMonth,
-      threeMo: threeMonth,
-      ytd: YTD,
-      firstSinceInception: sinceInceptionCumulative,
-      oneY: oneYear,
-      threeY: threeYear,
-      fiveY: fiveYear,
-      secondSinceInception: sinceInceptionAnnualized,
-    },
-    {
-      name: "Market Price Performance",
-      oneMo: moneMonth,
-      threeMo: mthreeMonth,
-      ytd: mYTD,
-      firstSinceInception: msinceInceptionCumulative,
-      oneY: moneYear,
-      threeY: mthreeYear,
-      fiveY: mfiveYear,
-      secondSinceInception: msinceInceptionAnnualized,
-    },
-    {
-      name: "MSCI World Index (Benchmark)",
-      oneMo: woneMonth,
-      threeMo: wthreeMonth,
-      ytd: wYTD,
-      firstSinceInception: wsinceInceptionCumulative,
-      oneY: woneYear,
-      threeY: wthreeYear,
-      fiveY: wfiveYear,
-      secondSinceInception: wsinceInceptionAnnualized,
-    },
+    ...dArray.map(({ name, data }) => {
+      const {
+        oneMonth,
+        oneYear,
+        threeMonth,
+        threeYear,
+        fiveYear,
+        YTD,
+        sinceInceptionAnnualized,
+        sinceInceptionCumulative,
+      } = data;
+
+      return {
+        name,
+        oneMo: oneMonth,
+        threeMo: threeMonth,
+        ytd: YTD,
+        firstSinceInception: sinceInceptionCumulative,
+        oneY: oneYear,
+        threeY: threeYear,
+        fiveY: fiveYear,
+        secondSinceInception: sinceInceptionAnnualized,
+      };
+    }),
   ].map((d): IDateRow => {
     const newObj = {};
     Object.keys(d).forEach((k) => {
+      // @ts-expect-error here
       newObj[k] = typeof d[k] === "number" ? `${d[k]}%` : d[k];
     });
     return newObj as IDateRow;
   });
 };
 
+// eslint-disable-next-line
 const findData = (d: any[], index: number, key: string) => {
   return getPerfData(
+    // @ts-expect-error here
     d.find((f) => f["Fund Ticker"] === fundTickerMap[index][key])
   );
 };
 
+// eslint-disable-next-line
 export const getPerfList = (etfIndex: number, data: any) => {
   const NavData = findData(data, etfIndex, "nav");
   const marketData = findData(data, etfIndex, "market");

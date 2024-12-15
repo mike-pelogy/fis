@@ -19,7 +19,7 @@ export default function PostCard({
   showButton,
   showImage,
 }: IPostCardProps) {
-  const { categories, title, slug, featuredImage, date } = post;
+  const { categories, title, slug, date } = post;
   return (
     <article className={className}>
       <Link href={`/news-and-insights/${slug}`} draggable onDragStart={(e) => e.preventDefault()} className="hover:text-fis-purple transition-all">

@@ -4519,7 +4519,17 @@ export type Page_Pray_Documents = AcfFieldGroup & {
   __typename?: 'Page_Pray_Documents';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundResources?: Maybe<Array<Maybe<Page_Pray_Documents_FundResources>>>;
   legal?: Maybe<Array<Maybe<Page_Pray_Documents_Legal>>>;
+};
+
+/** Field Group */
+export type Page_Pray_Documents_FundResources = AcfFieldGroup & {
+  __typename?: 'Page_Pray_Documents_fundResources';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4527,6 +4537,8 @@ export type Page_Pray_Documents_Legal = AcfFieldGroup & {
   __typename?: 'Page_Pray_Documents_legal';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4553,10 +4565,12 @@ export type Page_Pray_Landing = AcfFieldGroup & {
 /** Field Group */
 export type Page_Pray_Overview = AcfFieldGroup & {
   __typename?: 'Page_Pray_Overview';
+  description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   fundResources?: Maybe<Array<Maybe<Page_Pray_Overview_FundResources>>>;
   investmentObjectives?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4582,6 +4596,7 @@ export type Page_Pray_Pricing = AcfFieldGroup & {
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   premiumOrDiscountInfo?: Maybe<AcfLink>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */

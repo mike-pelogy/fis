@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@/components/Button";
+// eslint-disable-next-line
 import useFetch from "@/data/useFetch";
 import {
   MediaItem,
@@ -11,6 +12,7 @@ import {
   Page_Kocg_Pricing,
 } from "@/gql/graphql";
 import classNames from "classnames";
+// eslint-disable-next-line
 import { useEffect, useState } from "react";
 import FunBackground from "./FunBackground";
 import WhiteContainer from "./WhiteContainer";
@@ -26,6 +28,7 @@ import quarterlyPerf from "../../public/FaithInvSvrs.40KF.KF_QuarterlyPerformanc
 // @ts-expect-error file import
 import topHoldings from "../../public/FaithInvSvrs.40KF.TOP10_Holdings.csv";
 import { getPerfList } from "@/utils/performanceData";
+import { getDailyData } from "@/utils/dailyData";
 
 type SectionTypes =
   | "Overview"
@@ -49,52 +52,25 @@ const navBar: INavBar[] = [
   { title: "Documents" },
 ];
 
+// TODO: make this come from wordpress
 const dataBinding = [
   {
-    FundInception: "7/14/2021",
+    FundInception: "07/14/2021",
     ISIN: "US78433H1059",
     Gross: "0.75%",
     PrimaryExchange: "NYSE Arca",
     Index: "MSCI ACWI Index",
     DistributionFrequency: "Annually",
   },
+  {
+    FundInception: "02/08/2022",
+    ISIN: "US78433H2040",
+    Gross: "0.69%",
+    PrimaryExchange: "NYSE Arca",
+    Index: "MSCI ACWI Index",
+    DistributionFrequency: "Annually",
+  },
 ];
-
-const getDailyData = (data: any) => {
-  const {
-    "Rate Date": rateDate,
-    "Fund Ticker": fundTicker,
-    CUSIP,
-    "Net Assets": netAssets,
-    "Shares Outstanding": shares,
-    "Market Price": marketPrice,
-    "Market Price Change Dollars": marketPriceChangeDollars,
-    "Market Price Change Percentage": marketPriceChangePercentage,
-    "Median 30 Day Spread Percentage": medium30DaySpreadPercentage,
-    NAV,
-    "NAV Change Dollars": NavChangeDollars,
-    "NAV Change Percentage": NavChangePercentage,
-    "Premium/Discount Percentage": PremiumDiscountPercentage,
-    "Shares Outstanding": SharesOutstanding,
-  } = data;
-
-  return {
-    rateDate,
-    fundTicker,
-    CUSIP,
-    netAssets,
-    shares,
-    marketPrice,
-    marketPriceChangeDollars,
-    marketPriceChangePercentage,
-    medium30DaySpreadPercentage,
-    NAV,
-    NavChangeDollars,
-    NavChangePercentage,
-    PremiumDiscountPercentage,
-    SharesOutstanding,
-  };
-};
 
 interface ITypeIndex {
   /**
@@ -181,20 +157,20 @@ const Overview = ({
             <div className="mt-8">
               <h4 className="font-bold text-lg mb-4">Fund Resources</h4>
               <div className="flex flex-col gap-2 items-start">
-              {overview?.fundResources?.map((f) => {
-                return (
-                  <Button
-                    key={f?.file?.mediaItemUrl as string}
-                    href={f?.file?.mediaItemUrl as string}
-                    variant="neutral"
-                    target="_blank"
-                    IconButton={<Pdf />}
-                  >
-                    {f?.title}
-                  </Button>
-                );
-              })}
-            </div>
+                {overview?.fundResources?.map((f) => {
+                  return (
+                    <Button
+                      key={f?.file?.mediaItemUrl as string}
+                      href={f?.file?.mediaItemUrl as string}
+                      variant="neutral"
+                      target="_blank"
+                      IconButton={<Pdf />}
+                    >
+                      {f?.title}
+                    </Button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -469,7 +445,7 @@ const Performance = ({
 
 const DistributionsMap = [
   {
-    "30 Day SEC Yield": "1.56%",
+    "30 Day SEC Yield": "1.19%",
     "Ex-Div Date": ["12/29/2021", "12/29/2022"],
     "Record Date": ["12/30/2021", "12/30/2022"],
     "Payable Date": ["01/03/2022", "01/03/2023"],
@@ -477,10 +453,10 @@ const DistributionsMap = [
   },
   {
     "30 Day SEC Yield": "1.56%",
-    "Ex-Div Date": ["12/29/2021", "12/29/2022"],
-    "Record Date": ["12/30/2021", "12/30/2022"],
-    "Payable Date": ["01/03/2022", "01/03/2023"],
-    "Amount ($)": ["$0.07221", "$0.39647"],
+    "Ex-Div Date": ["12/29/2022"],
+    "Record Date": ["12/30/2022"],
+    "Payable Date": ["01/03/2023"],
+    "Amount ($)": ["$0.25961"],
   },
 ];
 
@@ -676,20 +652,20 @@ const Documents = ({
                   <div key={title} className="w-full md:w-1/2">
                     <h3 className="font-bold text-xl mb-4">{title}</h3>
                     <div className="flex flex-col gap-2 items-start">
-                    {items?.map((f) => {
-                      return (
-                        <Button
-                          key={f?.file?.mediaItemUrl as string}
-                          href={f?.file?.mediaItemUrl as string}
-                          target="_blank"
-                          variant="neutral"
-                          IconButton={<Pdf />}
-                        >
-                          {f?.title || f?.file?.title}
-                        </Button>
-                      );
-                    })}
-                  </div>
+                      {items?.map((f) => {
+                        return (
+                          <Button
+                            key={f?.file?.mediaItemUrl as string}
+                            href={f?.file?.mediaItemUrl as string}
+                            target="_blank"
+                            variant="neutral"
+                            IconButton={<Pdf />}
+                          >
+                            {f?.title || f?.file?.title}
+                          </Button>
+                        );
+                      })}
+                    </div>
                   </div>
                 );
               })}
