@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "@/pages/_app";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { Nav } from "../individuals/financial-planning";
 import WhiteContainer from "@/components/WhiteContainer";
 import FunBackground from "@/components/FunBackground";
@@ -9,6 +9,7 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { separatelyManageAccountsPageQuery } from "@/data/separatelyManageAccountsPageQuery";
 import { Page_Separatelymanagedaccountssma } from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
+import { handleSubmit } from "@/utils/submitForm";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(separatelyManageAccountsPageQuery);
@@ -24,15 +25,11 @@ export const radialBg =
   "bg-[radial-gradient(at_top_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
 const AccessFISForm = () => {
-  const handleSubmit = () => {
-    alert("TODO: submit the data");
-  };
-
   return (
     <form
       name="separatelyManagedAccounts"
       onSubmit={handleSubmit}
-      data-netlify="true"
+      data-netlify
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col md:flex-row gap-4">
@@ -61,7 +58,7 @@ const AccessFISForm = () => {
         </div>
       </div>
       <div className="flex justify-end mt-fis-1">
-        <Button variant="secondary" onClick={() => {}}>
+        <Button variant="secondary" type="submit">
           Submit
         </Button>
       </div>
@@ -113,7 +110,9 @@ const EndowmentsPage: NextPageWithLayout<{
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <div
               className="text-2xl text-fis-blue mb-4"
-              dangerouslySetInnerHTML={{ __html: dueDiligenceForFinancialAdvisors?.title || "" }}
+              dangerouslySetInnerHTML={{
+                __html: dueDiligenceForFinancialAdvisors?.title || "",
+              }}
             />
             <div
               className={fancyBulletPoints}
@@ -160,16 +159,18 @@ const EndowmentsPage: NextPageWithLayout<{
           <WhiteContainer>
             <section className="flex container w-full flex-col md:flex-row px-0 md:px-fis-1">
               <div className="w-full md:w-1/2 pr-0 md:pr-fis-1">
-            <div
-              className="text-2xl text-fis-blue mb-4"
-              dangerouslySetInnerHTML={{ __html: howToAccessFisForSmas?.title || "" }}
-            />
-            <div
-              className={fancyBulletPoints}
-              dangerouslySetInnerHTML={{
-                __html: howToAccessFisForSmas?.description || "",
-              }}
-            />
+                <div
+                  className="text-2xl text-fis-blue mb-4"
+                  dangerouslySetInnerHTML={{
+                    __html: howToAccessFisForSmas?.title || "",
+                  }}
+                />
+                <div
+                  className={fancyBulletPoints}
+                  dangerouslySetInnerHTML={{
+                    __html: howToAccessFisForSmas?.description || "",
+                  }}
+                />
               </div>
               <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
                 <div className="pl-0 md:pl-fis-1">

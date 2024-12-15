@@ -11,6 +11,7 @@ import ArrowRight from "@/svgs/ArrowRight";
 import Mail from "@/svgs/Mail";
 import LocationMarker from "@/svgs/LocationMarker";
 import getGqlRequest from "@/data/getGqlRequest";
+import { handleSubmit } from "@/utils/submitForm";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -43,10 +44,6 @@ const locations = [
 const buttons = "text-fis-blue hover:text-fis-purple transition-all";
 
 const ContactForm = () => {
-  const handleSubmit = () => {
-    alert("TODO: submit the data");
-  };
-
   return (
     <form
       name="contactForm"
@@ -111,10 +108,7 @@ export const SubscribeSection = () => {
             Subscribe now for the latest insights and market outlook from Faith
             Investor Services.
           </p>
-          <form
-      name="subscribe"
-      data-netlify="true"
-          >
+          <form onSubmit={handleSubmit} name="subscribe" data-netlify="true">
             <div className="flex flex-wrap md:flex-nowrap gap-4">
               <div className="w-full md:w-1/2">
                 <TextField name="name" label="Name:" />

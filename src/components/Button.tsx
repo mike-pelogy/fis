@@ -16,6 +16,7 @@ export interface IButtonProps extends PropsWithChildren {
   IconButton?: ReactElement;
   disabled?: boolean;
   target?: string;
+  type?: string;
 }
 
 const baseClass =
@@ -78,6 +79,7 @@ export default function Button({
 LeadingIconButton,
 disabled,
   target,
+  type,
 }: IButtonProps) {
   const variantClassNames = getVariantClassNames(variant);
   const sizeClassNames = getSizeClassName(size);
@@ -103,9 +105,9 @@ disabled,
     );
   }
 
-  if (onClick) {
+  if (onClick || type === 'submit') {
     return (
-      <NativeButton onClick={onClick} disabled={disabled} className={finalClassNames}>
+      <NativeButton onClick={() => onClick?.()} type={type} disabled={disabled} className={finalClassNames}>
         <div className="flex items-center">
           {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
           <span>

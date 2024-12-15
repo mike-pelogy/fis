@@ -8,6 +8,7 @@ import { aboutPageQuery } from "@/data/aboutPageQuery";
 import { Page_Aboutpage } from "@/gql/graphql";
 import { navBar, SubscribeSection } from "..";
 import getGqlRequest from "@/data/getGqlRequest";
+import { handleSubmit } from "@/utils/submitForm";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -20,10 +21,6 @@ export async function getStaticProps() {
 }
 
 const CareerForm = () => {
-  const handleSubmit = () => {
-    alert("TODO: submit the data");
-  };
-
   return (
     <form
       name="career"
