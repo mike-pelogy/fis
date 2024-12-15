@@ -111,7 +111,10 @@ export const SubscribeSection = () => {
             Subscribe now for the latest insights and market outlook from Faith
             Investor Services.
           </p>
-          <form>
+          <form
+      name="subscribe"
+      data-netlify="true"
+          >
             <div className="flex flex-wrap md:flex-nowrap gap-4">
               <div className="w-full md:w-1/2">
                 <TextField name="name" label="Name:" />

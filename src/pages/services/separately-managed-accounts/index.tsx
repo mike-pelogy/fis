@@ -30,7 +30,7 @@ const AccessFISForm = () => {
 
   return (
     <form
-      name="contactForm"
+      name="separatelyManagedAccounts"
       onSubmit={handleSubmit}
       data-netlify="true"
       className="flex flex-col gap-4"
