@@ -122,11 +122,13 @@ const FinancialPlanningPage: NextPageWithLayout<{
 export const subLayout = (page: ReactElement) => {
   return (
     <div className="flex flex-col justify-center w-full items-center">
-      <div className="w-full bg-slate-100 flex justify-center">
+    <div className="pt-fis-1 w-full bg-slate-100" />
+      <div className="w-full bg-slate-100 flex justify-center sticky top-[79px] md:top-[100px] z-[1000]">
         <div className="container w-full">
           <Nav />
         </div>
       </div>
+    <div className="pb-fis-1 w-full bg-slate-100" />
       <div className="container w-full">
         <NavBar
           className="!pb-0"

@@ -150,8 +150,8 @@ const Overview = ({
               {info.map(({ title, value }) => {
                 return (
                   <div key={title} className="flex justify-between">
-                    <p className="text-slate-500">{title}</p>
-                    <p className="text-fis-purple">{value}</p>
+                    <div className="text-slate-500">{title}</div>
+                    <div className="text-fis-purple">{value}</div>
                   </div>
                 );
               })}
@@ -198,8 +198,8 @@ const SimpleDataTable = ({
         {labelValues.map(({ label, value }) => {
           return (
             <div key={label} className="flex justify-between">
-              {label && <p className="text-slate-500">{label}</p>}
-              {value && <p className="text-fis-purple">{value}</p>}
+              {label && <div className="text-slate-500">{label}</div>}
+              {value && <div className="text-fis-purple">{value}</div>}
             </div>
           );
         })}

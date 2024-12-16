@@ -83,7 +83,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
                 }}
               />
               <div
-                className="max-w-[350px] [&_strong]:text-2xl [&_p]:text-xs [&_p]:text-slate-500 [&_strong]:text-fis-purple mb-4"
+                className="max-w-[350px] [&_strong]:text-2xl [&_p]:mb-1 [&_p]:text-xs [&_p]:text-slate-500 [&_strong]:text-fis-purple mb-4"
                 dangerouslySetInnerHTML={{
                   __html: values.investmentPolicy as string,
                 }}
@@ -133,6 +133,7 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
               />
             </div>
             <div
+                className="[&>p]:mb-1"
               dangerouslySetInnerHTML={{ __html: quote.description || "" }}
             />
           </div>
@@ -157,9 +158,9 @@ const KocgPage: NextPageWithLayout<{
 }> = ({ data, title }) => {
   return (
     <>
-      <Head>
-        <title>{buildPageTitle("KOCG")}</title>
-      </Head>
+    <Head>
+    <title>{buildPageTitle('KOCG')}</title>
+    </Head>
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}
@@ -262,3 +263,5 @@ KocgPage.getLayout = (page: ReactElement) => {
 };
 
 export default KocgPage;
+
+

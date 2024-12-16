@@ -100,6 +100,7 @@ const FinancialPlanningPage: NextPageWithLayout<{
 export const Nav = () => {
   return (
     <NavBar
+className="pt-0 pb-0" 
       navBar={[
         {
           title: "Individuals",
@@ -122,9 +123,13 @@ export const Nav = () => {
 export const subLayout = (page: ReactElement) => {
   return (
     <div className="flex flex-col justify-center w-full items-center">
+      <div className="pt-fis-1" />
+      <div className="w-full bg-white sticky top-[79px] md:top-[100px] z-[1000] flex justify-center">
       <div className="container w-full">
-        <Nav />
+          <Nav />
+        </div>
       </div>
+      <div className="pb-fis-1" />
       <section className="container w-full px-4 md:px-fis-2 py-fis-1 flex flex-col md:flex-row items-center">
         <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
           <h3 className="text-2xl text-fis-blue">
