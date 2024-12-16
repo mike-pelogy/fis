@@ -11,6 +11,7 @@ import buildPageTitle from "@/utils/buildPageTitle";
 import classNames from "classnames";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
@@ -98,9 +99,25 @@ const FinancialPlanningPage: NextPageWithLayout<{
 };
 
 export const Nav = () => {
+  const { asPath } = useRouter();
+
+  const map: Record<string, string> = {
+    "/services/individuals/financial-planning":
+      "/services/individuals/financial-planning",
+    "/services/individuals/investment-management":
+      "/services/individuals/financial-planning",
+    "/services/companies-not-for-profit-organizations/retirement-plans":
+      "/services/companies-not-for-profit-organizations/retirement-plans",
+    "/services/companies-not-for-profit-organizations/endowments":
+      "/services/companies-not-for-profit-organizations/retirement-plans",
+    "/services/separately-managed-accounts":
+      "/services/separately-managed-accounts",
+  };
+
   return (
     <NavBar
-className="pt-0 pb-0" 
+      className="pt-0 pb-0"
+      active={map[asPath] as string}
       navBar={[
         {
           title: "Individuals",
@@ -125,7 +142,7 @@ export const subLayout = (page: ReactElement) => {
     <div className="flex flex-col justify-center w-full items-center">
       <div className="pt-fis-1" />
       <div className="w-full bg-white sticky top-[79px] md:top-[100px] z-[1000] flex justify-center">
-      <div className="container w-full">
+        <div className="container w-full">
           <Nav />
         </div>
       </div>

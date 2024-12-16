@@ -87,7 +87,7 @@ const MissionAndValues = ({
                 alt="Wealth Management"
                 width={1200}
                 height={1200}
-                className="object-cover rounded-lg h-full"
+                className="object-cover h-full"
               />
             </div>
           </div>
@@ -141,7 +141,7 @@ const AboutOurTeam = ({
             dangerouslySetInnerHTML={{ __html: about.description as string }}
           />
         </div>
-        <div className="mt-fis-1 grid grid-cols-1 md:grid-cols-3 gap-y-fis-2 gap-x-fis-1">
+        <div className="mt-fis-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-fis-2 gap-x-fis-1">
           {team.map((teamMember) => (
             <TeamCard key={teamMember.slug} {...teamMember} />
           ))}

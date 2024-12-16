@@ -20,7 +20,7 @@ export const menu: IMenuItem[] = [
   { title: "Wealth Management", path: "/wealth-management" },
   {
     title: "Services",
-    path: "/services",
+    path: "/services/individuals/financial-planning",
     children: [
       {
         title: "Individuals",
@@ -73,7 +73,7 @@ export const menu: IMenuItem[] = [
       { title: "Team", path: "/about#team" },
     ],
   },
-  { title: "News and Insights", path: "/news-and-insights" },
+  { title: "News and Insights", path: "/news-and-insights/category/tips" },
   {
     title: "Contact",
     path: "/contact",

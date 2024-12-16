@@ -26,7 +26,6 @@ export const NavBar = ({
 }) => {
   const router = useRouter();
 
-  console.log(router.pathname, router.asPath);
   return (
     <div
       className={classNames(
@@ -43,6 +42,8 @@ export const NavBar = ({
                 "whitespace-nowrap",
                 href === router.pathname ||
                   href === router.asPath ||
+                  href === active ||
+                  router.asPath.includes(href as string) ||
                   active === title
                   ? activeClass
                   : ""
