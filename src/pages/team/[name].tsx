@@ -1,3 +1,6 @@
+import getGqlRequest from "@/data/getGqlRequest";
+import { teamMemberQuery, teamsQuery } from "@/data/teamPageQuery";
+import { Team } from "@/gql/graphql";
 import Mail from "@/svgs/Mail";
 import Phone from "@/svgs/Phone";
 import buildPageTitle from "@/utils/buildPageTitle";
@@ -8,12 +11,15 @@ import type {
   GetStaticPaths,
 } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticPaths = (async () => {
-  // TODO: get all the team members from wordpress
-  const teamMembers = [{ id: "mr-tester" }].map(({ id }) => ({
-    params: { name: id },
+  const { data } = await getGqlRequest(teamsQuery);
+
+  // eslint-disable-next-line
+  const teamMembers = data.teams.edges.map(({ node }: { node: any }) => ({
+    params: { name: node.slug },
   }));
 
   return {
@@ -22,28 +28,25 @@ export const getStaticPaths = (async () => {
   };
 }) satisfies GetStaticPaths;
 
-export const getStaticProps: GetStaticProps<
-  {
-    name: string;
-    role: string;
-    email: string;
-    phone: string;
-    biography: string;
-    url: string;
-  },
-  { name: string }
-> = async ({ params }) => {
+// eslint-disable-next-line
+export const getStaticProps: GetStaticProps<any, { name: string }> = async ({
+  params,
+}) => {
   const { name } = params || {};
+
+  if (!name) {
+    return { notFound: true };
+  }
+
+  const { data } = await getGqlRequest(teamMemberQuery, { slug: name });
+  const teamBy: Team = data.teamBy;
+  const { title, content: biography } = teamBy;
 
   return {
     props: {
-      name: name || "",
-      role: "role",
-      phone: "543534554",
-      email: "email@email.com",
-      url: "url",
-      biography:
-        "aasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas ad aasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas adaasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas adaasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas adaasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas adaasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas dkfkasdjfhak jsdjkahsj asj jalsd jhas adaasdfasdvasdv alksdjvk lakjsvlkasdvas dvpas d0-v as90dv a90sdv90a s0d9va0isdhva9sdhva98s gdvo8asgdv7iasdi7vgaisdgofaudshufihqowihjf alksjdhf jkas    dkfkasdjfhak jsdjkahsj asj jalsd jhas ad",
+      name: title || "",
+      biography,
+      member: teamBy,
     },
   };
 };
@@ -51,22 +54,13 @@ export const getStaticProps: GetStaticProps<
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.2)_0%,rgba(256,256,256,1)_60%)]";
 
-export const TeamDetails = ({
-  name,
-  role,
-  phone,
-  email,
-  url,
-}: {
-  name: string;
-  role: string;
-  phone: string;
-  email: string;
-  url: string;
-}) => {
+export const TeamDetails = ({ slug, title: name, teamMember }: Team) => {
+  const { email, phone } = teamMember || {};
+  const role = teamMember?.titles?.map((t) => t?.title).join(", ");
+  const href = `/team/${slug}`;
   return (
     <>
-      <Link href={url}>
+      <Link href={href}>
         <h1 className="text-fis-blue text-lg font-bold">{name}</h1>
         <p className="text-base">{role}</p>
       </Link>
@@ -90,11 +84,8 @@ export const TeamDetails = ({
 
 export default function TeamMember({
   name,
-  role,
-  email,
-  phone,
   biography,
-  url,
+  member,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -105,19 +96,24 @@ export default function TeamMember({
         <section className="container px-4 md:px-fis-2 p-fis-2 flex gap-fis-2 w-full flex-col md:flex-row relative">
           <div className="w-full md:w-1/2 flex flex-col gap-4 md:flex-row">
             <div className="w-full md:w-1/3 max-w-[200px] md:max-w-full">
-              <div className="w-full aspect-square bg-slate-500 rounded-lg" />
-            </div>
-            <div className="w-full md:w-2/3 flex flex-col gap-2 align-start">
-              <TeamDetails
-                url={url}
-                name={name}
-                role={role}
-                phone={phone}
-                email={email}
+              <Image
+                src={
+                  member.featuredImage?.node.mediaItemUrl ||
+                  "/defaultFeaturedImage.png"
+                }
+                alt={member}
+                width={500}
+                height={500}
+                className="w-full object-cover max-w-[230px] aspect-square rounded-lg bg-slate-500"
               />
             </div>
+            <div className="w-full md:w-2/3 flex flex-col gap-2 align-start">
+              <TeamDetails {...member} />
+            </div>
           </div>
-          <div className="w-full md:w-1/2">{biography}</div>
+          <div className="w-full md:w-1/2">
+            <div dangerouslySetInnerHTML={{ __html: biography }} />
+          </div>
         </section>
         <div
           className={classNames(

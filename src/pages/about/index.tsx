@@ -1,10 +1,11 @@
 import FunBackground from "@/components/FunBackground";
-import { aboutPageQuery } from "@/data/aboutPageQuery";
+import { aboutPageQuery, teamQuery } from "@/data/aboutPageQuery";
 import {
   Page_Aboutpage,
   Page_Aboutpage_About,
   Page_Aboutpage_Mission,
   Page_Aboutpage_Values,
+  Team,
 } from "@/gql/graphql";
 import { TeamDetails } from "../team/[name]";
 import Link from "next/link";
@@ -16,10 +17,13 @@ import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
+  const { data: teamData } = await getGqlRequest(teamQuery);
 
   return {
     props: {
       data: data.page.aboutPage as Page_Aboutpage,
+      // eslint-disable-next-line
+      team: teamData?.teams?.edges.map(({ node }: { node: any }) => node) || [],
     },
   };
 }
@@ -48,7 +52,7 @@ const MissionAndValues = ({
           className={classNames("overflow-hidden relative rounded-lg", bg)}
         >
           <div className="flex flex-col md:flex-row">
-            <div className="flex relative flex-col w-full items-stretch md:w-1/2 px-4 p-fis-2 md:px-fis-2">
+            <div className="flex relative flex-col w-full justify-center items-stretch md:w-1/2 px-4 p-fis-2 md:px-fis-2">
               <div>
                 <h3
                   className="text-fis-blue text-2xl mb-4"
@@ -93,56 +97,22 @@ const MissionAndValues = ({
   );
 };
 
-interface ITeamMember {
-  img: string;
-  role: string;
-  name: string;
-  phone: string;
-  email: string;
-  url: string;
-}
-
-const teamMembers: ITeamMember[] = [
-  {
-    img: "img",
-    url: "img",
-    name: "erik",
-    role: "web development",
-    phone: "23423423",
-    email: "e.fadfadf@gmail.com",
-  },
-  {
-    img: "img",
-    url: "img",
-    name: "erik",
-    role: "web development",
-    phone: "23423423",
-    email: "e.fadfadf@gmail.com",
-  },
-  {
-    img: "img",
-    url: "img",
-    name: "erik",
-    role: "web development",
-    phone: "23423423",
-    email: "e.fadfadf@gmail.com",
-  },
-  {
-    img: "img",
-    url: "img",
-    name: "erik",
-    role: "web development",
-    phone: "23423423",
-    email: "e.fadfadf@gmail.com",
-  },
-];
-
-const TeamCard = (team: ITeamMember) => {
+const TeamCard = (team: Team) => {
+  const href = `/team/${team.slug}`;
   return (
     <article>
-      <Link href={team.url}>
+      <Link href={href}>
         <div className="pb-4">
-          <div className="w-full max-w-[230px] aspect-square rounded-lg bg-slate-500" />
+          <Image
+            src={
+              team.featuredImage?.node.mediaItemUrl ||
+              "/defaultFeaturedImage.png"
+            }
+            alt={team.title || ""}
+            width={500}
+            height={500}
+            className="w-full object-cover max-w-[230px] aspect-square rounded-lg bg-slate-500"
+          />
         </div>
       </Link>
       <div className="flex flex-col gap-2">
@@ -152,7 +122,13 @@ const TeamCard = (team: ITeamMember) => {
   );
 };
 
-const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
+const AboutOurTeam = ({
+  about,
+  team,
+}: {
+  about: Page_Aboutpage_About;
+  team: Team[];
+}) => {
   return (
     <div className="flex justify-center px-4 md:px-fis-3 py-fis-2" id="team">
       <section className="container flex flex-col">
@@ -166,8 +142,8 @@ const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
           />
         </div>
         <div className="mt-fis-1 grid grid-cols-1 md:grid-cols-3 gap-y-fis-2 gap-x-fis-1">
-          {teamMembers.map((teamMember) => (
-            <TeamCard key={teamMember.url} {...teamMember} />
+          {team.map((teamMember) => (
+            <TeamCard key={teamMember.slug} {...teamMember} />
           ))}
         </div>
       </section>
@@ -175,7 +151,13 @@ const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
   );
 };
 
-export default function AboutPage({ data }: { data: Page_Aboutpage }) {
+export default function AboutPage({
+  data,
+  team,
+}: {
+  data: Page_Aboutpage;
+  team: Team[];
+}) {
   return (
     <>
       <Head>
@@ -184,7 +166,7 @@ export default function AboutPage({ data }: { data: Page_Aboutpage }) {
       {data.mission && data.values && (
         <MissionAndValues mission={data.mission} values={data.values} />
       )}
-      {data.valuesCopy && <AboutOurTeam about={data.valuesCopy} />}
+      {data.valuesCopy && <AboutOurTeam about={data.valuesCopy} team={team} />}
     </>
   );
 }
