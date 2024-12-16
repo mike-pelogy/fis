@@ -22,7 +22,7 @@ interface PostWithCursor extends Post {
 
 // eslint-disable-next-line
 export const normalizePosts = (data: any) => {
-  return data.posts.edges.map(
+  return (data?.posts?.edges || []).map(
     // eslint-disable-next-line
     ({ node, cursor }: { node: any; cursor?: string }) => ({
       ...node,

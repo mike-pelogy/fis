@@ -11,9 +11,9 @@ export default async function getGqlRequest(document: any, variables?: any) {
     requestHeaders: {
       authorization: AUTH,
     },
-  });
+  }).catch(console.error);
 
   return {
-    data,
+    data: data || {},
   };
 }

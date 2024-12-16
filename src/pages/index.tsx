@@ -64,7 +64,7 @@ const LandingAndAbout = ({
             />
             <Button
               variant="white"
-              href='/contact'
+              href="/contact"
               className="hover:!bg-slate-50/90"
               IconButton={<ArrowRight />}
             >
@@ -91,7 +91,7 @@ const LandingAndAbout = ({
               className="h-full object-cover object-right-top"
             />
           </div>
-          <div className="px-4 p-fis-2 md:p-fis-2 w-full md:w-1/2 relative">
+          <div className="px-4 p-fis-2 md:p-fis-2 w-full flex flex-col justify-center md:w-1/2 relative">
             <h2
               className="text-fis-blue text-2xl"
               dangerouslySetInnerHTML={{ __html: aboutSection.title as string }}
@@ -104,10 +104,7 @@ const LandingAndAbout = ({
               }}
             />
             <div className="flex justify-end mt-8">
-              <Button
-                variant="secondary"
-                href='/about'
-              >
+              <Button variant="secondary" href="/about">
                 {aboutSection.callToAction?.title}
               </Button>
             </div>

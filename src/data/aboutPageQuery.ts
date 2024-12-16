@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const teamQuery = gql(`
 query teams {
-  teams(first: 99) {
+  teams(first: 99, where: {orderby: {field: DATE, order: ASC}}) {
     edges {
       node {
         content
