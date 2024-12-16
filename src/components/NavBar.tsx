@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 interface INavBar {
   title: string;
@@ -13,22 +12,6 @@ interface INavBar {
 const buttonClass =
   "text-lg text-fis-blue block leading-[2em] hover:text-fis-purple transition-all hover:border-fis-purple border-b-2 border-transparent";
 const activeClass = "!text-fis-purple !border-fis-purple";
-
-const getHash = () =>
-  typeof window !== "undefined" ? window.location.hash : undefined;
-
-const useHash = () => {
-  const [isClient, setIsClient] = useState(false);
-  const [hash, setHash] = useState(getHash());
-  const params = useParams();
-
-  useEffect(() => {
-    setIsClient(true);
-    setHash(getHash());
-  }, [params]);
-
-  return isClient ? hash : null;
-};
 
 export const NavBar = ({
   navBar,
@@ -42,7 +25,6 @@ export const NavBar = ({
   handleOnClick?: (title: string) => void;
 }) => {
   const router = useRouter();
-  const currentHash = useHash();
 
   console.log(router.pathname, router.asPath);
   return (
@@ -61,7 +43,6 @@ export const NavBar = ({
                 "whitespace-nowrap",
                 href === router.pathname ||
                   href === router.asPath ||
-                  currentHash === `#${title}` ||
                   active === title
                   ? activeClass
                   : ""

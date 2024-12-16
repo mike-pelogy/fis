@@ -64,7 +64,7 @@ const LandingAndAbout = ({
             />
             <Button
               variant="white"
-              href={landing.callToAction?.url as string}
+              href='/contact'
               className="hover:!bg-slate-50/90"
               IconButton={<ArrowRight />}
             >
@@ -106,7 +106,7 @@ const LandingAndAbout = ({
             <div className="flex justify-end mt-8">
               <Button
                 variant="secondary"
-                href={aboutSection.callToAction?.url as string}
+                href='/about'
               >
                 {aboutSection.callToAction?.title}
               </Button>

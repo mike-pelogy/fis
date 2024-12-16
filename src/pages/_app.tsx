@@ -1,11 +1,14 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import { Lato } from "next/font/google";
 import Layout from "@/components/Layout";
 import { NextPage } from "next";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import img from "../../public/defaultFeaturedImage.png";
 
 const lato = Lato({
   weight: ["300", "400", "700"],
@@ -26,11 +29,30 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   const getSubLayout = Component.getSubLayout ?? ((page) => page);
+  const [currentTitle, setCurrentTitle] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setCurrentTitle(document.title);
+  }, [router.asPath]);
 
   return (
-    <div className={lato.className}>
-      {getLayout(<Layout>{getSubLayout(<Component {...pageProps} />)}</Layout>)}
-      <ToastContainer  position="bottom-left"/>
-    </div>
+    <>
+      <Head>
+        <meta property="og:title" content={currentTitle} />
+        <meta
+          property="og:description"
+          content="Our mission is to empower investors by aligning their financial decisions with their spiritual values and in fostering a community where faith and finance intersect harmoniously."
+        />
+        <meta property="og:image" content={img.src} />
+      </Head>
+      <div className={lato.className}>
+        {getLayout(
+          <Layout>{getSubLayout(<Component {...pageProps} />)}</Layout>
+        )}
+        <ToastContainer position="bottom-left" />
+      </div>
+    </>
   );
 }

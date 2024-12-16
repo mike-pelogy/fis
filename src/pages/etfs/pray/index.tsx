@@ -46,13 +46,15 @@ const Landing = ({
           <span
             dangerouslySetInnerHTML={{ __html: landing.description as string }}
           />
-          <Button
-            variant="primary"
-            href={landing.cta?.url as string}
-            IconButton={<ArrowRight />}
-          >
-            {landing.cta?.title}
-          </Button>
+          <div className="flex justify-end mt-8">
+            <Button
+              variant="primary"
+              href="#Overview"
+              IconButton={<ArrowRight />}
+            >
+              Learn more
+            </Button>
+          </div>
         </div>
         <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
           <div className="w-full aspect-video bg-slate-500 rounded-lg" />

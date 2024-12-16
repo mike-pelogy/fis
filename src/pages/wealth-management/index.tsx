@@ -69,7 +69,7 @@ const WealthManagementPage = ({
               }}
             />
             <div className="flex justify-end mt-8">
-              <Button variant="secondary" href="#" IconButton={<ArrowRight />}>
+              <Button variant="secondary" href="https://login.orionadvisor.com/login.html?g=86e684ed-2ae0-4e46-867b-cbaaeb71665d" target="_blank" IconButton={<ArrowRight />}>
                 {introduction.cta?.title}
               </Button>
             </div>

@@ -700,15 +700,22 @@ export default function ETF({
 } & ITypeIndex) {
   return (
     <>
-      <NavBar navBar={navBar} />
-      {dataReference.dailyNav && (
-        <Overview
-          typeIndex={typeIndex}
-          overview={overview}
-          id="Overview"
-          daily={dataReference?.dailyNav}
-        />
-      )}
+      <div className="pt-fis-1" />
+      <div className="sticky top-[79px] md:top-[100px] w-full bg-white z-[100] flex justify-center">
+        <div className="container">
+          <NavBar navBar={navBar} className="pb-0 pt-0" />
+        </div>
+      </div>
+      <div className="pt-fis-1">
+        {dataReference.dailyNav && (
+          <Overview
+            typeIndex={typeIndex}
+            overview={overview}
+            id="Overview"
+            daily={dataReference?.dailyNav}
+          />
+        )}
+      </div>
       <Pricing pricing={pricing} id="Pricing" typeIndex={typeIndex} />
       {dataReference?.monthlyPerformance &&
         dataReference?.quarterlyPerformance && (
