@@ -22,7 +22,7 @@ export default function PostCard({
 }: IPostCardProps) {
   const { categories, title, slug, date, featuredImage } = post;
 
-  const image = post.featuredImage?.node.mediaItemUrl || "/defaultFeaturedImage.png";
+  const image = featuredImage?.node.mediaItemUrl || "/defaultFeaturedImage.png";
 
   return (
     <article className={className}>
