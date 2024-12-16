@@ -5,6 +5,9 @@ import classNames from "classnames";
 import getGqlRequest from "@/data/getGqlRequest";
 import { endowmentsPageQuery } from "@/data/endowmentsPageQuery";
 import { Page_Endowments } from "@/gql/graphql";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(endowmentsPageQuery);
@@ -30,6 +33,9 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
   } = data;
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Endowments")}</title>
+      </Head>
       <section
         className={classNames(
           "w-full px-4 md:px-fis-2 p-fis-2 flex justify-center",
@@ -38,7 +44,10 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
       >
         <div className="container flex flex-col md:flex-row justify-center">
           <div className="w-full md:w-1/2 flex justify-center">
-            <div className="max-w-[400px]" dangerouslySetInnerHTML={{ __html: introduction || "" }} />
+            <div
+              className="max-w-[400px]"
+              dangerouslySetInnerHTML={{ __html: introduction || "" }}
+            />
           </div>
         </div>
       </section>
@@ -70,7 +79,9 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
             <div>
               <div
                 className="text-2xl text-fis-blue mb-4"
-                dangerouslySetInnerHTML={{ __html: educationAndACultureOfPhilanthropy?.title || "" }}
+                dangerouslySetInnerHTML={{
+                  __html: educationAndACultureOfPhilanthropy?.title || "",
+                }}
               />
               <div
                 dangerouslySetInnerHTML={{
@@ -80,7 +91,13 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
             </div>
           </div>
           <div className="w-1/2 h-full">
-            <div className="bg-slate-500 w-full h-full" />
+            <Image
+              src="/FISHelp.png"
+              alt="FIS helps"
+              width={1500}
+              height={1500}
+              className="h-full"
+            />
           </div>
         </div>
       </section>

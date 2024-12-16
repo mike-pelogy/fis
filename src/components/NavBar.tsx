@@ -44,6 +44,7 @@ export const NavBar = ({
   const router = useRouter();
   const currentHash = useHash();
 
+  console.log(router.pathname, router.asPath);
   return (
     <div
       className={classNames(
@@ -57,8 +58,9 @@ export const NavBar = ({
             <Link
               className={classNames(
                 buttonClass,
-                'whitespace-nowrap',
+                "whitespace-nowrap",
                 href === router.pathname ||
+                  href === router.asPath ||
                   currentHash === `#${title}` ||
                   active === title
                   ? activeClass
@@ -66,7 +68,7 @@ export const NavBar = ({
               )}
               href={href ? href : `#${title}`}
               onClick={(e) => {
-                if(handleOnClick)  {
+                if (handleOnClick) {
                   e.preventDefault();
                   handleOnClick(title);
                 }

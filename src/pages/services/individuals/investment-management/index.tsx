@@ -6,6 +6,9 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { investmentManagementPageQuery } from "@/data/investmentManagementPageQuery";
 import { Page_Investmentmanagement } from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(investmentManagementPageQuery);
@@ -33,6 +36,9 @@ const InvestmentManagementPage: NextPageWithLayout<{
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Investment Management")}</title>
+      </Head>
       <section
         className={classNames("container px-4 md:px-fis-2 py-fis-2", radialBg)}
       >
@@ -69,10 +75,12 @@ const InvestmentManagementPage: NextPageWithLayout<{
             <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
               <div
                 className="text-2xl text-fis-blue mb-4"
-                dangerouslySetInnerHTML={{ __html: wealthTransition?.title || "" }}
+                dangerouslySetInnerHTML={{
+                  __html: wealthTransition?.title || "",
+                }}
               />
               <div
-                className={classNames(fancyBulletPoints, '[&_h6]:text-xs')}
+                className={classNames(fancyBulletPoints, "[&_h6]:text-xs")}
                 dangerouslySetInnerHTML={{
                   __html: wealthTransition?.description || "",
                 }}
@@ -81,7 +89,9 @@ const InvestmentManagementPage: NextPageWithLayout<{
             <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
               <div
                 className="text-2xl text-fis-blue mb-4"
-                dangerouslySetInnerHTML={{ __html: investmentPhilosophy?.title || "" }}
+                dangerouslySetInnerHTML={{
+                  __html: investmentPhilosophy?.title || "",
+                }}
               />
               <div
                 dangerouslySetInnerHTML={{
@@ -106,7 +116,13 @@ const InvestmentManagementPage: NextPageWithLayout<{
             />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
-            <div className="bg-slate-500 w-full aspect-video rounded-lg" />
+            <Image
+              src="/Our portfolios.png"
+              alt="You worked hard to secure your wealth"
+              width={1500}
+              height={1500}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </section>

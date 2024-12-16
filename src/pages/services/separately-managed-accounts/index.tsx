@@ -10,6 +10,9 @@ import { separatelyManageAccountsPageQuery } from "@/data/separatelyManageAccoun
 import { Page_Separatelymanagedaccountssma } from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
 import { handleSubmit } from "@/utils/submitForm";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(separatelyManageAccountsPageQuery);
@@ -79,9 +82,12 @@ const EndowmentsPage: NextPageWithLayout<{
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Separately Managed Accounts (SMA)")}</title>
+      </Head>
       <section className="w-full pt-fis-1 pb-fis-2 flex justify-center bg-slate-100">
-        <div className="container px-4 md:px-0 flex flex-col md:flex-row items-center">
-          <div className="w-full md:w-1/2">
+        <div className="container px-4 md:px-0 flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 md:pr-fis-2">
             <div
               className="text-2xl text-fis-blue mb-4"
               dangerouslySetInnerHTML={{ __html: top5Reasons?.title || "" }}
@@ -99,14 +105,26 @@ const EndowmentsPage: NextPageWithLayout<{
             />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
-            <div className="w-full aspect-square bg-slate-500 rounded" />
+            <Image
+              src="/Top5Reasons.png"
+              alt="Top 5 Reasons"
+              width={1500}
+              height={1500}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </section>
       <section className="w-full pt-fis-1 pb-fis-2 flex justify-center ">
         <div className="container flex px-4 md:px-0 flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-            <div className="w-full aspect-square bg-slate-500 rounded" />
+            <Image
+              src="/DueDiligence.png"
+              alt={dueDiligenceForFinancialAdvisors?.title || ""}
+              width={1500}
+              height={1500}
+              className="rounded-lg"
+            />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <div

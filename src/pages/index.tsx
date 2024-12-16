@@ -21,10 +21,12 @@ import { useEffect, useState } from "react";
 import { fancyBulletPoints } from "./about";
 import getGqlRequest from "@/data/getGqlRequest";
 import { normalizePosts } from "./news-and-insights";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(homePageQuery);
-const {data: postsData} = await getGqlRequest(homePagePostsQuery)
+  const { data: postsData } = await getGqlRequest(homePagePostsQuery);
   const posts = normalizePosts(postsData);
 
   return {
@@ -79,9 +81,15 @@ const LandingAndAbout = ({
             />
           </div>
         </section>
-        <section className="container rounded-lg overflow-hidden flex flex-col-reverse md:flex-row items-center relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
+        <section className="container items-stretch rounded-lg overflow-hidden flex flex-col-reverse md:flex-row items-center relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
           <div className="w-full md:w-1/2 relative">
-            <Image src="/HomeAbout.jpg" alt="nice" width={1500} height={1500} />
+            <Image
+              src="/HomeAbout.jpg"
+              alt="nice"
+              width={1500}
+              height={1500}
+              className="h-full object-cover object-right-top"
+            />
           </div>
           <div className="px-4 p-fis-2 md:p-fis-2 w-full md:w-1/2 relative">
             <h2
@@ -159,7 +167,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
               <Button
                 IconButton={<ArrowRight />}
                 variant="primary"
-                href={services.wealthManagement?.callToAction?.url as string}
+                href="/wealth-management"
               >
                 {services.wealthManagement?.callToAction?.title}
               </Button>
@@ -172,7 +180,13 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
       </section>
       <section className="pt-fis-2 flex flex-col-reverse md:flex-row">
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+          <Image
+            src="/Investment Management image.png"
+            alt="investment management"
+            width={1200}
+            height={1200}
+            className="rounded-lg"
+          />
         </div>
         <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
           <h3
@@ -190,7 +204,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
             <Button
               IconButton={<ArrowRight />}
               variant="primary"
-              href={services.investment?.callToAction?.url as string}
+              href="/services/individuals/investment-management"
             >
               {services.investment?.callToAction?.title}
             </Button>
@@ -225,7 +239,7 @@ const LatestNewAndHighlights = ({
   posts,
 }: {
   latestNewAndInsights: Page_Homepage_LatestNewAndInsights;
-  posts: Post[],
+  posts: Post[];
 }) => {
   const isDesktop = useMediaQuery();
 
@@ -253,7 +267,7 @@ const LatestNewAndHighlights = ({
             <Button
               IconButton={<ArrowRight />}
               variant="neutral"
-              href={latestNewAndInsights.link?.url as string}
+              href="/news-and-insights"
             >
               {latestNewAndInsights.link?.title}
             </Button>
@@ -276,9 +290,18 @@ const LatestNewAndHighlights = ({
   );
 };
 
-export default function HomePage({ data, posts }: { data: Page_Homepage; posts: Post[] }) {
+export default function HomePage({
+  data,
+  posts,
+}: {
+  data: Page_Homepage;
+  posts: Post[];
+}) {
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Home")}</title>
+      </Head>
       {data.landing && data.aboutSection && (
         <LandingAndAbout
           landing={data.landing}
@@ -288,7 +311,7 @@ export default function HomePage({ data, posts }: { data: Page_Homepage; posts: 
       {data.services && <Services services={data.services} />}
       {data.latestNewAndInsights && (
         <LatestNewAndHighlights
-        posts={posts}
+          posts={posts}
           latestNewAndInsights={data.latestNewAndInsights}
         />
       )}

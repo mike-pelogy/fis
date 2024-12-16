@@ -8,6 +8,9 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { retirementPlansPageQuery } from "@/data/retirementPlansPageQuery";
 import { Page_Retirementplans } from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(retirementPlansPageQuery);
@@ -29,6 +32,9 @@ const FinancialPlanningPage: NextPageWithLayout<{
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Retirement plans")}</title>
+      </Head>
       <div className="flex justify-center relative w-full pt-fis-2 pb-fis-2">
         <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[-1]">
           <FunBackground />
@@ -96,7 +102,13 @@ const FinancialPlanningPage: NextPageWithLayout<{
             })}
           </div>
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-            <div className="bg-slate-500 rounded-lg w-full aspect-video" />
+            <Image
+              src="/EstablishedRelationships.png"
+              alt="You worked hard to secure your wealth"
+              width={1500}
+              height={1500}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </section>

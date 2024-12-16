@@ -7,6 +7,9 @@ import {
   Page_Wealthmanagement_Introduction,
   Page_Wealthmanagement_Services,
 } from "@/gql/graphql";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(wealthManagementPageQuery);
@@ -52,6 +55,9 @@ const WealthManagementPage = ({
 }) => {
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Wealth Management")}</title>
+      </Head>
       <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
         <section className="container flex flex-col md:flex-row items-center px-4 md:px-fis-2">
           <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
@@ -69,7 +75,13 @@ const WealthManagementPage = ({
             </div>
           </div>
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-            <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+            <Image
+              src="/wealthManagement.png"
+              alt="Wealth Management"
+              width={1200}
+              height={1200}
+              className="rounded-lg"
+            />
           </div>
         </section>
       </div>
@@ -86,14 +98,26 @@ const WealthManagementPage = ({
             })}
           </div>
           <div className="flex justify-center">
-            <div className="bg-slate-500 w-full aspect-square rounded-lg max-w-[600px]" />
+            <Image
+              src="/wheel.png"
+              alt="Wealth Management"
+              width={1200}
+              height={1200}
+              className="rounded-lg max-w-[650px]"
+            />
           </div>
         </section>
       </div>
       <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
         <section className="container px-4 md:px-fis-2 flex flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-            <div className="bg-slate-500 w-full aspect-video rounded-lg" />
+            <Image
+              src="/interestedInMoreInfo.png"
+              alt="Wealth Management"
+              width={1200}
+              height={600}
+              className="rounded-lg"
+            />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <h3 className="text-fis-blue text-2xl mb-4">

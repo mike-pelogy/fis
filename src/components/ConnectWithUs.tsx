@@ -5,22 +5,31 @@ import classNames from "classnames";
 import ArrowRight from "@/svgs/ArrowRight";
 
 const radialBg =
-  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.3)_0%,rgba(256,256,256,1)_70%)]";
+  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.3)_0%,rgba(256,256,256,0)_70%)]";
 
 const radialBgInner =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.45)_0%,rgba(256,256,256,1)_60%)]";
 
 export default function ConnectWithUs({
   connectWithUs,
+  className,
 }: {
   connectWithUs: Page_Homepage_ContactUsCtaSimple;
+  className?: string;
 }) {
   return (
-    <div className={classNames("w-full pt-fis-2", radialBg,
-      'bg-[length:50%] bg-no-repeat bg-center',
-    )}>
+    <div
+      className={classNames(
+        "w-full pt-fis-2",
+        radialBg,
+        "bg-[length:50%] bg-no-repeat bg-center",
+        className
+      )}
+    >
       <section
-        className={classNames( "relative w-full max-h-[400px] h-screen flex justify-center items-end overflow-hidden")}
+        className={classNames(
+          "relative w-full max-h-[400px] h-screen flex justify-center items-end overflow-hidden"
+        )}
       >
         <div
           className={classNames(
@@ -43,7 +52,9 @@ export default function ConnectWithUs({
             />
             <Button
               IconButton={<ArrowRight />}
-            variant="white" href={connectWithUs.link?.url as string}>
+              variant="white"
+              href={connectWithUs.link?.url as string}
+            >
               {connectWithUs.link?.title}
             </Button>
           </div>

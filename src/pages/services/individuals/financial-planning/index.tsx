@@ -7,7 +7,10 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { Page_Financialplanning } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import { fancyBulletPoints } from "@/pages/about";
+import buildPageTitle from "@/utils/buildPageTitle";
 import classNames from "classnames";
+import Head from "next/head";
+import Image from "next/image";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
@@ -30,6 +33,9 @@ const FinancialPlanningPage: NextPageWithLayout<{
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("Financial planning")}</title>
+      </Head>
       <section
         className={classNames("container px-4 md:px-fis-2 py-fis-2", radialBg)}
       >
@@ -42,7 +48,7 @@ const FinancialPlanningPage: NextPageWithLayout<{
           </div>
         </div>
       </section>
-      <div className="w-full pb-fis-2">
+      <div className="w-full pb-fis-2 bg-slate-100">
         <div className="flex justify-center relative w-full pt-fis-2">
           <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
             <FunBackground />
@@ -65,7 +71,13 @@ const FinancialPlanningPage: NextPageWithLayout<{
                     />
                   </div>
                   <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-                    <div className="bg-slate-500 rounded-lg w-full aspect-video" />
+                    <Image
+                      src="/Collaboration.png"
+                      alt="You worked hard to secure your wealth"
+                      width={1500}
+                      height={1500}
+                      className="rounded-lg"
+                    />
                   </div>
                 </div>
               </section>
@@ -74,6 +86,7 @@ const FinancialPlanningPage: NextPageWithLayout<{
         </div>
       </div>
       <ConnectWithUs
+        className="bg-slate-100"
         connectWithUs={{
           link: { title: "Connect with us", url: "/contact" },
           title: "Interested in more information?",
@@ -127,7 +140,13 @@ export const subLayout = (page: ReactElement) => {
           </p>
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <div className="bg-slate-500 w-full aspect-video rounded-lg" />
+          <Image
+            src="/Individuals.png"
+            alt="You worked hard to secure your wealth"
+            width={1500}
+            height={1500}
+            className="rounded-lg"
+          />
         </div>
       </section>
       <div className="container w-full">

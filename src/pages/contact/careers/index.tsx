@@ -9,6 +9,8 @@ import { Page_Aboutpage } from "@/gql/graphql";
 import { navBar, SubscribeSection } from "..";
 import getGqlRequest from "@/data/getGqlRequest";
 import { handleSubmit } from "@/utils/submitForm";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -81,32 +83,39 @@ const CareerForm = () => {
 
 export default function CareerPage() {
   return (
-    <div className="bg-slate-100 w-full pb-fis-2">
-      <div className="flex justify-center relative w-full pt-fis-2">
-        <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
-          <FunBackground />
-        </div>
-        <div className="container w-full">
-          <WhiteContainer>
-            <div className="flex flex-col">
-              <NavBar navBar={navBar} className="!pt-0" />
-              <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 md:pr-fis-2 pr-0">
-                  <p className="mb-4">
-                    Interested in more information? Reach out and let’s explore
-                    how we can support you.
-                  </p>
-                  <CareerForm />
-                </div>
-                <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-                  <div className="rounded-lg bg-slate-500 w-full aspect-square" />
+    <>
+      <Head>
+        <title>{buildPageTitle("Careers")}</title>
+      </Head>
+      <div className="bg-slate-100 w-full pb-fis-2">
+        <div className="flex justify-center relative w-full pt-fis-2">
+          <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
+            <FunBackground />
+          </div>
+          <div className="container w-full">
+            <WhiteContainer>
+              <div className="flex flex-col">
+                <NavBar navBar={navBar} className="!pt-0" />
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-1/2 md:pr-fis-2 pr-0">
+                    <p className="mb-1 text-lg">
+                      Interested in more information?
+                    </p>
+                    <p className="mb-4">
+                      Reach out and let’s explore how we can support you.
+                    </p>
+                    <CareerForm />
+                  </div>
+                  <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
+                    <div className="rounded-lg bg-slate-500 w-full aspect-square" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </WhiteContainer>
+            </WhiteContainer>
+          </div>
         </div>
+        <SubscribeSection />
       </div>
-      <SubscribeSection />
-    </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import ETF from "@/components/ETF";
+import ETF, { fancyNumberList } from "@/components/ETF";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
 import getGqlRequest from "@/data/getGqlRequest";
@@ -12,6 +12,10 @@ import {
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
+import buildPageTitle from "@/utils/buildPageTitle";
+import classNames from "classnames";
+import Head from "next/head";
+import Image from "next/image";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
@@ -46,11 +50,7 @@ const Landing = ({
             dangerouslySetInnerHTML={{ __html: landing.description as string }}
           />
           <div className="flex justify-end mt-8">
-            <Button
-              variant="primary"
-              href={landing.cta?.url || ''}
-              IconButton={<ArrowRight />}
-            >
+            <Button variant="primary" href="#Kocg" IconButton={<ArrowRight />}>
               {landing.cta?.title}
             </Button>
           </div>
@@ -65,7 +65,7 @@ const Landing = ({
 
 const Values = ({ values }: { values: Page_Kocg_Values }) => {
   return (
-    <div className="flex justify-center relative w-full pt-fis-2">
+    <div className="flex justify-center relative w-full pt-fis-2" id="Kocg">
       <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
         <FunBackground />
       </div>
@@ -77,28 +77,22 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
             </div>
             <div className="w-full md:w-1/2">
               <div
-                className="[&>p:text-lg]"
+                className="[&_p:text-lg] mb-6"
                 dangerouslySetInnerHTML={{
                   __html: values.description as string,
                 }}
               />
-              <div className="flex gap-4 md:gap-8 flex-col md:flex-row items-start md:items-center my-8">
-                <div className="w-[168px] h-[60px] bg-slate-500 rounded-lg" />
-                <Button
-                  variant="primary"
-                  href={values.moreInfo?.url as string}
-                  IconButton={<ArrowRight />}
-                >
-                  {values.moreInfo?.title}
-                </Button>
-              </div>
               <div
+                className="max-w-[350px] [&_strong]:text-2xl [&_p]:text-xs [&_p]:text-slate-500 [&_strong]:text-fis-purple mb-4"
                 dangerouslySetInnerHTML={{
                   __html: values.investmentPolicy as string,
                 }}
-                className="mb-4"
               />
               <div
+                className={classNames(
+                  fancyNumberList,
+                  "lg:[&>ol]:max-h-[7rem] [&>ol]:flex [&>ol]:gap-4 [&>ol]:flex-wrap [&>ol]:flex-col [&>ol>li]:font-bold [&>ol>li]:!pl-6 [&>ol>li]:before:text-xl [&>ol]:!space-y-0 [&_p]:text-2xl [&_p]:text-fis-blue [&_p]:mb-2"
+                )}
                 dangerouslySetInnerHTML={{
                   __html: values.guidelines as string,
                 }}
@@ -111,26 +105,46 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
   );
 };
 
+export const radialBg =
+  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.15)_0%,rgba(256,256,256,1)_50%)]";
+
 const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
   return (
-    <div className="bg-slate-50 w-full pt-fis-2 flex justify-center">
+    <div
+      className={classNames(
+        "bg-slate-50 w-full pt-fis-2 flex justify-center",
+        radialBg
+      )}
+    >
       <section className="container flex flex-col px-4 md:px-0 md:flex-row justify-center">
         <div className="pb-fis-2 flex flex-col pr-0 md:pr-fis-2 max-w-[630px]">
           <div
-            className="text-2xl text-fis-purple"
+            className="text-2xl text-fis-purple before:content-['“'] before:absolute relative before:left-0 before:top-0 pl-8 before:text-fis-purple before:text-6xl"
             dangerouslySetInnerHTML={{ __html: quote.quote || "" }}
           />
           <div className="flex items-center gap-8 mt-8">
             <div>
-              <div className="w-[168px] h-[60px] bg-slate-500 rounded-lg" />
+              <Image
+                className="w-[120px]"
+                src="/Knights-logo 2.png"
+                alt="KOC logo"
+                width={300}
+                height={120}
+              />
             </div>
             <div
               dangerouslySetInnerHTML={{ __html: quote.description || "" }}
             />
           </div>
         </div>
-        <div className="flex justify-center">
-          <div className="w-[325px] h-[400px] bg-slate-500 rounded-t-lg" />
+        <div className="flex justify-center items-end">
+          <Image
+            className="w-[325px] h-[325px] object-contain object-bottom"
+            src="/Patrick-2.png"
+            alt="Patrick Kelly"
+            width={650}
+            height={800}
+          />
         </div>
       </section>
     </div>
@@ -143,6 +157,9 @@ const KocgPage: NextPageWithLayout<{
 }> = ({ data, title }) => {
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("KOCG")}</title>
+      </Head>
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}

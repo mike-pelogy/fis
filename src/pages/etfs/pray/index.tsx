@@ -3,7 +3,7 @@ import ETF from "@/components/ETF";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
-    Page_Kocg_DataReference,
+  Page_Kocg_DataReference,
   Page_Kocg_Documents,
   Page_Kocg_Holdings,
   Page_Kocg_Overview,
@@ -14,6 +14,8 @@ import {
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
+import buildPageTitle from "@/utils/buildPageTitle";
+import Head from "next/head";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
@@ -66,6 +68,9 @@ const PrayPage: NextPageWithLayout<{
 }> = ({ data, title }) => {
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("PRAY")}</title>
+      </Head>
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}

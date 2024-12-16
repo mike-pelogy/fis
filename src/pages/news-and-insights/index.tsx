@@ -13,6 +13,8 @@ import {
   newsInsightsQuery,
 } from "@/data/newsInsightsPosts";
 import { Post } from "@/gql/graphql";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 interface PostWithCursor extends Post {
   cursor?: string;
@@ -29,10 +31,10 @@ export const normalizePosts = (data: any) => {
   ) as PostWithCursor[];
 };
 
+const TIPS_ID = 7;
+
 export async function getStaticProps() {
-  // TODO: get the categories
-  // get the id of the tips cat
-  const catId = 2;
+  const catId = TIPS_ID;
 
   const { data } = await getGqlRequest(newsInsightsQuery, {
     categoryId: catId,
@@ -58,7 +60,6 @@ const navBar = [
   },
 ];
 
-// TODO: create pagination
 export const Cat = ({
   catId,
   posts,
@@ -131,7 +132,7 @@ export const Cat = ({
       )}
       {!posts?.length && (
         <div className="my-fis-2">
-          <p>No posts found</p>
+          <p>No items found</p>
         </div>
       )}
     </>
@@ -143,7 +144,19 @@ const NewsAndInsightsPage: NextPageWithLayout<{
   categoryId: number;
   hasNextPage: boolean;
 }> = ({ posts, categoryId, hasNextPage }) => {
-  return <Cat catId={categoryId} posts={posts} hasNextPage={hasNextPage} />;
+  return (
+    <>
+      <Head>
+        <title>{buildPageTitle("News and Insights")}</title>
+      </Head>
+      <Cat
+        key={categoryId}
+        catId={categoryId}
+        posts={posts}
+        hasNextPage={hasNextPage}
+      />
+    </>
+  );
 };
 
 export const subLayout = (page: ReactElement) => {

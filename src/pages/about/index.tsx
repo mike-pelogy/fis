@@ -10,6 +10,9 @@ import { TeamDetails } from "../team/[name]";
 import Link from "next/link";
 import classNames from "classnames";
 import getGqlRequest from "@/data/getGqlRequest";
+import Image from "next/image";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -45,7 +48,7 @@ const MissionAndValues = ({
           className={classNames("overflow-hidden relative rounded-lg", bg)}
         >
           <div className="flex flex-col md:flex-row">
-            <div className="flex relative flex-col w-full md:w-1/2 px-4 p-fis-2 md:px-fis-2">
+            <div className="flex relative flex-col w-full items-stretch md:w-1/2 px-4 p-fis-2 md:px-fis-2">
               <div>
                 <h3
                   className="text-fis-blue text-2xl mb-4"
@@ -74,7 +77,15 @@ const MissionAndValues = ({
                 />
               </div>
             </div>
-            <div className="w-full md:w-1/2 h-full bg-slate-500 relative" />
+            <div className="w-full md:w-1/2  relative">
+              <Image
+                src="/aboutPage.png"
+                alt="Wealth Management"
+                width={1200}
+                height={1200}
+                className="object-cover rounded-lg h-full"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -167,6 +178,9 @@ const AboutOurTeam = ({ about }: { about: Page_Aboutpage_About }) => {
 export default function AboutPage({ data }: { data: Page_Aboutpage }) {
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("About")}</title>
+      </Head>
       {data.mission && data.values && (
         <MissionAndValues mission={data.mission} values={data.values} />
       )}

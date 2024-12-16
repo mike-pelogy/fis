@@ -22,6 +22,8 @@ import { useState } from "react";
 import Image from "next/image";
 import formatDate from "@/utils/formatDate";
 import { BASE_URL } from "@/constants";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 interface ICategory {
   label: string;
@@ -129,8 +131,9 @@ const Categories = ({ categories }: { categories: ICategory[] }) => {
   return (
     <div className="flex flex-wrap gap-2">
       {categories.map(({ label, url }) => {
+        const href = `/news-and-insights/category/${url}`;
         return (
-          <Button key={url} variant="tertiary" size="small" href={url}>
+          <Button key={url} variant="tertiary" size="small" href={href}>
             {label}
           </Button>
         );
@@ -225,6 +228,9 @@ export default function Post({
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle(title)}</title>
+      </Head>
       <div className="flex items-center w-full relative flex-col">
         <section className="container px-4 md:px-fis-2 p-fis-2 flex flex-col w-full relative">
           <h3 className="text-2xl text-fis-blue mb-fis-1">{title}</h3>
@@ -242,7 +248,6 @@ export default function Post({
               <div dangerouslySetInnerHTML={{ __html: content || "" }} />
             </article>
             <aside className="w-full md:w-1/3 flex flex-col pt-fis-2 md:pt-0">
-              <div></div>
               <div>
                 <div className="mb-4 flex gap-2 justify-between items-center">
                   <h4 className="text-2xl text-fis-blue">More news</h4>

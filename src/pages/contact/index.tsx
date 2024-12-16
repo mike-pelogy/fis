@@ -12,6 +12,11 @@ import Mail from "@/svgs/Mail";
 import LocationMarker from "@/svgs/LocationMarker";
 import getGqlRequest from "@/data/getGqlRequest";
 import { handleSubmit } from "@/utils/submitForm";
+import Image from "next/image";
+import Field from "@/components/Forms/Field";
+import Link from "next/link";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -99,7 +104,13 @@ export const SubscribeSection = () => {
     <div className="flex justify-center">
       <section className="flex flex-col-reverse md:flex-row pt-fis-2 container px-4 md:px-fis-2 items-center">
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <div className="rounded-lg aspect-video bg-slate-500 w-full" />
+          <Image
+            src="/Subscribe.png"
+            alt="subscribe image"
+            width={1200}
+            height={600}
+            className="rounded-lg"
+          />
         </div>
         <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
           <h3 className="text-2xl text-fis-blue mb-4">
@@ -119,6 +130,24 @@ export const SubscribeSection = () => {
                 <TextField name="email" label="Email:" type="email" />
               </div>
             </div>
+            <div>
+              <Field label="" name="consent">
+                <label className="flex gap-2">
+                  <input type="checkbox" name="consent" id="consent" required />
+                  <div>
+                    I consent to the terms of the 
+                    <Link
+                      href="/privacy-policy"
+                      className="text-fis-blue hover:text-fis-purple"
+                      target="_blank"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </div>
+                </label>
+              </Field>
+            </div>
             <div className="flex mt-fis-1">
               <Button
                 variant="secondary"
@@ -137,52 +166,57 @@ export const SubscribeSection = () => {
 
 export default function ContactPage() {
   return (
-    <div className="bg-slate-100 w-full pb-fis-2">
-      <div className="flex justify-center relative w-full pt-fis-2">
-        <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
-          <FunBackground />
+    <>
+      <Head>
+        <title>{buildPageTitle("Contact")}</title>
+      </Head>
+      <div className="bg-slate-100 w-full pb-fis-2">
+        <div className="flex justify-center relative w-full pt-fis-2">
+          <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
+            <FunBackground />
+          </div>
+          <div className="container w-full">
+            <WhiteContainer>
+              <div className="flex flex-col">
+                <NavBar navBar={navBar} className="!pt-0" />
+                <section className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
+                    <ContactForm />
+                  </div>
+                  <div className="w-full md:w-1/2 flex flex-col pt-fis-1 md:pt-0 gap-fis-1 md:gap-fis-2">
+                    {locations.map(({ phone, email, location }) => (
+                      <div key={phone} className="flex flex-col gap-2">
+                        <a
+                          className={classNames("flex items-center", buttons)}
+                          href={`tel:${phone}`}
+                        >
+                          <Phone />
+                          <div className="ml-2">{phone}</div>
+                        </a>
+                        <a
+                          className={classNames("flex items-center", buttons)}
+                          href={`mailto:${email}`}
+                        >
+                          <Mail />
+                          <div className="ml-2">{email}</div>
+                        </a>
+                        <a
+                          className={classNames("flex items-center", buttons)}
+                          href="#"
+                        >
+                          <LocationMarker />
+                          <div className="ml-2">{location}</div>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </WhiteContainer>
+          </div>
         </div>
-        <div className="container w-full">
-          <WhiteContainer>
-            <div className="flex flex-col">
-              <NavBar navBar={navBar} className="!pt-0" />
-              <section className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
-                  <ContactForm />
-                </div>
-                <div className="w-full md:w-1/2 flex flex-col pt-fis-1 md:pt-0 gap-fis-1 md:gap-fis-2">
-                  {locations.map(({ phone, email, location }) => (
-                    <div key={phone} className="flex flex-col gap-2">
-                      <a
-                        className={classNames("flex items-center", buttons)}
-                        href={`tel:${phone}`}
-                      >
-                        <Phone />
-                        <div className="ml-2">{phone}</div>
-                      </a>
-                      <a
-                        className={classNames("flex items-center", buttons)}
-                        href={`mailto:${email}`}
-                      >
-                        <Mail />
-                        <div className="ml-2">{email}</div>
-                      </a>
-                      <a
-                        className={classNames("flex items-center", buttons)}
-                        href="#"
-                      >
-                        <LocationMarker />
-                        <div className="ml-2">{location}</div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-          </WhiteContainer>
-        </div>
+        <SubscribeSection />
       </div>
-      <SubscribeSection />
-    </div>
+    </>
   );
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "@/components/Button";
 // eslint-disable-next-line
-import useFetch from "@/data/useFetch";
 import {
   MediaItem,
   Page_Kocg_DataReference,
@@ -13,7 +12,7 @@ import {
 } from "@/gql/graphql";
 import classNames from "classnames";
 // eslint-disable-next-line
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FunBackground from "./FunBackground";
 import WhiteContainer from "./WhiteContainer";
 import { NavBar } from "./NavBar";
@@ -80,6 +79,9 @@ interface ITypeIndex {
   typeIndex: 0 | 1;
 }
 
+export const fancyNumberList =
+  "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
+
 const Overview = ({
   overview,
   id,
@@ -127,7 +129,7 @@ const Overview = ({
               dangerouslySetInnerHTML={{ __html: overview.title as string }}
             />
             <div
-              className="[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold"
+              className={classNames(fancyNumberList)}
               dangerouslySetInnerHTML={{
                 __html: overview.description as string,
               }}
@@ -325,7 +327,8 @@ const Performance = ({
   monthly: MediaItem;
   quarterly: MediaItem;
 } & ITypeIndex) => {
-  const { rateDate } = getDailyData(dailyNav);
+  const d = dailyNav[typeIndex];
+  const { rateDate } = getDailyData(d);
 
   const [active, setActive] = useState(perfNav[0].title);
 

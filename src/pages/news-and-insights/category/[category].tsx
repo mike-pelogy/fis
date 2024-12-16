@@ -3,26 +3,22 @@ import { NextPageWithLayout } from "../../_app";
 import { Cat, normalizePosts, subLayout } from "..";
 import getGqlRequest from "@/data/getGqlRequest";
 import { catIdQuery, newsInsightsQuery } from "@/data/newsInsightsPosts";
-
-interface IParams {
-  params: {
-    category: string;
-  };
-}
+import { categoriesQuery } from "@/data/categoriesQuery";
+import Head from "next/head";
+import buildPageTitle from "@/utils/buildPageTitle";
 
 export const getStaticPaths = (async () => {
-  // TODO: get all the categories from wordpress
-  const posts: IParams[] = [
-    { uri: "tips" },
-    { uri: "articles" },
-    { uri: "videos" },
-    { uri: "faith-retirement" },
-  ].map(({ uri }) => ({
-    params: { category: uri },
-  }));
+  const { data } = await getGqlRequest(categoriesQuery);
+
+  // eslint-disable-next-line
+  const paths = data.categories.edges.map(({ node }: { node: any }) => {
+    return {
+      params: { category: node.slug },
+    };
+  });
 
   return {
-    paths: posts,
+    paths,
     fallback: false,
   };
 }) satisfies GetStaticPaths;
@@ -37,17 +33,13 @@ export const getStaticProps = async ({ params }: { params: any }) => {
     };
   }
 
-  const slug = "research";
   const { data: catData } = await getGqlRequest(catIdQuery, {
-    slug,
+    id: category,
   });
-  const id = catData.categories.edges.map(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ({ node }: { node: any }) => node.databaseId
-  )[0];
+  const catId = catData.category.databaseId;
 
   const { data } = await getGqlRequest(newsInsightsQuery, {
-    categoryId: id,
+    categoryId: catId,
   });
   const posts = normalizePosts(data);
 
@@ -55,8 +47,8 @@ export const getStaticProps = async ({ params }: { params: any }) => {
     props: {
       posts,
       hasNextPage: !!data.posts.pageInfo.hasNextPage,
-      categoryId: id,
-      slug,
+      categoryId: catId || "",
+      slug: category,
     },
   };
 };
@@ -77,8 +69,16 @@ const CategoryPage: NextPageWithLayout<
 
   return (
     <>
+      <Head>
+        <title>{buildPageTitle("News and Insights")}</title>
+      </Head>
       {getSectionHeader()}
-      <Cat posts={posts} catId={categoryId} hasNextPage={hasNextPage} />
+      <Cat
+        key={categoryId}
+        posts={posts}
+        catId={categoryId}
+        hasNextPage={hasNextPage}
+      />
     </>
   );
 };
