@@ -164,7 +164,7 @@ const Share = ({ url: propsUrl }: { url: string }) => {
 
   return (
     <div className="flex items-center gap-4">
-      <p className="text-slate-600">Share:</p>
+      <span className="text-slate-600">Share:</span>
       <div className="flex items-center gap-6">
         <a
           className={classNames(aClass, "text-2xl")}
@@ -192,6 +192,7 @@ const Share = ({ url: propsUrl }: { url: string }) => {
           className={aClass}
           href={`https://twitter.com/intent/tweet?text=undefined&url=${url}`}
           rel="noopener noreferrer"
+          target="_blank"
         >
           <Twitter />
         </a>
@@ -238,7 +239,7 @@ export default function Post({
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <Author {...author} />
               <Categories categories={categories || []} />
-              <p className="text-slate-600">{date}</p>
+              <span className="text-slate-600">{date}</span>
             </div>
             <Share url={url || ""} />
           </div>

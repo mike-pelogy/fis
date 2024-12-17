@@ -565,7 +565,7 @@ const Holdings = ({
       <section
         id={id}
         className={classNames(
-          "flex flex-col container w-full py-fis-2 px-4 md:px-fis-1",
+          "flex flex-col container w-full py-fis-2 pb-fis-4 px-4 md:px-fis-1",
           radialBg
         )}
       >
@@ -638,7 +638,7 @@ const Documents = ({
   ];
 
   return (
-    <div className="flex justify-center relative w-full pb-fis-2">
+    <div className="flex justify-center relative w-full pb-fis-2 -mt-fis-2">
       <div className="w-full h-[calc(100%-120px)] absolute left-0 bottom-0 bg-fis-blue/10 z-[-1]">
         <FunBackground />
       </div>

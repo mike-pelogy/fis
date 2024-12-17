@@ -66,7 +66,7 @@ const Landing = ({
 
 const Values = ({ values }: { values: Page_Kocg_Values }) => {
   return (
-    <div className="flex justify-center relative w-full pt-fis-2" id="Kocg">
+    <div className="flex justify-center relative w-full bg-slate-100 pt-fis-2" id="Kocg">
       <div className="w-full h-[calc(100%-120px)] absolute left-0 top-0 bg-fis-blue/10">
         <FunBackground />
       </div>
@@ -107,14 +107,14 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
 };
 
 export const radialBg =
-  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.15)_0%,rgba(256,256,256,1)_50%)]";
+  "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.25)_0%,rgba(256,256,256,0)_50%)]";
 
 const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
   return (
     <div
       className={classNames(
-        "bg-slate-50 w-full pt-fis-2 flex justify-center",
-        radialBg
+        radialBg,
+        "bg-slate-100 w-full pt-fis-2 flex justify-center",
       )}
     >
       <section className="container flex flex-col px-4 md:px-0 md:flex-row justify-center">
