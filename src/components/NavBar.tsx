@@ -34,32 +34,34 @@ export const NavBar = ({
       )}
     >
       <ul className="w-full overflow-x-auto border-b-[1px] border-slate-100 flex gap-6">
-        {navBar.map(({ title, href }) => (
-          <li key={title} className="leading-[0] mb-[4px] md:mb-0">
-            <Link
-              className={classNames(
-                buttonClass,
-                "whitespace-nowrap",
-                href === router.pathname ||
-                  href === router.asPath ||
-                  href === active ||
-                  router.asPath.includes(href as string) ||
-                  active === title
-                  ? activeClass
-                  : ""
-              )}
-              href={href ? href : `#${title}`}
-              onClick={(e) => {
-                if (handleOnClick) {
-                  e.preventDefault();
-                  handleOnClick(title);
-                }
-              }}
-            >
-              {title}
-            </Link>
-          </li>
-        ))}
+        {navBar.map(({ title, href }) => {
+          const isActive =
+            href === router.pathname ||
+            href === router.asPath ||
+            (href === active && typeof active === "string") ||
+            (title === active && typeof active === "string");
+
+          return (
+            <li key={title} className="leading-[0] mb-[4px] md:mb-0">
+              <Link
+                className={classNames(
+                  buttonClass,
+                  "whitespace-nowrap",
+                  isActive ? activeClass : ""
+                )}
+                href={href ? href : `#${title}`}
+                onClick={(e) => {
+                  if (handleOnClick) {
+                    e.preventDefault();
+                    handleOnClick(title);
+                  }
+                }}
+              >
+                {title}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

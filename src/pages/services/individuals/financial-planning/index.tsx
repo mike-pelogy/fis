@@ -101,7 +101,7 @@ const FinancialPlanningPage: NextPageWithLayout<{
 export const Nav = () => {
   const { asPath } = useRouter();
 
-  const map: Record<string, string> = {
+  const asPathMap: Record<string, string> = {
     "/services/individuals/financial-planning":
       "/services/individuals/financial-planning",
     "/services/individuals/investment-management":
@@ -117,7 +117,7 @@ export const Nav = () => {
   return (
     <NavBar
       className="pt-0 pb-0"
-      active={map[asPath] as string}
+      active={asPathMap[asPath] as string}
       navBar={[
         {
           title: "Individuals",

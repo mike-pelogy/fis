@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import ETF, { fancyNumberList } from "@/components/ETF";
 import FunBackground from "@/components/FunBackground";
+import VideoPlayer from "@/components/VideoPlayer";
 import WhiteContainer from "@/components/WhiteContainer";
 import getGqlRequest from "@/data/getGqlRequest";
 import { kocgPageQuery } from "@/data/kocgPageQuery";
@@ -56,7 +57,7 @@ const Landing = ({
           </div>
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+          <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
         </div>
       </section>
     </div>
@@ -73,7 +74,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
         <WhiteContainer>
           <div className="flex flex-col-reverse md:flex-row">
             <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mt-fis-2 md:mt-0">
-              <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+              <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
             </div>
             <div className="w-full md:w-1/2">
               <div
@@ -133,7 +134,7 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
               />
             </div>
             <div
-                className="[&>p]:mb-1"
+              className="[&>p]:mb-1"
               dangerouslySetInnerHTML={{ __html: quote.description || "" }}
             />
           </div>
@@ -158,9 +159,9 @@ const KocgPage: NextPageWithLayout<{
 }> = ({ data, title }) => {
   return (
     <>
-    <Head>
-    <title>{buildPageTitle('KOCG')}</title>
-    </Head>
+      <Head>
+        <title>{buildPageTitle("KOCG")}</title>
+      </Head>
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}
@@ -263,5 +264,3 @@ KocgPage.getLayout = (page: ReactElement) => {
 };
 
 export default KocgPage;
-
-

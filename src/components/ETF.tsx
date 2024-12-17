@@ -703,7 +703,7 @@ export default function ETF({
       <div className="pt-fis-1" />
       <div className="sticky top-[79px] md:top-[100px] w-full bg-white z-[100] flex justify-center">
         <div className="container">
-          <NavBar navBar={navBar} className="pb-0 pt-0" />
+          <NavBar navBar={navBar} active={undefined} className="pb-0 pt-0" />
         </div>
       </div>
       <div className="pt-fis-1">
