@@ -186,7 +186,7 @@ const MobileMenu = ({
   useHtmlOverflow();
 
   return (
-    <div className="w-full h-full fixed top-0 left-0 flex flex-col z-[1001] bg-white">
+    <div className="w-full h-full fixed top-0 left-0 flex flex-col z-[1000001] bg-white">
       <div className="w-full flex items-center justify-between p-4 h-[80px]">
         <Link href="/" className="h-full">
           <Logo
@@ -199,7 +199,7 @@ const MobileMenu = ({
         </button>
       </div>
       <div className="flex flex-col gap-fis-1 p-4">
-        <Menu menu={menu} className="flex-col !gap-2 items-start" />
+        <Menu menu={menu} className="flex-col !gap-2 items-start relative !z-[1000]" />
         <TopBar openSearch={openSearch} />
       </div>
     </div>
@@ -207,7 +207,6 @@ const MobileMenu = ({
 };
 
 // TODO: get data for top nav
-// and make mobile menu :D
 export default function Header() {
   const { pathname } = useRouter();
 
@@ -244,7 +243,7 @@ export default function Header() {
           <div className="flex lg:hidden">
             <button
               onClick={() => {
-                document.dispatchEvent(new CustomEvent('opensearch'));
+              setIsMobileMenuActive(true);
               }}
               className="text-fis-purple"
             >
@@ -252,7 +251,9 @@ export default function Header() {
             </button>
           </div>
           <div className="hidden lg:flex flex-col gap-4">
-            <TopBar openSearch={setIsSearchActive} />
+            <TopBar openSearch={() => {
+document.dispatchEvent(new CustomEvent('opensearch'));
+            }} />
             <Menu menu={menu} />
           </div>
         </div>

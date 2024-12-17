@@ -33,6 +33,13 @@
     --teal: 66 223 255;
     --purple: 51 78 207;
   }
+  p>a {
+    @apply transition-all;
+    @apply text-fis-blue;
+  }
+  p>a:hover {
+    @apply text-fis-purple;
+  }
 }
 
 body {

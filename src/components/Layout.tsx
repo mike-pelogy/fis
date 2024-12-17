@@ -6,7 +6,7 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <Header />
-      <main className="flex flex-col items-center">{children}</main>
+      <main className="flex relative z-0 flex-col items-center">{children}</main>
       <Footer />
     </>
   );

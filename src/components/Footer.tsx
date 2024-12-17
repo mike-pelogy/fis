@@ -59,18 +59,23 @@ export default function Footer() {
           />
         </div>
         <div className="w-full md:w-1/3">
-          <p className="text-base">
+          <p>
             Investors should consider the investment objectives, risks, charges
             and expenses carefully before investing. A prospectus or summary
             prospectus with this and other information about the Funds can be
-            found here, PRAY or KOCG. Read the prospectus or summary prospectus
-            carefully before investing. Investing in ETFs involves risk and
-            there is no guarantee the Funds’ investment strategy will be
-            successful and you can lose money on your investment in the fund.
-            Shares may trade at a premium or discount to their NAV in the
-            secondary market. ETFs are Distributed by Foreside Fund Services,
-            LLC.
+            found here, <Link href="/etfs/pray">PRAY</Link> or{" "}
+            <Link href="/etfs/kocg">KOCG</Link>. Read the prospectus or summary
+            prospectus carefully before investing.
           </p>
+
+          <p>
+            Investing in ETFs involves risk and there is no guarantee the Funds’
+            investment strategy will be successful and you can lose money on
+            your investment in the fund. Shares may trade at a premium or
+            discount to their NAV in the secondary market.
+          </p>
+
+          <p>ETFs are Distributed by Foreside Fund Services, LLC.</p>
         </div>
       </footer>
     </div>

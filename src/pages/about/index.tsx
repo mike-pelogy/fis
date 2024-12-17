@@ -101,8 +101,9 @@ const TeamCard = (team: Team) => {
   const href = `/team/${team.slug}`;
   return (
     <article>
-      <Link href={href}>
+      <Link className="group" href={href}>
         <div className="pb-4">
+        <div className="overflow-hidden max-w-[230px] aspect-square rounded-lg bg-slate-500">
           <Image
             src={
               team.featuredImage?.node.mediaItemUrl ||
@@ -111,8 +112,9 @@ const TeamCard = (team: Team) => {
             alt={team.title || ""}
             width={500}
             height={500}
-            className="w-full object-cover max-w-[230px] aspect-square rounded-lg bg-slate-500"
+            className="w-full h-full object-cover"
           />
+          </div>
         </div>
       </Link>
       <div className="flex flex-col gap-2">

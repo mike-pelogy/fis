@@ -60,8 +60,8 @@ export const TeamDetails = ({ slug, title: name, teamMember }: Team) => {
   const href = `/team/${slug}`;
   return (
     <>
-      <Link href={href}>
-        <h1 className="text-fis-blue text-lg font-bold">{name}</h1>
+      <Link className="group" href={href}>
+        <h1 className="text-fis-blue group-hover:text-fis-purple transition-all text-lg font-bold">{name}</h1>
         <p className="text-base">{role}</p>
       </Link>
       <a
