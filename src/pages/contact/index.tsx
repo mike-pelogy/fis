@@ -35,14 +35,16 @@ export const navBar = [
 
 const locations = [
   {
-    phone: "523-2333-1532",
+    phone: "833-833-1311",
     email: "info@fisetfs.com",
-    location: "10440 N. Central Expressway Suite 800 Dallas, TX 75231",
+    location: `10440 N. Central Expressway Suite 800 
+Dallas, TX 75231`,
   },
   {
-    phone: "523-2333-1532",
+    phone: "314-212-1404",
     email: "info@fisetfs.com",
-    location: "10440 N. Central Expressway Suite 800 Dallas, TX 75231",
+    location: `4339 Butler Hill Rd Suite 200
+St. Louis, MO 63128`,
   },
 ];
 
@@ -202,7 +204,8 @@ export default function ContactPage() {
                         </a>
                         <a
                           className={classNames("flex items-center", buttons)}
-                          href="#"
+                          href={`http://maps.google.com/?q=${location}`}
+                          target="_blank"
                         >
                           <LocationMarker />
                           <div className="ml-2">{location}</div>

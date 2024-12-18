@@ -249,11 +249,18 @@ const Arrow = ({
     <div
       style={{ ...style }}
       className={classNames(className, "before:hidden z-[10000] !w-auto", {
-        "!-bottom-12 !top-[initial] !left-[initial] right-[calc(44px+1rem)] md:!top-[50%] md:!bottom-[initial] md:!left-0": direction === "left",
-        "!-bottom-12 !top-[initial] !right-0 md:!top-[50%] md:!bottom-[initial] md:!right-[calc(20%-2.25rem)]": direction === "right",
+        "!-bottom-12 !top-[initial] !left-[initial] right-[calc(44px+1rem)] md:!top-[50%] md:!bottom-[initial] md:!left-0":
+          direction === "left",
+        "!-bottom-12 !top-[initial] !right-0 md:!top-[50%] md:!bottom-[initial] md:!right-[calc(20%-2.25rem)]":
+          direction === "right",
       })}
     >
-      <Button variant="primary" onClick={onClick} size="small" className="w-[44px] [&>div]:!justify-center">
+      <Button
+        variant="neutral"
+        onClick={onClick}
+        size="small"
+        className="w-[44px] [&>div]:!justify-center"
+      >
         {direction === "left" ? <ChevronLeft /> : <ChevronRight />}
       </Button>
     </div>
@@ -307,7 +314,11 @@ const LatestNewAndHighlights = ({
           <hr className="mt-4 mb-6" />
           <div className="w-full relative">
             <div
-              className={classNames("relative md:overflow-hidden", before, after)}
+              className={classNames(
+                "relative md:overflow-hidden",
+                before,
+                after
+              )}
             >
               <div className="w-full md:w-[120%]">
                 <Slider
