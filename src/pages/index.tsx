@@ -23,6 +23,9 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { normalizePosts } from "./news-and-insights";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import classNames from "classnames";
+import ChevronLeft from "@/svgs/ChevronLeft";
+import ChevronRight from "@/svgs/ChevronRight";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(homePageQuery);
@@ -231,6 +234,38 @@ function useMediaQuery() {
   return isMobile;
 }
 
+const Arrow = ({
+  className,
+  style,
+  onClick,
+  direction,
+}: {
+  className?: string;
+  style?: Record<string, string>;
+  onClick?: () => void;
+  direction: "left" | "right";
+}) => {
+  return (
+    <div
+      style={{ ...style }}
+      className={classNames(className, "before:hidden z-[10000] !w-auto", {
+        "!-bottom-12 !top-[initial] !left-[initial] right-[calc(44px+1rem)] md:!top-[50%] md:!bottom-[initial] md:!left-0": direction === "left",
+        "!-bottom-12 !top-[initial] !right-0 md:!top-[50%] md:!bottom-[initial] md:!right-[calc(20%-2.25rem)]": direction === "right",
+      })}
+    >
+      <Button variant="primary" onClick={onClick} size="small" className="w-[44px] [&>div]:!justify-center">
+        {direction === "left" ? <ChevronLeft /> : <ChevronRight />}
+      </Button>
+    </div>
+  );
+};
+
+const before =
+  "before:hidden md:before:block before:content-[''] before:w-[10%] before:bg-gradient-to-r before:from-transparent before:to-white before:right-12 before:top-0 before:h-full before:absolute before:z-[100]";
+
+const after =
+  "after:hidden md:after:block after:content-[''] after:w-12 after:bg-white after:right-0 after:top-0 after:h-full after:absolute after:z-[100]";
+
 const LatestNewAndHighlights = ({
   latestNewAndInsights,
   posts,
@@ -243,7 +278,7 @@ const LatestNewAndHighlights = ({
   const finalSettings = {
     infinite: true,
     speed: 500,
-    slidesToShow: isDesktop ? 3 : 1,
+    slidesToShow: isDesktop ? 4 : 1,
     slidesToScroll: 1,
   };
 
@@ -271,15 +306,28 @@ const LatestNewAndHighlights = ({
           </div>
           <hr className="mt-4 mb-6" />
           <div className="w-full relative">
-            <Slider {...finalSettings}>
-              {posts.map((post) => {
-                return (
-                  <div key={post.slug} className="px-4">
-                    <PostCard post={post} showButton showImage />
-                  </div>
-                );
-              })}
-            </Slider>
+            <div
+              className={classNames("relative md:overflow-hidden", before, after)}
+            >
+              <div className="w-full md:w-[120%]">
+                <Slider
+                  {...finalSettings}
+                  className="md:px-8"
+                  prevArrow={<Arrow direction="left" />}
+                  nextArrow={<Arrow direction="right" />}
+                  swipe={false}
+                  arrows
+                >
+                  {posts.map((post) => {
+                    return (
+                      <div key={post.slug} className="md:px-4">
+                        <PostCard post={post} showButton showImage />
+                      </div>
+                    );
+                  })}
+                </Slider>
+              </div>
+            </div>
           </div>
         </WhiteContainer>
       </div>

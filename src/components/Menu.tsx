@@ -115,7 +115,7 @@ export function MenuLayer({
                   "rounded px-4 z-10 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-all",
                   {
                   "py-1 bg-slate-100": isMobile,
-                    "drop-shadow-xl bg-white absolute top-[100%] opacity-0 py-3": !isMobile,
+                    "bg-white absolute top-[100%] opacity-0 py-3": !isMobile,
                     "-left-4 min-w-[225px] w-auto":
                       !["/news-and-insights", "/contact"].includes(path) &&
                       !isMobile,
