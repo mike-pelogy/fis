@@ -19,6 +19,9 @@
   ul:last-child {
     margin-bottom: 0;
   }
+  input[type="file"]::file-selector {
+    display: none;
+  }
 }
 
 @layer base {

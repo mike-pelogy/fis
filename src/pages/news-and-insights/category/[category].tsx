@@ -6,6 +6,7 @@ import { catIdQuery, newsInsightsQuery } from "@/data/newsInsightsPosts";
 import { categoriesQuery } from "@/data/categoriesQuery";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import Image from "next/image";
 
 export const getStaticPaths = (async () => {
   const { data } = await getGqlRequest(categoriesQuery);
@@ -60,7 +61,13 @@ const CategoryPage: NextPageWithLayout<
     if (slug === "faith-retirement") {
       return (
         <div className="mb-4">
-          <div className="bg-slate-500 w-[100px] aspect-video rounded" />
+          <Image
+            alt=""
+            src="/faith and retirement sirius-1.png 1.png"
+            width={130}
+            height={44}
+            className="w-[130px]"
+          />
         </div>
       );
     }

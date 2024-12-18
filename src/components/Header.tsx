@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import classNames from "classnames";
-import Menu from "./Menu";
+import { MenuLayer } from "./Menu";
 import type { IMenuItem } from "./Menu";
 import Logo from "./Logo";
 import Link from "next/link";
@@ -77,7 +77,6 @@ export const menu: IMenuItem[] = [
   {
     title: "Contact",
     path: "/contact",
-    children: [{ title: "Careers", path: "/contact/careers" }],
   },
 ];
 
@@ -198,9 +197,13 @@ const MobileMenu = ({
           <Close />
         </button>
       </div>
-      <div className="flex flex-col gap-fis-1 p-4">
-        <Menu menu={menu} className="flex-col !gap-2 items-start relative !z-[1000]" />
+      <div className="flex flex-col bg-slate-100 gap-fis-1 p-4 h-[calc(100vh-80px)] overflow-auto">
         <TopBar openSearch={openSearch} />
+        <MenuLayer
+          isMobile
+          menu={menu}
+          className="flex-col !gap-2 items-start relative !z-[1000]"
+        />
       </div>
     </div>
   );
@@ -214,13 +217,13 @@ export default function Header() {
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
 
   useEffect(() => {
-    function openSearch () {
+    function openSearch() {
       setIsSearchActive(true);
     }
-    document.addEventListener('opensearch', openSearch);
+    document.addEventListener("opensearch", openSearch);
     return () => {
-      document.removeEventListener('opensearch', openSearch);
-    }
+      document.removeEventListener("opensearch", openSearch);
+    };
   }, []);
 
   useEffect(() => {
@@ -243,7 +246,7 @@ export default function Header() {
           <div className="flex lg:hidden">
             <button
               onClick={() => {
-              setIsMobileMenuActive(true);
+                setIsMobileMenuActive(true);
               }}
               className="text-fis-purple"
             >
@@ -251,17 +254,19 @@ export default function Header() {
             </button>
           </div>
           <div className="hidden lg:flex flex-col gap-4">
-            <TopBar openSearch={() => {
-document.dispatchEvent(new CustomEvent('opensearch'));
-            }} />
-            <Menu menu={menu} />
+            <TopBar
+              openSearch={() => {
+                document.dispatchEvent(new CustomEvent("opensearch"));
+              }}
+            />
+            <MenuLayer menu={menu} />
           </div>
         </div>
       </header>
       {isMobileMenuActive && (
         <MobileMenu
           openSearch={() => {
-            document.dispatchEvent(new CustomEvent('opensearch'));
+            document.dispatchEvent(new CustomEvent("opensearch"));
           }}
           onClose={() => setIsMobileMenuActive(false)}
         />

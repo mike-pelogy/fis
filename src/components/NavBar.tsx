@@ -13,6 +13,39 @@ const buttonClass =
   "text-lg text-fis-blue block leading-[2em] hover:text-fis-purple transition-all hover:border-fis-purple border-b-2 border-transparent";
 const activeClass = "!text-fis-purple !border-fis-purple";
 
+const Li = ({
+  title,
+  href,
+  isActive,
+  handleOnClick,
+}: {
+  title: string;
+  href?: string;
+  isActive: boolean;
+  handleOnClick?: (title: string) => void;
+}) => {
+  return (
+    <li className="leading-[0] mb-[4px] md:mb-0">
+      <Link
+        className={classNames(
+          buttonClass,
+          "whitespace-nowrap",
+          isActive ? activeClass : ""
+        )}
+        href={href ? href : `#${title}`}
+        onClick={(e) => {
+          if (handleOnClick) {
+            e.preventDefault();
+            handleOnClick(title);
+          }
+        }}
+      >
+        {title}
+      </Link>
+    </li>
+  );
+};
+
 export const NavBar = ({
   navBar,
   className,
@@ -42,24 +75,13 @@ export const NavBar = ({
             (title === active && typeof active === "string");
 
           return (
-            <li key={title} className="leading-[0] mb-[4px] md:mb-0">
-              <Link
-                className={classNames(
-                  buttonClass,
-                  "whitespace-nowrap",
-                  isActive ? activeClass : ""
-                )}
-                href={href ? href : `#${title}`}
-                onClick={(e) => {
-                  if (handleOnClick) {
-                    e.preventDefault();
-                    handleOnClick(title);
-                  }
-                }}
-              >
-                {title}
-              </Link>
-            </li>
+            <Li
+              key={title}
+              title={title}
+              href={href}
+              handleOnClick={handleOnClick}
+              isActive={isActive}
+            />
           );
         })}
       </ul>

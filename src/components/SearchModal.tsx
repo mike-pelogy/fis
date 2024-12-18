@@ -111,7 +111,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       className={classNames(
-        "fixed w-full h-full top-0 left-0 z-[100000] flex justify-center items-start",
+        "fixed w-full h-full top-0 left-0 z-[10000000000] flex justify-center items-start",
         bg
       )}
     >

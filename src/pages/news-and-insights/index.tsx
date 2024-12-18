@@ -181,14 +181,14 @@ export const subLayout = (page: ReactElement) => {
               </div>
               <div className="relative">
                 <button
-                  className="absolute right-4 top-fis-1 h-[38px] text-fis-blue hover:text-fis-purple transition-all"
+                  className="relative mr-0 ml-auto md:ml-0 block px-4 md:px-0 md:absolute md:right-4 md:top-fis-1 h-[38px] text-fis-blue hover:text-fis-purple transition-all"
                   onClick={() => {
                     document.dispatchEvent(new CustomEvent("opensearch"));
                   }}
                 >
                   <Search />
                 </button>
-                <NavBar navBar={navBar} />
+                <NavBar navBar={navBar} className="pt-0 md:pt-fis-1" />
               </div>
               <div>{page}</div>
             </div>

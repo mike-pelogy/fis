@@ -9,10 +9,7 @@ export interface IMenuItem {
   children?: IMenuItem[];
 }
 
-export const beforeClass =
-  "relative before:content-[''] before:absolute before:w-full before:h-[2px] before:bottom-0 before:left-0 before:scale-0 before:bg-fis-purple before:transition-all before:origin-left";
-export const hoverClass =
-  "[&>a]:hover:before:bg-fis-blue [&>a]:hover:before:scale-100";
+export const beforeClass = "border-b-2 border-transparent";
 
 export default function Menu({
   menu,
@@ -30,12 +27,11 @@ export default function Menu({
           <li
             className={classNames(
               "text-base font-bold hover:text-fis-blue transition-all leading-0",
-              hoverClass,
               {
                 "text-fis-purple [&>a]:before:scale-100":
                   pathname === path ||
                   children?.find((c) => c.path === pathname) ||
-                  pathname.includes(path) && path !== '/',
+                  (pathname.includes(path) && path !== "/"),
               }
             )}
           >
@@ -71,5 +67,76 @@ export default function Menu({
         </div>
       ))}
     </ul>
+  );
+}
+
+export function MenuLayer({
+  menu,
+  className,
+  layer = 1,
+  isMobile,
+}: {
+  className?: string;
+  menu: IMenuItem[];
+  layer?: number;
+  isMobile?: boolean;
+}) {
+  const { pathname } = useRouter();
+
+  return (
+    <div>
+      <ul className={classNames("flex gap-6", className)}>
+        {menu.map(({ title, path, children }) => (
+          <div className="relative group" key={title}>
+            <li
+              className={classNames(
+                "text-base font-bold hover:text-fis-blue transition-all leading-0",
+                {
+                  "text-fis-purple [&>a]:before:scale-100":
+                    pathname === path ||
+                    children?.find((c) => c.path === pathname) ||
+                    (pathname.includes(path) && path !== "/"),
+                }
+              )}
+            >
+              <Link
+                className={classNames(
+                  "relative leading-6 inline-block whitespace-nowrap",
+                  beforeClass
+                )}
+                href={path}
+              >
+                {title}
+              </Link>
+            </li>
+            {children && (
+              <div
+                className={classNames(
+                  "rounded px-4 z-10 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-all",
+                  {
+                  "py-1 bg-slate-100": isMobile,
+                    "drop-shadow-xl bg-white absolute top-[100%] opacity-0 py-3": !isMobile,
+                    "-left-4 min-w-[225px] w-auto":
+                      !["/news-and-insights", "/contact"].includes(path) &&
+                      !isMobile,
+                    "-right-4": ["/news-and-insights", "/contact"].includes(
+                      path
+                    ),
+                    "!relative pl-6 drop-shadow-none": layer >= 2,
+                  }
+                )}
+              >
+                <MenuLayer
+                  className="flex-col !gap-2 [&>li]:text-small"
+                  menu={children}
+                  isMobile={isMobile}
+                  layer={layer + 1}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </ul>
+    </div>
   );
 }
