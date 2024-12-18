@@ -122,7 +122,7 @@ export function MenuLayer({
                     "-right-4": ["/news-and-insights", "/contact"].includes(
                       path
                     ),
-                    "!relative pl-6 drop-shadow-[none]": layer >= 2,
+                    "!relative pl-6 !drop-shadow-[none]": layer >= 2,
                   }
                 )}
               >
