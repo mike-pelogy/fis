@@ -157,7 +157,7 @@ const EndowmentsPage: NextPageWithLayout<{
               }}
             />
             <div
-              className="text-2xl text-fis-purple font-bold mt-4"
+              className="text-3xl text-fis-purple font-bold mt-4"
               dangerouslySetInnerHTML={{
                 __html: dueDiligence?.quote || "",
               }}
