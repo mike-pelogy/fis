@@ -104,7 +104,7 @@ const EndowmentsPage: NextPageWithLayout<{
               }}
             />
           </div>
-          <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
+          <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 md:pr-fis-3 mt-fis-2 md:mt-0">
             <Image
               src="/Top5Reasons.png"
               alt="Top 5 Reasons"
