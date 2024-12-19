@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               <strong>Information We Collect:</strong> We collect certain
-              nonpublic information about you ("Customer Information"). The
+              nonpublic information about you (&ldquo;Customer Information&rdquo;). The
               essential purpose for collecting Customer Information is to allow
               us to provide advisory services to you. Customer Information we
               collect may include:
