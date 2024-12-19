@@ -127,7 +127,7 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
             className="text-2xl text-fis-purple before:content-['“'] before:absolute relative before:left-0 before:top-0 pl-8 before:text-fis-purple before:text-6xl"
             dangerouslySetInnerHTML={{ __html: quote.quote || "" }}
           />
-          <div className="flex items-center gap-8 mt-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mt-8">
             <div>
               <Image
                 className="w-[120px]"

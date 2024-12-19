@@ -234,7 +234,7 @@ export default function Post({
       </Head>
       <div className="flex items-center w-full relative flex-col">
         <section className="container px-4 md:px-fis-2 p-fis-2 flex flex-col w-full relative">
-          <h3 className="text-2xl text-fis-blue mb-fis-1">{title}</h3>
+          <h3 className="text-2xl text-fis-blue mb-fis-1 max-w-[700px]">{title}</h3>
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <Author {...author} />
