@@ -22,6 +22,10 @@
   input[type="file"]::file-selector {
     display: none;
   }
+
+  div.ReactModal__Overlay {
+    z-index: 99999999999999;
+  }
 }
 
 @layer base {

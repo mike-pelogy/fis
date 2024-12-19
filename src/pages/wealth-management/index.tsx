@@ -10,6 +10,8 @@ import {
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import { useState } from "react";
+import Modal from "@/components/Modal";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(wealthManagementPageQuery);
@@ -53,11 +55,49 @@ const WealthManagementPage = ({
   introduction: Page_Wealthmanagement_Introduction;
   services: Page_Wealthmanagement_Services;
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <Head>
         <title>{buildPageTitle("Wealth Management")}</title>
       </Head>
+      <Modal isOpen={isModalOpen}>
+        <h3 className="text-2xl text-fis-blue mb-4 font-[inherit] max-w-[480px]">
+          You are now leaving the Faith Investor Services website.
+        </h3>
+        <div className="font-[inherit] mb-fis-1">
+          <p className="text-base">
+            Please click confirm below to continue on to the Orion website.
+          </p>
+          <p>
+            If you have not done so already, we encourage you to enroll in
+            two-factor authentication with Orion to better protect your account.
+          </p>
+          <p>
+            The link you have selected is located on another server. Faith
+            Investor Services does not endorse this website, its sponsor, or any
+            of the policies, activities, products or services offered on the
+            site or by any advertiser on the site.
+          </p>
+        </div>
+        <div className="flex justify-end gap-2">
+          <Button
+            variant="neutral"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            href="https://login.orionadvisor.com/login.html?g=86e684ed-2ae0-4e46-867b-cbaaeb71665d"
+          >
+            Confirm
+          </Button>
+        </div>
+      </Modal>
       <div className="bg-slate-50 w-full py-fis-2 flex justify-center">
         <section className="container flex flex-col md:flex-row items-center px-4 md:px-fis-2">
           <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
@@ -69,7 +109,13 @@ const WealthManagementPage = ({
               }}
             />
             <div className="flex justify-end mt-8">
-              <Button variant="secondary" href="https://login.orionadvisor.com/login.html?g=86e684ed-2ae0-4e46-867b-cbaaeb71665d" target="_blank" IconButton={<ArrowRight />}>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+                IconButton={<ArrowRight />}
+              >
                 {introduction.cta?.title}
               </Button>
             </div>
@@ -103,7 +149,7 @@ const WealthManagementPage = ({
               alt="Wealth Management"
               width={1200}
               height={1200}
-              className="rounded-lg max-w-[650px]"
+              className="rounded-lg max-w-full md:max-w-[650px]"
             />
           </div>
         </section>

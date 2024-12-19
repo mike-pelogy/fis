@@ -112,7 +112,9 @@ export default function TeamMember({
             </div>
           </div>
           <div className="w-full md:w-1/2">
-            <div dangerouslySetInnerHTML={{ __html: biography }} />
+          <div className="min-h-[60vh]">
+          <div className="max-w-[500px]" dangerouslySetInnerHTML={{ __html: biography }} />
+          </div>
           </div>
         </section>
         <div

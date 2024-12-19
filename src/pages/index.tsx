@@ -306,7 +306,7 @@ const LatestNewAndHighlights = ({
             <Button
               IconButton={<ArrowRight />}
               variant="neutral"
-              href="/news-and-insights"
+              href="/news-and-insights/category/faith-retirement"
             >
               {latestNewAndInsights.link?.title}
             </Button>

@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import img from "../../public/defaultFeaturedImage.png";
+import { FontContextProvider } from "@/components/FontProvider";
 
 const lato = Lato({
   weight: ["300", "400", "700"],
@@ -48,10 +49,12 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta property="og:image" content={img.src} />
       </Head>
       <div className={lato.className}>
+      <FontContextProvider value={{fontClassName: lato.className}}>
         {getLayout(
           <Layout>{getSubLayout(<Component {...pageProps} />)}</Layout>
         )}
         <ToastContainer position="bottom-left" />
+        </FontContextProvider>
       </div>
     </>
   );

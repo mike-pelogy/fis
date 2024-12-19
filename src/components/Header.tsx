@@ -73,7 +73,7 @@ export const menu: IMenuItem[] = [
       { title: "Team", path: "/about#team" },
     ],
   },
-  { title: "News and Insights", path: "/news-and-insights/category/tips" },
+  { title: "News and Insights", path: "/news-and-insights/category/faith-retirement" },
   {
     title: "Contact",
     path: "/contact",
@@ -88,7 +88,8 @@ export const FormAndADV = ({
   return (
     <>
       <a
-        href="#"
+        target="_blank"
+        href="https://adviserinfo.sec.gov/firm/summary/313337"
         className={classNames("hover:text-fis-blue transition-all", color)}
       >
         Form CRS
@@ -97,7 +98,8 @@ export const FormAndADV = ({
         </span>
       </a>
       <a
-        href="#"
+        target="_blank"
+        href="https://adviserinfo.sec.gov/firm/summary/313337"
         className={classNames("hover:text-fis-blue transition-all", color)}
       >
         ADV Disclosures

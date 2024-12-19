@@ -51,13 +51,13 @@ export async function getStaticProps() {
 }
 
 const navBar = [
-  { title: "Tips", href: "/news-and-insights/category/tips" },
-  { title: "Articles", href: "/news-and-insights/category/articles" },
-  { title: "Videos", href: "/news-and-insights/category/videos" },
   {
     title: "Faith & Retirement",
     href: "/news-and-insights/category/faith-retirement",
   },
+  { title: "Tips", href: "/news-and-insights/category/tips" },
+  { title: "Articles", href: "/news-and-insights/category/articles" },
+  { title: "Videos", href: "/news-and-insights/category/videos" },
 ];
 
 export const Cat = ({
