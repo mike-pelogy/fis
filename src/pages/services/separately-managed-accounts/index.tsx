@@ -13,6 +13,8 @@ import { handleSubmit } from "@/utils/submitForm";
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import { fancyNumberList } from "@/components/ETF";
+import classNames from "classnames";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(separatelyManageAccountsPageQuery);
@@ -93,7 +95,7 @@ const EndowmentsPage: NextPageWithLayout<{
               dangerouslySetInnerHTML={{ __html: top5Reasons?.title || "" }}
             />
             <div
-              className="mb-4"
+              className={classNames(fancyNumberList, "mb-fis-2")}
               dangerouslySetInnerHTML={{
                 __html: top5Reasons?.reasons || "",
               }}
