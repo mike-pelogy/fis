@@ -11,6 +11,7 @@ import { fancyBulletPoints } from "@/pages/about";
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import classNames from "classnames";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(retirementPlansPageQuery);
@@ -81,18 +82,23 @@ const FinancialPlanningPage: NextPageWithLayout<{
           />
         </div>
         <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
-            {servicesBenefits?.servicesAndBenefits?.map((sandb) => {
+          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 flex flex-col gap-6">
+            {servicesBenefits?.servicesAndBenefits?.map((sandb, index) => {
               return (
                 <div key={sandb?.title}>
+                  <div className="flex relative pl-8">
+                    <span className="text-xl font-bold text-fis-blue absolute left-0">
+                      {index + 1}
+                    </span>
+                    <div
+                      className="text-xl font-bold text-fis-blue mb-2"
+                      dangerouslySetInnerHTML={{
+                        __html: sandb?.title || "",
+                      }}
+                    />
+                  </div>
                   <div
-                    dangerouslySetInnerHTML={{
-                      __html: sandb?.title || "",
-                    }}
-                  />
-
-                  <div
-                    className={fancyBulletPoints}
+                    className={classNames(fancyBulletPoints, "pl-8")}
                     dangerouslySetInnerHTML={{
                       __html: sandb?.description || "",
                     }}
@@ -122,13 +128,13 @@ const FinancialPlanningPage: NextPageWithLayout<{
 export const subLayout = (page: ReactElement) => {
   return (
     <div className="flex flex-col justify-center w-full items-center">
-    <div className="pt-fis-1 w-full bg-slate-100" />
+      <div className="pt-fis-1 w-full bg-slate-100" />
       <div className="w-full bg-slate-100 flex justify-center sticky top-[79px] md:top-[100px] z-[1000]">
         <div className="container w-full">
           <Nav />
         </div>
       </div>
-    <div className="pb-fis-1 w-full bg-slate-100" />
+      <div className="pb-fis-1 w-full bg-slate-100" />
       <div className="container w-full">
         <NavBar
           className="!pb-0"
