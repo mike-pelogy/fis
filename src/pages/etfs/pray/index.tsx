@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import ETF from "@/components/ETF";
+import VideoPlayer from "@/components/VideoPlayer";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
@@ -58,7 +59,7 @@ const Landing = ({
           </div>
         </div>
         <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-          <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+          <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
         </div>
       </section>
     </div>
