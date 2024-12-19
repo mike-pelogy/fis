@@ -101,7 +101,6 @@ const LandingAndAbout = ({
             />
             <hr className="mt-4 mb-8" />
             <span
-              className="[&>p]:text-base"
               dangerouslySetInnerHTML={{
                 __html: aboutSection.description as string,
               }}
@@ -174,7 +173,13 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
             </div>
           </div>
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-            <div className="w-full aspect-video bg-slate-500 rounded-lg" />
+          <Image
+            src="/services.png"
+            alt="Services"
+            width={1200}
+            height={1200}
+            className="rounded-lg"
+          />
           </div>
         </div>
       </section>

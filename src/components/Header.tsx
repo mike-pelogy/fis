@@ -60,8 +60,8 @@ export const menu: IMenuItem[] = [
     title: "Etfs",
     path: "/etfs/kocg",
     children: [
-      { title: "KOCG", path: "/etfs/kocg" },
       { title: "PRAY", path: "/etfs/pray" },
+      { title: "KOCG", path: "/etfs/kocg" },
     ],
   },
   {
@@ -73,7 +73,10 @@ export const menu: IMenuItem[] = [
       { title: "Team", path: "/about#team" },
     ],
   },
-  { title: "News and Insights", path: "/news-and-insights/category/faith-retirement" },
+  {
+    title: "News and Insights",
+    path: "/news-and-insights/category/faith-retirement",
+  },
   {
     title: "Contact",
     path: "/contact",

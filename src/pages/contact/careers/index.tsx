@@ -11,6 +11,7 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { handleSubmit } from "@/utils/submitForm";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import Image from "next/image";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
@@ -66,7 +67,7 @@ const CareerForm = () => {
       </div>
       <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="w-full md:w-1/2">
-          <FileField name="resume" label="Upload Resume:" />
+          <FileField name="resume" label="Upload Resume:" required />
         </div>
         <div className="w-full md:w-1/2">
           <FileField name="cover" label="Upload Cover Letter:" />
@@ -107,7 +108,13 @@ export default function CareerPage() {
                     <CareerForm />
                   </div>
                   <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-                    <div className="rounded-lg bg-slate-500 w-full aspect-square" />
+                    <Image
+                      src="/team.png"
+                      width={1200}
+                      height={800}
+                      alt="team photo"
+                      className="rounded-lg"
+                    />
                   </div>
                 </div>
               </div>

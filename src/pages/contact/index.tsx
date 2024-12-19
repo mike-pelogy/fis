@@ -134,7 +134,7 @@ export const SubscribeSection = () => {
             </div>
             <div>
               <Field label="" name="consent">
-                <label className="flex gap-2">
+                <label className="flex md:items-center gap-2">
                   <input type="checkbox" name="consent" id="consent" required />
                   <div>
                     I consent to the terms of the 
