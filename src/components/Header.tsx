@@ -17,51 +17,51 @@ import { useRouter } from "next/router";
 
 export const menu: IMenuItem[] = [
   { title: "Home", path: "/" },
-  { title: "Wealth Management", path: "/wealth-management" },
   {
-    title: "Services",
-    path: "/services/individuals/financial-planning",
+    title: "Wealth Management",
+    path: "/wealth-management/individuals/financial-planning",
     children: [
       {
         title: "Individuals",
-        path: "/services/individuals/financial-planning",
+        path: "/wealth-management/individuals/financial-planning",
         children: [
           {
             title: "Financial Planning",
-            path: "/services/individuals/financial-planning",
+            path: "/wealth-management/individuals/financial-planning",
           },
           {
             title: "Investment Management",
-            path: "/services/individuals/investment-management",
+            path: "/wealth-management/individuals/investment-management",
           },
         ],
       },
       {
         title: "Companies not for profit organizations",
-        path: "/services/companies-not-for-profit-organizations/retirement-plans",
+        path: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
         children: [
           {
             title: "Retirement Plans",
-            path: "/services/companies-not-for-profit-organizations/retirement-plans",
+            path: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
           },
           {
             title: "Endowments",
-            path: "/services/companies-not-for-profit-organizations/endowments",
+            path: "/wealth-management/companies-not-for-profit-organizations/endowments",
           },
         ],
       },
       {
         title: "Separately Managed Accounts (SMA)",
-        path: "/services/separately-managed-accounts",
+        path: "/wealth-management/separately-managed-accounts",
       },
     ],
   },
   {
-    title: "Etfs",
-    path: "/etfs/kocg",
+    title: "ETFs",
+    path: "/etfs/pray",
     children: [
       { title: "PRAY", path: "/etfs/pray" },
       { title: "KOCG", path: "/etfs/kocg" },
+      { title: "BRIF", path: "/etfs/brif" },
     ],
   },
   {
@@ -90,16 +90,6 @@ export const FormAndADV = ({
 }) => {
   return (
     <>
-      <a
-        target="_blank"
-        href="https://adviserinfo.sec.gov/firm/summary/313337"
-        className={classNames("hover:text-fis-blue transition-all", color)}
-      >
-        Form CRS
-        <span className="inline-block w-[1rem] h-[0.9rem] ml-2">
-          <ExternalLink />
-        </span>
-      </a>
       <a
         target="_blank"
         href="https://adviserinfo.sec.gov/firm/summary/313337"
@@ -151,13 +141,13 @@ export const SocialAndPhone = () => {
         </a>
       ))}
       <a
-        href="tel:833-833-1311"
+        href="tel:888-586-1404"
         className={classNames("text-fis-purple hover:text-fis-blue")}
       >
         <span className="inline-block w-[1rem] h-[0.9rem] mr-2">
           <Phone />
         </span>
-        833-833-1311
+        888-586-1404
       </a>
     </>
   );

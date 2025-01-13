@@ -66,14 +66,14 @@ const Landing = ({
   );
 };
 
-const PrayPage: NextPageWithLayout<{
+const BrifPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
 }> = ({ data, title }) => {
   return (
     <>
       <Head>
-        <title>{buildPageTitle("PRAY")}</title>
+        <title>{buildPageTitle("BRIF")}</title>
       </Head>
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
@@ -99,7 +99,7 @@ const PrayPage: NextPageWithLayout<{
   );
 };
 
-PrayPage.getLayout = (page: ReactElement) => {
+BrifPage.getLayout = (page: ReactElement) => {
   return (
     <>
       {page}
@@ -193,4 +193,4 @@ PrayPage.getLayout = (page: ReactElement) => {
   );
 };
 
-export default PrayPage;
+export default BrifPage;

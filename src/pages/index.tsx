@@ -209,7 +209,7 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
             <Button
               IconButton={<ArrowRight />}
               variant="primary"
-              href="/services/individuals/investment-management"
+              href="/wealth-management/individuals/investment-management"
             >
               {services.investment?.callToAction?.title}
             </Button>

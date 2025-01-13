@@ -141,11 +141,11 @@ export const subLayout = (page: ReactElement) => {
           navBar={[
             {
               title: "Retirement Plans",
-              href: "/services/companies-not-for-profit-organizations/retirement-plans",
+              href: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
             },
             {
               title: "Endowments",
-              href: "/services/companies-not-for-profit-organizations/endowments",
+              href: "/wealth-management/companies-not-for-profit-organizations/endowments",
             },
           ]}
         />

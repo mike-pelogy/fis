@@ -35,10 +35,10 @@ export const navBar = [
 
 const locations = [
   {
-    phone: "833-833-1311",
+    phone: "888-586-1404",
     email: "info@fisetfs.com",
-    location: `10440 N. Central Expressway Suite 800 
-Dallas, TX 75231`,
+    location: `8080 N. Central Expressway Suite 1700
+Dallas, TX 75206`,
   },
   {
     phone: "314-212-1404",

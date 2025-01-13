@@ -102,16 +102,16 @@ export const Nav = () => {
   const { asPath } = useRouter();
 
   const asPathMap: Record<string, string> = {
-    "/services/individuals/financial-planning":
-      "/services/individuals/financial-planning",
-    "/services/individuals/investment-management":
-      "/services/individuals/financial-planning",
-    "/services/companies-not-for-profit-organizations/retirement-plans":
-      "/services/companies-not-for-profit-organizations/retirement-plans",
-    "/services/companies-not-for-profit-organizations/endowments":
-      "/services/companies-not-for-profit-organizations/retirement-plans",
-    "/services/separately-managed-accounts":
-      "/services/separately-managed-accounts",
+    "/wealth-management/individuals/financial-planning":
+      "/wealth-management/individuals/financial-planning",
+    "/wealth-management/individuals/investment-management":
+      "/wealth-management/individuals/financial-planning",
+    "/wealth-management/companies-not-for-profit-organizations/retirement-plans":
+      "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
+    "/wealth-management/companies-not-for-profit-organizations/endowments":
+      "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
+    "/wealth-management/separately-managed-accounts":
+      "/wealth-management/separately-managed-accounts",
   };
 
   return (
@@ -121,15 +121,15 @@ export const Nav = () => {
       navBar={[
         {
           title: "Individuals",
-          href: "/services/individuals/financial-planning",
+          href: "/wealth-management/individuals/financial-planning",
         },
         {
           title: "Companies & Not-For-Profit Organizations",
-          href: "/services/companies-not-for-profit-organizations/retirement-plans",
+          href: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
         },
         {
           title: "Separately Managed Accounts (SMA)",
-          href: "/services/separately-managed-accounts",
+          href: "/wealth-management/separately-managed-accounts",
         },
       ]}
     />
@@ -177,11 +177,11 @@ export const subLayout = (page: ReactElement) => {
           navBar={[
             {
               title: "Financial Planning",
-              href: "/services/individuals/financial-planning",
+              href: "/wealth-management/individuals/financial-planning",
             },
             {
               title: "Investment Management",
-              href: "/services/individuals/investment-management",
+              href: "/wealth-management/individuals/investment-management",
             },
           ]}
         />
