@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import ETF from "@/components/ETF";
 import VideoPlayer from "@/components/VideoPlayer";
 import getGqlRequest from "@/data/getGqlRequest";
-import { prayPageQuery } from "@/data/prayPageQuery";
+import { brifPageQuery } from "@/data/brifPageQuery";
 import {
   Page_Kocg_DataReference,
   Page_Kocg_Documents,
@@ -21,11 +21,11 @@ import Link from "next/link";
 import { ReactElement } from "react";
 
 export async function getStaticProps() {
-  const { data } = await getGqlRequest(prayPageQuery);
+  const { data } = await getGqlRequest(brifPageQuery);
 
   return {
     props: {
-      data: data.page.pray,
+      data: data.page.brif,
       title: data.page.title,
     },
   };

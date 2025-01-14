@@ -3691,6 +3691,8 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   authorDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the author of the node */
   authorId?: Maybe<Scalars['ID']['output']>;
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;BRIF&quot; was set to Show in GraphQL. */
+  brif?: Maybe<Page_Brif>;
   /** Connection between the HierarchicalContentNode type and the ContentNode type */
   children?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>;
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
@@ -3790,7 +3792,7 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   parentId?: Maybe<Scalars['ID']['output']>;
   /** The password for the page object. */
   password?: Maybe<Scalars['String']['output']>;
-  /** Added to the GraphQL Schema because the ACF Field Group &quot;BRIF&quot; was set to Show in GraphQL. */
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;PRAY&quot; was set to Show in GraphQL. */
   pray?: Maybe<Page_Pray>;
   /** Connection between the Page type and the page type */
   preview?: Maybe<PageToPreviewConnectionEdge>;
@@ -4159,6 +4161,116 @@ export type Page_Aboutpage_Values = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif = AcfFieldGroup & {
+  __typename?: 'Page_Brif';
+  dataReference?: Maybe<Page_Brif_DataReference>;
+  distributions?: Maybe<Scalars['String']['output']>;
+  distributionsCopy?: Maybe<Page_Brif_Holdings>;
+  documents?: Maybe<Page_Brif_Documents>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  landing?: Maybe<Page_Brif_Landing>;
+  overview?: Maybe<Page_Brif_Overview>;
+  performance?: Maybe<Page_Brif_Performance>;
+  pricing?: Maybe<Page_Brif_Pricing>;
+};
+
+/** Field Group */
+export type Page_Brif_DataReference = AcfFieldGroup & {
+  __typename?: 'Page_Brif_DataReference';
+  dailyNav?: Maybe<MediaItem>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  monthlyPerformance?: Maybe<MediaItem>;
+  quarterlyPerformance?: Maybe<MediaItem>;
+};
+
+/** Field Group */
+export type Page_Brif_Documents = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Documents';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundResources?: Maybe<Array<Maybe<Page_Brif_Documents_FundResources>>>;
+  legal?: Maybe<Array<Maybe<Page_Brif_Documents_Legal>>>;
+};
+
+/** Field Group */
+export type Page_Brif_Documents_FundResources = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Documents_fundResources';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Documents_Legal = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Documents_legal';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Holdings = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Holdings';
+  download?: Maybe<AcfLink>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Landing = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Landing';
+  cta?: Maybe<AcfLink>;
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Overview = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Overview';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundResources?: Maybe<Array<Maybe<Page_Brif_Overview_FundResources>>>;
+  investmentObjectives?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Overview_FundResources = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Overview_fundResources';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  file?: Maybe<MediaItem>;
+};
+
+/** Field Group */
+export type Page_Brif_Performance = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Performance';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  monthlyDisclaimer?: Maybe<Scalars['String']['output']>;
+  quarterlyDisclaimer?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Pricing = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Pricing';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  premiumOrDiscountInfo?: Maybe<AcfLink>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
