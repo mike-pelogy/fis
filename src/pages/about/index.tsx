@@ -31,7 +31,7 @@ export async function getStaticProps() {
 
   const teamTemp = team.map((member) => {
     if(member.slug) {
-      // @ts-ignore
+      // @ts-expect-error
       member.featuredImage = { node: { mediaItemUrl: slugToImageMap[member.slug] } };
     }
 

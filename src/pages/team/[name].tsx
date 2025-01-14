@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps<any, { name: string }> = async ({
   }
 
   teamFinal.featuredImage =  {
-    // @ts-ignore
+    // @ts-expect-error
     node: {
       mediaItemUrl: slugToImageMap[teamBy.slug as string],
     },
