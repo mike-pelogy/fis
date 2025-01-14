@@ -3790,7 +3790,7 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   parentId?: Maybe<Scalars['ID']['output']>;
   /** The password for the page object. */
   password?: Maybe<Scalars['String']['output']>;
-  /** Added to the GraphQL Schema because the ACF Field Group &quot;PRAY&quot; was set to Show in GraphQL. */
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;BRIF&quot; was set to Show in GraphQL. */
   pray?: Maybe<Page_Pray>;
   /** Connection between the Page type and the page type */
   preview?: Maybe<PageToPreviewConnectionEdge>;

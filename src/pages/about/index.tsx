@@ -15,15 +15,35 @@ import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 
+export const slugToImageMap: Record<string, string> = {
+  'mike-skillman': '/MikeSkillman.jpg',
+  'jay-peroni-cfp': '/JayPeroni.png',
+  'steve-nelson-cfa': '/SteveNelson.png',
+  'jason-kreke': '/JasonKreke.png',
+}
+
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
   const { data: teamData } = await getGqlRequest(teamQuery);
 
+  // eslint-disable-next-line
+  const team = teamData?.teams?.edges.map(({ node }: { node: any }) => node) as Team[] || [];
+
+  const teamTemp = team.map((member) => {
+    if(member.slug) {
+      // @ts-ignore
+      member.featuredImage = { node: { mediaItemUrl: slugToImageMap[member.slug] } };
+    }
+
+    return {
+      ...member,
+    }
+  })
+
   return {
     props: {
       data: data.page.aboutPage as Page_Aboutpage,
-      // eslint-disable-next-line
-      team: teamData?.teams?.edges.map(({ node }: { node: any }) => node) || [],
+      team: teamTemp,
     },
   };
 }

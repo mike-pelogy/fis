@@ -7,6 +7,8 @@ import { categoriesQuery } from "@/data/categoriesQuery";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import Image from "next/image";
+import Rss from "@/svgs/Rss";
+import Podcast from "@/svgs/Podcast";
 
 export const getStaticPaths = (async () => {
   const { data } = await getGqlRequest(categoriesQuery);
@@ -60,7 +62,7 @@ const CategoryPage: NextPageWithLayout<
   const getSectionHeader = () => {
     if (slug === "faith-retirement") {
       return (
-        <div className="mb-4">
+        <div className="mb-4 flex gap-4 items-center">
           <Image
             alt=""
             src="/faith and retirement sirius-1.png 1.png"
@@ -68,6 +70,12 @@ const CategoryPage: NextPageWithLayout<
             height={44}
             className="w-[130px]"
           />
+          <a href='https://rss.com/podcasts/faith-and-retirement/' target="_blank" className="text-fis-blue hover:text-fis-purple transition-all">
+            <Rss />
+          </a>
+          <a href='https://podcasts.apple.com/ca/podcast/faith-retirement/id1769055427' target="_blank" className="text-fis-blue hover:text-fis-purple transition-all">
+            <Podcast />
+          </a>
         </div>
       );
     }

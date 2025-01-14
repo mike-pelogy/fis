@@ -13,6 +13,7 @@ import type {
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { slugToImageMap } from "../about";
 
 export const getStaticPaths = (async () => {
   const { data } = await getGqlRequest(teamsQuery);
@@ -42,11 +43,22 @@ export const getStaticProps: GetStaticProps<any, { name: string }> = async ({
   const teamBy: Team = data.teamBy;
   const { title, content: biography } = teamBy;
 
+  const teamFinal = {
+    ...teamBy,
+  }
+
+  teamFinal.featuredImage =  {
+    // @ts-ignore
+    node: {
+      mediaItemUrl: slugToImageMap[teamBy.slug as string],
+    },
+  }
+
   return {
     props: {
       name: title || "",
       biography,
-      member: teamBy,
+      member: teamFinal,
     },
   };
 };

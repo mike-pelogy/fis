@@ -31,10 +31,10 @@ export const normalizePosts = (data: any) => {
   ) as PostWithCursor[];
 };
 
-const TIPS_ID = 7;
+const DEFAULT_ID = 4;
 
 export async function getStaticProps() {
-  const catId = TIPS_ID;
+  const catId = DEFAULT_ID;
 
   const { data } = await getGqlRequest(newsInsightsQuery, {
     categoryId: catId,
@@ -55,7 +55,6 @@ const navBar = [
     title: "Faith & Retirement",
     href: "/news-and-insights/category/faith-retirement",
   },
-  { title: "Tips", href: "/news-and-insights/category/tips" },
   { title: "Articles", href: "/news-and-insights/category/articles" },
   { title: "Videos", href: "/news-and-insights/category/videos" },
 ];
