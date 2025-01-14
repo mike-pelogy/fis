@@ -17,9 +17,9 @@ import buildPageTitle from "@/utils/buildPageTitle";
 
 export const slugToImageMap: Record<string, string> = {
   'mike-skillman': '/MikeSkillman.jpg',
-  'jay-peroni-cfp': '/JayPeroni.png',
-  'steve-nelson-cfa': '/SteveNelson.png',
-  'jason-kreke': '/JasonKreke.png',
+  'jay-peroni-cfp': '/JayPeroni.jpg',
+  'steve-nelson-cfa': '/SteveNelson.jpg',
+  'jason-kreke': '/JasonKreke.jpg',
 }
 
 export async function getStaticProps() {

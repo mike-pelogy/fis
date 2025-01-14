@@ -19,7 +19,7 @@ export const menu: IMenuItem[] = [
   { title: "Home", path: "/" },
   {
     title: "Wealth Management",
-    path: "/wealth-management/individuals/financial-planning",
+    path: "/wealth-management",
     children: [
       {
         title: "Individuals",

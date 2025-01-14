@@ -158,7 +158,7 @@ const WealthManagementPage = ({
         <section className="container px-4 md:px-fis-2 flex flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
             <Image
-              src="/interestedInMoreInfo.png"
+              src="/laptop-3196481_1920.jpg"
               alt="Wealth Management"
               width={1200}
               height={600}

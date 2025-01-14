@@ -109,7 +109,7 @@ const FinancialPlanningPage: NextPageWithLayout<{
           </div>
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
             <Image
-              src="/EstablishedRelationships.png"
+              src="/035_Faith_Investors.jpg"
               alt="You worked hard to secure your wealth"
               width={1500}
               height={1500}

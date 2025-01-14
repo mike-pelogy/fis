@@ -120,13 +120,55 @@ const LandingAndAbout = ({
 const Services = ({ services }: { services: Page_Homepage_Services }) => {
   return (
     <div className="container py-fis-2 px-4 md:px-0">
-      <section>
         <h2
           className="text-5xl font-bold mb-fis-2"
           dangerouslySetInnerHTML={{ __html: services.title as string }}
         />
-        <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
+      <section className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
+          <h3
+            className="text-fis-blue text-2xl mb-6"
+            dangerouslySetInnerHTML={{
+              __html: services.investment?.title as string,
+            }}
+          />
+          <span
+            dangerouslySetInnerHTML={{
+              __html: services.investment?.description as string,
+            }}
+          />
+          <div className="flex justify-end mt-fis-1">
+            <Button
+              IconButton={<ArrowRight />}
+              variant="primary"
+              href="/wealth-management/individuals/investment-management"
+            >
+              {services.investment?.callToAction?.title}
+            </Button>
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
+          <Image
+            src="/Investment Management image.png"
+            alt="investment management"
+            width={1200}
+            height={1200}
+            className="rounded-lg"
+          />
+        </div>
+      </section>
+      <section className="pt-fis-2">
+        <div className="flex flex-col-reverse md:flex-row">
+          <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
+          <Image
+            src="/services.png"
+            alt="Services"
+            width={1200}
+            height={1200}
+            className="rounded-lg"
+          />
+          </div>
+          <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <h3
               className="text-fis-blue text-2xl mb-6"
               dangerouslySetInnerHTML={{
@@ -171,48 +213,6 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
                 {services.wealthManagement?.callToAction?.title}
               </Button>
             </div>
-          </div>
-          <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <Image
-            src="/services.png"
-            alt="Services"
-            width={1200}
-            height={1200}
-            className="rounded-lg"
-          />
-          </div>
-        </div>
-      </section>
-      <section className="pt-fis-2 flex flex-col-reverse md:flex-row">
-        <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <Image
-            src="/Investment Management image.png"
-            alt="investment management"
-            width={1200}
-            height={1200}
-            className="rounded-lg"
-          />
-        </div>
-        <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
-          <h3
-            className="text-fis-blue text-2xl mb-6"
-            dangerouslySetInnerHTML={{
-              __html: services.investment?.title as string,
-            }}
-          />
-          <span
-            dangerouslySetInnerHTML={{
-              __html: services.investment?.description as string,
-            }}
-          />
-          <div className="flex justify-end mt-fis-1">
-            <Button
-              IconButton={<ArrowRight />}
-              variant="primary"
-              href="/wealth-management/individuals/investment-management"
-            >
-              {services.investment?.callToAction?.title}
-            </Button>
           </div>
         </div>
       </section>
