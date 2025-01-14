@@ -43,7 +43,7 @@ const Landing = ({
       <section className="container flex flex-col md:flex-row items-center">
         <div className="w-full md:w-1/2 md:pr-fis-4 pr-0">
           <h1 className="text-3xl md:text-5xl mb-8">{title}</h1>
-          <h3 className="text-fis-blue text-2xl">FIS Christian Stock Fund</h3>
+          <h3 className="text-fis-blue text-2xl" dangerouslySetInnerHTML={{ __html: landing.subtitle as string }}/>
           <hr className="mt-4 mb-6" />
           <span
             dangerouslySetInnerHTML={{ __html: landing.description as string }}
