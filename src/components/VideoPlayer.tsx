@@ -1,9 +1,10 @@
-import PlayButton from "@/svgs/PlayButton";
-import classNames from "classnames";
-import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React from "react";
+import dynamic from 'next/dynamic'
+import type { ReactPlayerProps } from "react-player";
 
-interface IVideoPlayerProps {
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+
+interface IVideoPlayerProps extends ReactPlayerProps {
   src: string;
   overlayImageSrc?: string;
 }
@@ -11,45 +12,11 @@ interface IVideoPlayerProps {
 export default function VideoPlayer({
   src,
   overlayImageSrc = "/defaultFeaturedImage.png",
+  ...rest
 }: IVideoPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   return (
-    <div className="relative rounded w-full aspect-video overflow-hidden border-[1px] border-slate-200">
-      <div
-        className={classNames(
-          { hidden: isPlaying },
-          "cursor-pointer group relative"
-        )}
-        onClick={() => {
-          if (videoRef) {
-            videoRef.current?.play();
-          }
-        }}
-      >
-        <Image
-          src={overlayImageSrc}
-          alt="video overlay"
-          width={1920}
-          height={1080}
-          className="w-full aspect-video object-cover"
-        />
-        <div className="transition-all w-full group-hover:scale-[1.05] absolute h-full flex justify-center items-center left-0 top-0 bg-slate-500/20 group-hover:bg-slate-500/10">
-          <PlayButton />
-        </div>
-      </div>
-      <video
-        controls
-        ref={videoRef}
-        onPlay={() => {
-          setIsPlaying(true);
-        }}
-        onPause={() => {
-          setIsPlaying(false);
-        }}
-        src={src}
-      />
+    <div className="flex w-full h-full [&>div]:pt-[56.25%] [&>div]:relative [&>div>div]:absolute [&>div>div]:top-0">
+      <ReactPlayer url={src} light={overlayImageSrc} controls {...rest} height={'100%'} width={'100%'} />
     </div>
-  );
+  )
 }

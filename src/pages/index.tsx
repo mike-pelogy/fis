@@ -26,6 +26,8 @@ import buildPageTitle from "@/utils/buildPageTitle";
 import classNames from "classnames";
 import ChevronLeft from "@/svgs/ChevronLeft";
 import ChevronRight from "@/svgs/ChevronRight";
+import VideoPlayer from "@/components/VideoPlayer";
+import PlayButton from "@/svgs/PlayButton";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(homePageQuery);
@@ -39,6 +41,48 @@ export async function getStaticProps() {
     },
   };
 }
+
+const LandingVideo = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const start = () => {
+    setIsPlaying(true);
+  };
+  const stop = () => {
+    console.log("here");
+    setIsPlaying(false);
+  };
+
+  return (
+    <>
+      <div
+        className={classNames(
+          { hidden: isPlaying },
+          "cursor-pointer group absolute w-full h-full overflow-hidden z-[10]"
+        )}
+        onClick={start}
+      >
+        <Image
+          src="/defaultFeaturedImage.png"
+          alt="video overlay"
+          width={1920}
+          height={1080}
+          className="w-full h-full aspect-video object-cover"
+        />
+        <div className="transition-all w-full group-hover:scale-[1.05] absolute h-full flex justify-center items-center left-0 top-0 bg-slate-500/20 group-hover:bg-slate-500/10">
+          <PlayButton />
+        </div>
+      </div>
+      <VideoPlayer
+        src="https://vimeo.com/1047160208/84cc34d69e"
+        light={false}
+        onStart={start}
+        onPause={stop}
+        onEnded={stop}
+      />
+    </>
+  );
+};
 
 const LandingAndAbout = ({
   landing,
@@ -85,14 +129,8 @@ const LandingAndAbout = ({
           </div>
         </section>
         <section className="container items-stretch rounded-lg overflow-hidden flex flex-col-reverse md:flex-row items-center relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
-          <div className="w-full md:w-1/2 relative">
-            <Image
-              src="/HomeAbout.jpg"
-              alt="nice"
-              width={1500}
-              height={1500}
-              className="h-full object-cover object-right-top"
-            />
+          <div className="w-full md:w-1/2 relative flex items-center">
+            <LandingVideo />
           </div>
           <div className="px-4 p-fis-2 md:p-fis-2 w-full flex flex-col justify-center md:w-1/2 relative">
             <h2
@@ -120,10 +158,10 @@ const LandingAndAbout = ({
 const Services = ({ services }: { services: Page_Homepage_Services }) => {
   return (
     <div className="container py-fis-2 px-4 md:px-0">
-        <h2
-          className="text-5xl font-bold mb-fis-2"
-          dangerouslySetInnerHTML={{ __html: services.title as string }}
-        />
+      <h2
+        className="text-5xl font-bold mb-fis-2"
+        dangerouslySetInnerHTML={{ __html: services.title as string }}
+      />
       <section className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
           <h3
@@ -160,13 +198,13 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
       <section className="pt-fis-2">
         <div className="flex flex-col-reverse md:flex-row">
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <Image
-            src="/services.png"
-            alt="Services"
-            width={1200}
-            height={1200}
-            className="rounded-lg"
-          />
+            <Image
+              src="/services.png"
+              alt="Services"
+              width={1200}
+              height={1200}
+              className="rounded-lg"
+            />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <h3

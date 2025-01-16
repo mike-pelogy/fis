@@ -96,7 +96,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
               <div
                 className={classNames(
                   fancyNumberList,
-                  "lg:[&>ol]:max-h-[7rem] [&>ol]:flex [&>ol]:gap-4 [&>ol]:flex-wrap [&>ol]:flex-col [&>ol>li]:font-bold [&>ol>li]:!pl-6 [&>ol>li]:before:text-xl [&>ol]:!space-y-0 [&_p]:text-2xl [&_p]:text-fis-blue [&_p]:mb-2"
+                  "lg:[&>ol]:max-h-[8rem] [&>ol]:flex [&>ol]:gap-4 [&>ol]:flex-wrap [&>ol]:flex-col [&>ol>li]:font-bold [&>ol>li]:!pl-6 [&>ol>li]:before:text-xl [&>ol]:!space-y-0 [&_p]:text-2xl [&_p]:text-fis-blue [&_p]:mb-2"
                 )}
                 dangerouslySetInnerHTML={{
                   __html: values.guidelines as string,
