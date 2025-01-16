@@ -15,7 +15,7 @@ export default function VideoPlayer({
   ...rest
 }: IVideoPlayerProps) {
   return (
-    <div className="flex w-full h-full [&>div]:pt-[56.25%] [&>div]:relative [&>div>div]:absolute [&>div>div]:top-0">
+    <div className="flex w-full h-full [&>div]:pt-[56.25%] [&>div]:relative [&>div>div]:absolute [&>div>div]:top-0 [&>div>video]:absolute [&>div>video]:top-0">
       <ReactPlayer url={src} light={overlayImageSrc} controls {...rest} height={'100%'} width={'100%'} />
     </div>
   )
