@@ -69,18 +69,40 @@ const dataBinding = [
     Index: "MSCI ACWI Index",
     DistributionFrequency: "Annually",
   },
+  {
+    FundInception: "12/20/2024",
+    ISIN: "US78433H6264",
+    Gross: "0.65%",
+    PrimaryExchange: "NYSE Arca",
+    Index: "MSCI ACWI Index",
+    DistributionFrequency: "Annually",
+  },
 ];
+
+type ETFIndexType = 0 | 1 | 2;
 
 interface ITypeIndex {
   /**
    * 0 - KOCG
    * 1 - PRAY
+   * 2 - BRIF
    */
-  typeIndex: 0 | 1;
+  typeIndex: ETFIndexType;
 }
 
 export const fancyNumberList =
   "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
+
+const typeToDailyMap: Record<number, ETFIndexType> = {
+  0: 2,
+   1: 1,
+   2: 0,
+};
+
+const formatter = Intl.NumberFormat('en-US', {
+style: 'currency',
+currency: 'USD',
+});
 
 const Overview = ({
   overview,
@@ -92,7 +114,7 @@ const Overview = ({
   id: SectionTypes;
   daily: MediaItem;
 } & ITypeIndex) => {
-  const data = dailyNav[typeIndex];
+  const data = dailyNav[typeToDailyMap[typeIndex]];
   const d = dataBinding[typeIndex];
 
   const {
@@ -112,7 +134,7 @@ const Overview = ({
     { title: "CUSIP", value: CUSIP },
     { title: "ISIN", value: ISIN },
     { title: "Gross Expense Ratio", value: Gross },
-    { title: "Net Assets", value: netAssets },
+    { title: "Net Assets", value: formatter.format(netAssets) },
     { title: "Shares Outstanding", value: shares },
     { title: "Primary Exchange", value: PrimaryExchange },
     { title: "Index", value: Index },
@@ -216,7 +238,7 @@ const Pricing = ({
   pricing: Page_Kocg_Pricing;
   id: SectionTypes;
 } & ITypeIndex) => {
-  const data = dailyNav[typeIndex];
+  const data = dailyNav[typeToDailyMap[typeIndex]];
 
   const {
     rateDate,
@@ -327,7 +349,7 @@ const Performance = ({
   monthly: MediaItem;
   quarterly: MediaItem;
 } & ITypeIndex) => {
-  const d = dailyNav[typeIndex];
+  const d = dailyNav[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(d);
 
   const [active, setActive] = useState(perfNav[0].title);
@@ -461,6 +483,13 @@ const DistributionsMap = [
     "Payable Date": ["01/03/2023"],
     "Amount ($)": ["$0.25961"],
   },
+  {
+    "30 Day SEC Yield": "-",
+    "Ex-Div Date": ["-"],
+    "Record Date": ["-"],
+    "Payable Date": ["-"],
+    "Amount ($)": ["-"],
+  },
 ];
 
 const Distributions = ({
@@ -473,7 +502,7 @@ const Distributions = ({
 } & ITypeIndex) => {
   const data = DistributionsMap[typeIndex];
 
-  const d = dailyNav[typeIndex];
+  const d = dailyNav[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(d);
 
   return (
@@ -527,7 +556,7 @@ const Distributions = ({
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
-const filterMap = ["KOCG", "PRAY"];
+const filterMap = ["KOCG", "PRAY", "BRIF"];
 
 const getTopHoldingsData = (indexFilter: number) => {
   return topHoldings
@@ -557,7 +586,7 @@ const Holdings = ({
     ...getTopHoldingsData(typeIndex),
   ];
 
-  const data = dailyNav[typeIndex];
+  const data = dailyNav[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(data);
 
   return (

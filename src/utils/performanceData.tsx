@@ -3,10 +3,11 @@ import React from "react";
 const fundTickerMap = [
   { nav: "KOCG NAV", market: "KOCG MKT", mwi: "NDUEACWF" },
   { nav: "PRAY NAV", market: "PRAY MKT", mwi: "NDDUWI" },
+  { nav: "BRIF NAV", market: "BRIF MKT", mwi: "NDDUWI" },
 ];
 
 // eslint-disable-next-line
-const getPerfData = (data: any) => {
+const getPerfData = (data: any = {}) => {
   const {
     "1 Month": oneMonth,
     "1 Year": oneYear,

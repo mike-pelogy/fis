@@ -1,21 +1,31 @@
 Date,Account,IDENTIFIER,NAME,Weightings
-11/27/2024,KOCG,MSFT,Microsoft Corp,4.80%
-11/27/2024,KOCG,NVDA,NVIDIA Corp,4.37%
-11/27/2024,KOCG,AAPL,Apple Inc,4.22%
-11/27/2024,KOCG,GOOGL,Alphabet Inc,2.71%
-11/27/2024,KOCG,META,Meta Platforms Inc,2.34%
-11/27/2024,KOCG,AVGO,Broadcom Inc,1.83%
-11/27/2024,KOCG,JPM,JPMORGAN CHASE & CO.,1.83%
-11/27/2024,KOCG,BRK/B,Berkshire Hathaway Inc,1.80%
-11/27/2024,KOCG,V,Visa Inc,1.62%
-11/27/2024,KOCG,PWR,Quanta Services Inc,1.62%
-11/27/2024,PRAY,NVDA,NVIDIA Corp,4.82%
-11/27/2024,PRAY,TOL,Toll Brothers Inc,3.80%
-11/27/2024,PRAY,PANW,Palo Alto Networks Inc,3.38%
-11/27/2024,PRAY,ISRG,Intuitive Surgical Inc,3.03%
-11/27/2024,PRAY,CASY,Casey's General Stores Inc,2.78%
-11/27/2024,PRAY,GFL,GFL Environmental Inc,2.49%
-11/27/2024,PRAY,NOW,ServiceNow Inc,2.45%
-11/27/2024,PRAY,HCMLY,Holcim AG,2.40%
-11/27/2024,PRAY,GPK,Graphic Packaging Holding Co,1.93%
-11/27/2024,PRAY,URI,United Rentals Inc,1.76%
+01/21/2025,BRIF,NVDA,NVIDIA Corp,5.68%
+01/21/2025,BRIF,AVGO,Broadcom Inc,4.92%
+01/21/2025,BRIF,PANW,Palo Alto Networks Inc,4.47%
+01/21/2025,BRIF,VRTX,Vertex Pharmaceuticals Inc,4.45%
+01/21/2025,BRIF,CSCO,Cisco Systems Inc,4.36%
+01/21/2025,BRIF,CAT,Caterpillar Inc,4.03%
+01/21/2025,BRIF,LIN,Linde PLC,3.89%
+01/21/2025,BRIF,ANET,Arista Networks Inc,3.87%
+01/21/2025,BRIF,ABT,Abbott Laboratories,3.71%
+01/21/2025,BRIF,COST,Costco Wholesale Corp,3.69%
+01/21/2025,KOCG,MSFT,Microsoft Corp,4.78%
+01/21/2025,KOCG,NVDA,NVIDIA Corp,4.63%
+01/21/2025,KOCG,AAPL,Apple Inc,4.11%
+01/21/2025,KOCG,GOOGL,Alphabet Inc,3.12%
+01/21/2025,KOCG,AVGO,Broadcom Inc,2.62%
+01/21/2025,KOCG,META,Meta Platforms Inc,2.48%
+01/21/2025,KOCG,JPM,JPMORGAN CHASE & CO.,1.88%
+01/21/2025,KOCG,TSM,Taiwan Semiconductor Manufacturing Co Ltd,1.77%
+01/21/2025,KOCG,BRK/B,Berkshire Hathaway Inc,1.75%
+01/21/2025,KOCG,V,Visa Inc,1.65%
+01/21/2025,PRAY,NVDA,NVIDIA Corp,5.06%
+01/21/2025,PRAY,ISRG,Intuitive Surgical Inc,3.45%
+01/21/2025,PRAY,TOL,Toll Brothers Inc,3.26%
+01/21/2025,PRAY,PANW,Palo Alto Networks Inc,3.15%
+01/21/2025,PRAY,CASY,Casey's General Stores Inc,2.66%
+01/21/2025,PRAY,NOW,ServiceNow Inc,2.56%
+01/21/2025,PRAY,HCMLY,Holcim AG,2.40%
+01/21/2025,PRAY,GFL,GFL Environmental Inc,2.33%
+01/21/2025,PRAY,GPK,Graphic Packaging Holding Co,1.90%
+01/21/2025,PRAY,SBMO NA,SBM Offshore NV,1.82%

@@ -1,6 +1,5 @@
 import Button from "@/components/Button";
 import ETF from "@/components/ETF";
-import VideoPlayer from "@/components/VideoPlayer";
 import getGqlRequest from "@/data/getGqlRequest";
 import { brifPageQuery } from "@/data/brifPageQuery";
 import {
@@ -58,9 +57,7 @@ const Landing = ({
             </Button>
           </div>
         </div>
-        <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-          <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
-        </div>
+        <div className="w-full md:w-1/2 mt-fis-2 md:mt-0" />
       </section>
     </div>
   );
@@ -85,7 +82,7 @@ const BrifPage: NextPageWithLayout<{
         data.distributionsCopy &&
         data.documents && (
           <ETF
-            typeIndex={1}
+            typeIndex={2}
             overview={data.overview as Page_Kocg_Overview}
             pricing={data.pricing as Page_Kocg_Pricing}
             performance={data.performance as Page_Kocg_Performance}
