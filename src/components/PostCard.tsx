@@ -14,6 +14,10 @@ interface IPostCardProps {
   showImage?: boolean;
 }
 
+const getDefaultImage = (post: Post) => {
+  return post.categories?.edges.find((p) => p.node.slug === 'faith-retirement') ? '/Faith-Retirement-default.jpg' : "/defaultFeaturedImage.png";
+}
+
 export default function PostCard({
   post,
   className,
@@ -22,7 +26,7 @@ export default function PostCard({
 }: IPostCardProps) {
   const { categories, title, slug, date, featuredImage } = post;
 
-  const image = featuredImage?.node.mediaItemUrl || "/defaultFeaturedImage.png";
+  const image = featuredImage?.node.mediaItemUrl || getDefaultImage(post);
 
   return (
     <article className={className}>
@@ -37,7 +41,7 @@ export default function PostCard({
             src={image}
             width={1200}
             height={690}
-            className="w-full aspect-video rounded-lg"
+            className="w-full aspect-video rounded-lg object-cover"
             alt={title || "Post featured image"}
           />
         )}

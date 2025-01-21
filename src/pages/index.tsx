@@ -49,7 +49,6 @@ const LandingVideo = () => {
     setIsPlaying(true);
   };
   const stop = () => {
-    console.log("here");
     setIsPlaying(false);
   };
 
