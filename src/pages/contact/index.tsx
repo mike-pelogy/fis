@@ -3,8 +3,7 @@ import { NavBar } from "@/components/NavBar";
 import TextField from "@/components/Forms/TextField";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { aboutPageQuery } from "@/data/aboutPageQuery";
-import { Page_Aboutpage } from "@/gql/graphql";
+import { Page_Contactpage, Page_Contactpage_Subscribe } from "@/gql/graphql";
 import Phone from "@/svgs/Phone";
 import classNames from "classnames";
 import ArrowRight from "@/svgs/ArrowRight";
@@ -17,13 +16,14 @@ import Field from "@/components/Forms/Field";
 import Link from "next/link";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import { contactPageQuery } from "@/data/contactPageQuery";
 
 export async function getStaticProps() {
-  const { data } = await getGqlRequest(aboutPageQuery);
+  const { data } = await getGqlRequest(contactPageQuery);
 
   return {
     props: {
-      data: data.page.aboutPage as Page_Aboutpage,
+      data: data.page.contactPage as Page_Contactpage,
     },
   };
 }
@@ -31,21 +31,6 @@ export async function getStaticProps() {
 export const navBar = [
   { title: "Contact Us", href: "/contact" },
   { title: "Careers", href: "/contact/careers" },
-];
-
-const locations = [
-  {
-    phone: "888-586-1404",
-    email: "info@fisetfs.com",
-    location: `8080 N. Central Expressway Suite 1700
-Dallas, TX 75206`,
-  },
-  {
-    phone: "314-212-1404",
-    email: "info@fisetfs.com",
-    location: `4339 Butler Hill Rd Suite 200
-St. Louis, MO 63128`,
-  },
 ];
 
 const buttons = "text-fis-blue hover:text-fis-purple transition-all";
@@ -101,7 +86,11 @@ const ContactForm = () => {
   );
 };
 
-export const SubscribeSection = () => {
+export const SubscribeSection = ({
+  data,
+}: {
+  data: Page_Contactpage_Subscribe;
+}) => {
   return (
     <div className="flex justify-center">
       <section className="flex flex-col-reverse md:flex-row pt-fis-2 container px-4 md:px-fis-2 items-center">
@@ -115,13 +104,11 @@ export const SubscribeSection = () => {
           />
         </div>
         <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
-          <h3 className="text-2xl text-fis-blue mb-4">
-            Subscribe for Faith Investor Services Insights
-          </h3>
-          <p className="font-bold mb-4 max-w-[400px]">
-            Subscribe now for the latest insights and market outlook from Faith
-            Investor Services.
-          </p>
+          <h3 className="text-2xl text-fis-blue mb-4">{data.title}</h3>
+          <span
+            className="font-bold block mb-4 max-w-[400px]"
+            dangerouslySetInnerHTML={{ __html: data.description || "" }}
+          />
           <form onSubmit={handleSubmit} name="subscribe" data-netlify="true">
             <input type="hidden" name="form-name" value="subscribe" />
             <div className="flex flex-wrap md:flex-nowrap gap-4">
@@ -166,7 +153,7 @@ export const SubscribeSection = () => {
   );
 };
 
-export default function ContactPage() {
+export default function ContactPage({ data }: { data: Page_Contactpage }) {
   return (
     <>
       <Head>
@@ -186,29 +173,29 @@ export default function ContactPage() {
                     <ContactForm />
                   </div>
                   <div className="w-full md:w-1/2 flex flex-col pt-fis-1 md:pt-0 gap-fis-1 md:gap-fis-2">
-                    {locations.map(({ phone, email, location }) => (
-                      <div key={phone} className="flex flex-col gap-2">
+                    {data?.contact?.map((c) => (
+                      <div key={c?.phone} className="flex flex-col gap-2">
                         <a
                           className={classNames("flex items-center", buttons)}
-                          href={`tel:${phone}`}
+                          href={`tel:${c?.phone}`}
                         >
                           <Phone />
-                          <div className="ml-2">{phone}</div>
+                          <div className="ml-2">{c?.phone}</div>
                         </a>
                         <a
                           className={classNames("flex items-center", buttons)}
-                          href={`mailto:${email}`}
+                          href={`mailto:${c?.email}`}
                         >
                           <Mail />
-                          <div className="ml-2">{email}</div>
+                          <div className="ml-2">{c?.email}</div>
                         </a>
                         <a
                           className={classNames("flex items-center", buttons)}
-                          href={`http://maps.google.com/?q=${location}`}
+                          href={`http://maps.google.com/?q=${c?.location}`}
                           target="_blank"
                         >
                           <LocationMarker />
-                          <div className="ml-2">{location}</div>
+                          <div className="ml-2">{c?.location}</div>
                         </a>
                       </div>
                     ))}
@@ -218,7 +205,7 @@ export default function ContactPage() {
             </WhiteContainer>
           </div>
         </div>
-        <SubscribeSection />
+        {data.subscribe && <SubscribeSection data={data.subscribe} />}
       </div>
     </>
   );

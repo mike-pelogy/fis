@@ -3693,6 +3693,8 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   authorId?: Maybe<Scalars['ID']['output']>;
   /** Added to the GraphQL Schema because the ACF Field Group &quot;BRIF&quot; was set to Show in GraphQL. */
   brif?: Maybe<Page_Brif>;
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;Careers Page&quot; was set to Show in GraphQL. */
+  careersPage?: Maybe<Page_Careerspage>;
   /** Connection between the HierarchicalContentNode type and the ContentNode type */
   children?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>;
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
@@ -4275,12 +4277,39 @@ export type Page_Brif_Pricing = AcfFieldGroup & {
 };
 
 /** Field Group */
-export type Page_Contactpage = AcfFieldGroup & {
-  __typename?: 'Page_Contactpage';
-  contact?: Maybe<Array<Maybe<Page_Contactpage_Contact>>>;
+export type Page_Careerspage = AcfFieldGroup & {
+  __typename?: 'Page_Careerspage';
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  subscribe?: Maybe<Page_Careerspage_Subscribe>;
+};
+
+/** Field Group */
+export type Page_Careerspage_Subscribe = AcfFieldGroup & {
+  __typename?: 'Page_Careerspage_Subscribe';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Contactpage = AcfFieldGroup & {
+  __typename?: 'Page_Contactpage';
+  contact?: Maybe<Array<Maybe<Page_Contactpage_Contact>>>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  subscribe?: Maybe<Page_Contactpage_Subscribe>;
+};
+
+/** Field Group */
+export type Page_Contactpage_Subscribe = AcfFieldGroup & {
+  __typename?: 'Page_Contactpage_Subscribe';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */

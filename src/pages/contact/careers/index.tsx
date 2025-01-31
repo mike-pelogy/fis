@@ -4,21 +4,21 @@ import FileField from "@/components/Forms/FileField";
 import TextField from "@/components/Forms/TextField";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { aboutPageQuery } from "@/data/aboutPageQuery";
-import { Page_Aboutpage } from "@/gql/graphql";
 import { navBar, SubscribeSection } from "..";
 import getGqlRequest from "@/data/getGqlRequest";
 import { handleSubmit } from "@/utils/submitForm";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import Image from "next/image";
+import { careerPageQuery } from "@/data/careerPageQuery";
+import { Page_Careerspage, Page_Contactpage_Subscribe } from "@/gql/graphql";
 
 export async function getStaticProps() {
-  const { data } = await getGqlRequest(aboutPageQuery);
+  const { data } = await getGqlRequest(careerPageQuery);
 
   return {
     props: {
-      data: data.page.aboutPage as Page_Aboutpage,
+      data: data.page.careersPage as Page_Careerspage,
     },
   };
 }
@@ -82,7 +82,7 @@ const CareerForm = () => {
   );
 };
 
-export default function CareerPage() {
+export default function CareerPage({ data }: { data: Page_Careerspage }) {
   return (
     <>
       <Head>
@@ -99,12 +99,12 @@ export default function CareerPage() {
                 <NavBar navBar={navBar} className="!pt-0" />
                 <div className="flex flex-col md:flex-row">
                   <div className="w-full md:w-1/2 md:pr-fis-2 pr-0">
-                    <p className="mb-1 text-lg">
-                      Interested in more information?
-                    </p>
-                    <p className="mb-4">
-                      Reach out and let’s explore how we can support you.
-                    </p>
+                    <div
+                      className="mb-8"
+                      dangerouslySetInnerHTML={{
+                        __html: data.description || "",
+                      }}
+                    />
                     <CareerForm />
                   </div>
                   <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
@@ -121,7 +121,11 @@ export default function CareerPage() {
             </WhiteContainer>
           </div>
         </div>
-        <SubscribeSection />
+        {data.subscribe && (
+          <SubscribeSection
+            data={data.subscribe as Page_Contactpage_Subscribe}
+          />
+        )}
       </div>
     </>
   );
