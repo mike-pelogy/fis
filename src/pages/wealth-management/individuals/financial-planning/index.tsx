@@ -4,7 +4,8 @@ import { NavBar } from "@/components/NavBar";
 import WhiteContainer from "@/components/WhiteContainer";
 import { financialPlanningPageQuery } from "@/data/financialPlanningPageQuery";
 import getGqlRequest from "@/data/getGqlRequest";
-import { Page_Financialplanning } from "@/gql/graphql";
+import { individualPageQuery } from "@/data/individualPageQuery";
+import { Page_Financialplanning, Page_Individual } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import { fancyBulletPoints } from "@/pages/about";
 import buildPageTitle from "@/utils/buildPageTitle";
@@ -16,10 +17,12 @@ import { ReactElement } from "react";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(financialPlanningPageQuery);
+  const { data: individualData } = await getGqlRequest(individualPageQuery);
 
   return {
     props: {
       data: data.page.financialPlanning,
+      sublayoutData: individualData.page.individual,
     },
   };
 }
@@ -136,8 +139,12 @@ export const Nav = () => {
   );
 };
 
-// TODO: get data from query
-export const subLayout = (page: ReactElement) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subLayout = (page: ReactElement, pageProps: any) => {
+  const {
+    sublayoutData: { individuals },
+  }: { sublayoutData: Page_Individual } = pageProps;
+
   return (
     <div className="flex flex-col justify-center w-full items-center">
       <div className="pt-fis-1" />
@@ -149,22 +156,18 @@ export const subLayout = (page: ReactElement) => {
       <div className="pb-fis-1" />
       <section className="container w-full px-4 md:px-fis-2 py-fis-1 flex flex-col md:flex-row items-center">
         <div className="w-full md:w-1/2 pr-0 md:pr-fis-2">
-          <h3 className="text-2xl text-fis-blue">
-            You worked hard to secure your wealth.
-          </h3>
+          <h3 className="text-2xl text-fis-blue">{individuals?.title}</h3>
           <hr className="my-4" />
-          <p>
-            Our first priority is to protect what you entrust to us. As a
-            thoughtful, caring steward, we help those with more than $2 million
-            plan and invest for their financial goals. Our family office
-            services include financial planning and comprehensive global wealth
-            management for individuals and business owners.
-          </p>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: individuals?.description || "",
+            }}
+          />
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <Image
             src="/Individuals.png"
-            alt="You worked hard to secure your wealth"
+            alt={individuals?.title || ""}
             width={1500}
             height={1500}
             className="rounded-lg"

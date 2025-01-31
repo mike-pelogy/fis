@@ -19,8 +19,16 @@ const lato = Lato({
 });
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
-  getSubLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (
+    page: ReactElement,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pageProps?: Record<string, any>
+  ) => ReactNode;
+  getSubLayout?: (
+    page: ReactElement,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pageProps?: Record<string, any>
+  ) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -49,11 +57,14 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta property="og:image" content={img.src} />
       </Head>
       <div className={lato.className}>
-      <FontContextProvider value={{fontClassName: lato.className}}>
-        {getLayout(
-          <Layout>{getSubLayout(<Component {...pageProps} />)}</Layout>
-        )}
-        <ToastContainer position="bottom-left" />
+        <FontContextProvider value={{ fontClassName: lato.className }}>
+          {getLayout(
+            <Layout>
+              {getSubLayout(<Component {...pageProps} />, pageProps)}
+            </Layout>,
+            pageProps
+          )}
+          <ToastContainer position="bottom-left" />
         </FontContextProvider>
       </div>
     </>

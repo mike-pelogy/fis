@@ -9,13 +9,16 @@ import { fancyBulletPoints } from "@/pages/about";
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import { individualPageQuery } from "@/data/individualPageQuery";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(investmentManagementPageQuery);
+  const { data: individualData } = await getGqlRequest(individualPageQuery);
 
   return {
     props: {
       data: data.page.investmentManagement,
+      sublayoutData: individualData.page.individual,
     },
   };
 }
