@@ -20,6 +20,15 @@ query wealthManagementPage {
           target
         }
       }
+      modal {
+        title
+        redirectUrl
+        description
+      }
+      cta {
+        title
+        description
+      }
     }
   }
 }

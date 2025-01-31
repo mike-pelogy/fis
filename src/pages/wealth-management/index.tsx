@@ -4,7 +4,9 @@ import { fancyBulletPoints } from "../about";
 import getGqlRequest from "@/data/getGqlRequest";
 import { wealthManagementPageQuery } from "@/data/wealthManagementPageQuery";
 import {
+    Page_Wealthmanagement_Cta,
   Page_Wealthmanagement_Introduction,
+  Page_Wealthmanagement_Modal,
   Page_Wealthmanagement_Services,
 } from "@/gql/graphql";
 import Image from "next/image";
@@ -16,11 +18,13 @@ import Modal from "@/components/Modal";
 export async function getStaticProps() {
   const { data } = await getGqlRequest(wealthManagementPageQuery);
 
-  const { services, introduction } = data.page.wealthManagement;
+  const { services, introduction, modal, cta } = data.page.wealthManagement;
   return {
     props: {
       services,
       introduction,
+      modal,
+      cta,
     },
   };
 }
@@ -51,9 +55,13 @@ const ServiceCard = ({
 const WealthManagementPage = ({
   introduction,
   services,
+  modal,
+  cta,
 }: {
   introduction: Page_Wealthmanagement_Introduction;
   services: Page_Wealthmanagement_Services;
+    modal: Page_Wealthmanagement_Modal;
+    cta: Page_Wealthmanagement_Cta;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -64,22 +72,11 @@ const WealthManagementPage = ({
       </Head>
       <Modal isOpen={isModalOpen}>
         <h3 className="text-2xl text-fis-blue mb-4 font-[inherit] max-w-[480px]">
-          You are now leaving the Faith Investor Services website.
+          {modal.title}
         </h3>
         <div className="font-[inherit] mb-fis-1">
-          <p className="text-base">
-            Please click confirm below to continue on to the Orion website.
-          </p>
-          <p>
-            If you have not done so already, we encourage you to enroll in
-            two-factor authentication with Orion to better protect your account.
-          </p>
-          <p>
-            The link you have selected is located on another server. Faith
-            Investor Services does not endorse this website, its sponsor, or any
-            of the policies, activities, products or services offered on the
-            site or by any advertiser on the site.
-          </p>
+          <span className="&[>p]:text-base" dangerouslySetInnerHTML={{__html: modal.description || ''}}>
+          </span>
         </div>
         <div className="flex justify-end gap-2">
           <Button
@@ -92,7 +89,7 @@ const WealthManagementPage = ({
           </Button>
           <Button
             variant="primary"
-            href="https://login.orionadvisor.com/login.html?g=86e684ed-2ae0-4e46-867b-cbaaeb71665d"
+            href={modal.redirectUrl || ''}
           >
             Confirm
           </Button>
@@ -167,11 +164,9 @@ const WealthManagementPage = ({
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
             <h3 className="text-fis-blue text-2xl mb-4">
-              Interested in more information?
+              {cta.title}
             </h3>
-            <p className="font-bold mb-fis-1">
-              Reach out and let’s explore how we can support you.
-            </p>
+            <p className="font-bold mb-fis-1" dangerouslySetInnerHTML={{__html:  cta.description || ''}} />
             <Button
               href="/contact"
               variant="secondary"

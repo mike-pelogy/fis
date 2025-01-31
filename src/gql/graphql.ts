@@ -4856,10 +4856,21 @@ export type Page_Separatelymanagedaccountssma_Top5Reasons = AcfFieldGroup & {
 /** Field Group */
 export type Page_Wealthmanagement = AcfFieldGroup & {
   __typename?: 'Page_Wealthmanagement';
+  cta?: Maybe<Page_Wealthmanagement_Cta>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   introduction?: Maybe<Page_Wealthmanagement_Introduction>;
+  modal?: Maybe<Page_Wealthmanagement_Modal>;
   services?: Maybe<Page_Wealthmanagement_Services>;
+};
+
+/** Field Group */
+export type Page_Wealthmanagement_Cta = AcfFieldGroup & {
+  __typename?: 'Page_Wealthmanagement_Cta';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4869,6 +4880,16 @@ export type Page_Wealthmanagement_Introduction = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Wealthmanagement_Modal = AcfFieldGroup & {
+  __typename?: 'Page_Wealthmanagement_Modal';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  redirectUrl?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
