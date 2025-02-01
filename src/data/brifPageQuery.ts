@@ -66,6 +66,9 @@ query BRIFPageQuery {
       }
       distributionsCopy {
         title
+        file {
+          mediaItemUrl
+        }
         download {
           url
           title

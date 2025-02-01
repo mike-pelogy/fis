@@ -1,6 +1,5 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import Button from "@/components/Button";
-// eslint-disable-next-line
 import {
   MediaItem,
   Page_Kocg_DataReference,
@@ -12,23 +11,19 @@ import {
   Page_Kocg_Pricing,
 } from "@/gql/graphql";
 import classNames from "classnames";
-// eslint-disable-next-line
 import { useState } from "react";
 import FunBackground from "./FunBackground";
 import WhiteContainer from "./WhiteContainer";
 import { NavBar } from "./NavBar";
 import ArrowRight from "@/svgs/ArrowRight";
 import Pdf from "@/svgs/Pdf";
-// @ts-expect-error file import
-import dailyNav from "../../public/FaithInvSvrs.40KF.KF_DailyNAV.csv";
-// @ts-expect-error file import
-import monthlyPerf from "../../public/FaithInvSvrs.40KF.KF_MonthlyPerformance.csv";
-// @ts-expect-error file import
-import quarterlyPerf from "../../public/FaithInvSvrs.40KF.KF_QuarterlyPerformance.csv";
-// @ts-expect-error file import
-import topHoldings from "../../public/FaithInvSvrs.40KF.TOP10_Holdings.csv";
 import { getPerfList } from "@/utils/performanceData";
 import { getDailyData } from "@/utils/dailyData";
+import { ETFDataType } from "@/utils/getEtfData";
+
+const EtfContext = createContext<{ etfData: ETFDataType | null }>({
+  etfData: null,
+});
 
 type SectionTypes =
   | "Overview"
@@ -81,13 +76,15 @@ const Overview = ({
   overview,
   id,
   typeIndex = 0,
-}: //  daily,
-{
+}: {
   overview: Page_Kocg_Overview;
   id: SectionTypes;
   daily: MediaItem;
 } & ITypeIndex) => {
-  const data = dailyNav[typeToDailyMap[typeIndex]];
+  const { etfData } = useContext(EtfContext);
+  const daily = etfData?.dailyRes;
+
+  const data = daily[typeToDailyMap[typeIndex]];
 
   const { rateDate, fundTicker, CUSIP, netAssets, shares } = getDailyData(data);
 
@@ -204,7 +201,10 @@ const Pricing = ({
   pricing: Page_Kocg_Pricing;
   id: SectionTypes;
 } & ITypeIndex) => {
-  const data = dailyNav[typeToDailyMap[typeIndex]];
+  const { etfData } = useContext(EtfContext);
+  const daily = etfData?.dailyRes;
+
+  const data = daily[typeToDailyMap[typeIndex]];
 
   const {
     rateDate,
@@ -316,13 +316,19 @@ const Performance = ({
   monthly: MediaItem;
   quarterly: MediaItem;
 } & ITypeIndex) => {
-  const d = dailyNav[typeToDailyMap[typeIndex]];
+  const { etfData } = useContext(EtfContext);
+  const daily = etfData?.dailyRes;
+
+  const d = daily[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(d);
 
   const [active, setActive] = useState(perfNav[0].title);
 
-  const monthlyList = getPerfList(typeIndex, monthlyPerf);
-  const quarterlyList = getPerfList(typeIndex, quarterlyPerf);
+  const monthlyP = etfData?.monthlyRes;
+  const quarterlyP = etfData?.quarterlyRes;
+
+  const monthlyList = getPerfList(typeIndex, monthlyP);
+  const quarterlyList = getPerfList(typeIndex, quarterlyP);
 
   const toShow = {
     [perfNav[0].title]: monthlyList,
@@ -339,7 +345,9 @@ const Performance = ({
           className="[&>ul>li>a]:text-2xl [&>ul>li>a]:whitespace-nowrap px-0 pt-0"
           navBar={perfNav}
           active={active}
-          handleOnClick={(v) => setActive(v)}
+          handleOnClick={(v) => {
+            setActive(v);
+          }}
         />
         <div>
           <p className="text-slate-600 mb-4">Data as of {rateDate}</p>
@@ -443,7 +451,10 @@ const Distributions = ({
   distributions: Page_Kocg_Distributions;
   id: SectionTypes;
 } & ITypeIndex) => {
-  const d = dailyNav[typeToDailyMap[typeIndex]];
+  const { etfData } = useContext(EtfContext);
+  const daily = etfData?.dailyRes;
+
+  const d = daily[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(d);
 
   const distrubtionData = (distributions?.data?.perYear || [])?.reduce<
@@ -529,8 +540,9 @@ const radialBg =
 
 const filterMap = ["KOCG", "PRAY", "BRIF"];
 
-const getTopHoldingsData = (indexFilter: number) => {
-  return topHoldings
+// eslint-disable-next-line
+const getTopHoldingsData = (holdings: any[], indexFilter: number) => {
+  return holdings
     .filter(
       ({ Account }: Record<string, string>) =>
         Account === filterMap[indexFilter]
@@ -552,12 +564,16 @@ const Holdings = ({
   holdings: Page_Kocg_Holdings;
   id: SectionTypes;
 } & ITypeIndex) => {
+  const { etfData } = useContext(EtfContext);
+  const daily = etfData?.dailyRes;
+  const h = etfData?.holdingsRes;
+
   const items = [
     { name: "", ticker: "Ticker", weight: "Weighting (%)" },
-    ...getTopHoldingsData(typeIndex),
+    ...getTopHoldingsData(h, typeIndex),
   ];
 
-  const data = dailyNav[typeToDailyMap[typeIndex]];
+  const data = daily[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(data);
 
   return (
@@ -698,6 +714,7 @@ export default function ETF({
   documents,
   dataReference,
   typeIndex,
+  etfData,
 }: {
   overview: Page_Kocg_Overview;
   pricing: Page_Kocg_Pricing;
@@ -706,9 +723,10 @@ export default function ETF({
   holdings: Page_Kocg_Holdings;
   documents: Page_Kocg_Documents;
   dataReference: Page_Kocg_DataReference;
+  etfData: ETFDataType;
 } & ITypeIndex) {
   return (
-    <>
+    <EtfContext.Provider value={{ etfData }}>
       <div className="pt-fis-1" />
       <div className="sticky top-[79px] md:top-[100px] w-full bg-white z-[100] flex justify-center">
         <div className="container">
@@ -743,6 +761,6 @@ export default function ETF({
       />
       <Holdings holdings={holdings} id="Holdings" typeIndex={typeIndex} />
       <Documents documents={documents} id="Documents" />
-    </>
+    </EtfContext.Provider>
   );
 }

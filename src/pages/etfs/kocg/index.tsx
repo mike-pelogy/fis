@@ -15,18 +15,32 @@ import {
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
+import getEtfData, { ETFDataType } from "@/utils/getEtfData";
 import classNames from "classnames";
 import Head from "next/head";
 import Image from "next/image";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(kocgPageQuery);
+  const kocg = data.page.kocg as Page_Kocg;
+
+  const etfData = await getEtfData({
+    // @ts-expect-error: types
+    daily: kocg.dataReference?.dailyNav,
+    // @ts-expect-error: types
+    monthly: kocg.dataReference?.monthlyPerformance,
+    // @ts-expect-error: types
+    quarterly: kocg.dataReference?.quarterlyPerformance,
+    // @ts-expect-error: types
+    holdings: kocg.distributionsCopy?.file,
+  });
 
   return {
     props: {
       data: data.page.kocg,
       title: data.page.title,
       customFooter: data.page.customerFooter,
+      etfData,
     },
   };
 }
@@ -53,12 +67,12 @@ const Landing = ({
           />
           <div className="flex justify-end mt-8">
             <Button variant="primary" href="#Kocg" IconButton={<ArrowRight />}>
-            Learn more
+              Learn more
             </Button>
           </div>
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <VideoPlayer src={landing.video || ''} />
+          <VideoPlayer src={landing.video || ""} />
         </div>
       </section>
     </div>
@@ -78,7 +92,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
         <WhiteContainer>
           <div className="flex flex-col-reverse md:flex-row">
             <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mt-fis-2 md:mt-0">
-              <VideoPlayer src={values.video || ''} />
+              <VideoPlayer src={values.video || ""} />
             </div>
             <div className="w-full md:w-1/2">
               <div
@@ -131,8 +145,8 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
             <div>
               <Image
                 className="w-[120px]"
-                src={quote.kocLogo?.mediaItemUrl || ''}
-                alt={quote.kocLogo?.altText || ''}
+                src={quote.kocLogo?.mediaItemUrl || ""}
+                alt={quote.kocLogo?.altText || ""}
                 width={300}
                 height={120}
               />
@@ -146,8 +160,8 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
         <div className="flex justify-center items-end">
           <Image
             className="w-[325px] h-[325px] object-contain object-bottom"
-            src={quote.photo?.mediaItemUrl || ''}
-            alt={quote.photo?.altText || ''}
+            src={quote.photo?.mediaItemUrl || ""}
+            alt={quote.photo?.altText || ""}
             width={650}
             height={800}
           />
@@ -160,7 +174,8 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
 const KocgPage: NextPageWithLayout<{
   data: Page_Kocg;
   title: string;
-}> = ({ data, title }) => {
+  etfData: ETFDataType;
+}> = ({ data, title, etfData }) => {
   return (
     <>
       <Head>
@@ -179,6 +194,7 @@ const KocgPage: NextPageWithLayout<{
         data.documents &&
         data.dataReference && (
           <ETF
+            etfData={etfData}
             typeIndex={0}
             overview={data.overview}
             pricing={data.pricing}

@@ -18,16 +18,30 @@ import {
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
+import getEtfData, { ETFDataType } from "@/utils/getEtfData";
 import Head from "next/head";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(prayPageQuery);
+  const pray = data.page.pray as Page_Pray;
+
+  const etfData = await getEtfData({
+    // @ts-expect-error: types
+    daily: pray.dataReference?.dailyNav,
+    // @ts-expect-error: types
+    monthly: pray.dataReference?.monthlyPerformance,
+    // @ts-expect-error: types
+    quarterly: pray.dataReference?.quarterlyPerformance,
+    // @ts-expect-error: types
+    holdings: pray.distributionsCopy?.file,
+  });
 
   return {
     props: {
       data: data.page.pray,
       title: data.page.title,
       customFooter: data.page.customerFooter,
+      etfData,
     },
   };
 }
@@ -70,7 +84,8 @@ const Landing = ({
 const PrayPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
-}> = ({ data, title }) => {
+  etfData: ETFDataType;
+}> = ({ data, title, etfData }) => {
   return (
     <>
       <Head>
@@ -86,6 +101,7 @@ const PrayPage: NextPageWithLayout<{
         data.distributionsCopy &&
         data.documents && (
           <ETF
+            etfData={etfData}
             typeIndex={1}
             overview={data.overview as Page_Kocg_Overview}
             pricing={data.pricing as Page_Kocg_Pricing}

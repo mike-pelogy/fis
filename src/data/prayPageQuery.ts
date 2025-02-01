@@ -71,6 +71,9 @@ query PrayPage {
           url
           title
         }
+        file {
+          mediaItemUrl
+        }
       }
       distributions {
         title
