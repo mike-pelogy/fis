@@ -4,6 +4,10 @@ export const endowmentsPageQuery = gql(`
 query endowmentsPageQuery {
   page(id: "189", idType: DATABASE_ID) {
     endowments {
+      connectWithUs {
+        description
+        title
+      }
       introduction
       howFisHelps {
         title

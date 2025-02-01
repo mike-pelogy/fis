@@ -6,19 +6,25 @@ import { Nav } from "../../individuals/financial-planning";
 import { SubscribeSection } from "@/pages/contact";
 import getGqlRequest from "@/data/getGqlRequest";
 import { retirementPlansPageQuery } from "@/data/retirementPlansPageQuery";
-import { Page_Retirementplans } from "@/gql/graphql";
+import {
+  Page_Retirementplans,
+  ThemeGeneralSettings_Globaloptions,
+} from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import classNames from "classnames";
+import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(retirementPlansPageQuery);
+  const { data: globalData } = await getGqlRequest(globalOptionsQuery);
 
   return {
     props: {
       data: data.page.retirementPlans,
+      globalData: globalData.themeGeneralSettings.globalOptions,
     },
   };
 }
@@ -28,7 +34,8 @@ export const radialBg =
 
 const FinancialPlanningPage: NextPageWithLayout<{
   data: Page_Retirementplans;
-}> = ({ data }) => {
+  globalData: ThemeGeneralSettings_Globaloptions;
+}> = ({ data, globalData }) => {
   const { introduction, servicesBenefits } = data;
 
   return (
@@ -118,9 +125,11 @@ const FinancialPlanningPage: NextPageWithLayout<{
           </div>
         </div>
       </section>
-      <div className="w-full bg-slate-100 pb-fis-2">
-        <SubscribeSection />
-      </div>
+      {globalData.subscribe && (
+        <div className="w-full bg-slate-100 pb-fis-2">
+          <SubscribeSection data={globalData.subscribe} />
+        </div>
+      )}
     </>
   );
 };

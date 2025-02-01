@@ -30,6 +30,7 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
     howFisHelps,
     goverance,
     educationAndACultureOfPhilanthropy,
+    connectWithUs,
   } = data;
   return (
     <>
@@ -104,8 +105,8 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
       <ConnectWithUs
         connectWithUs={{
           link: { title: "Connect with us", url: "/contact" },
-          title: "Interested in more information?",
-          description: "Reach out and let’s explore how we can support you.",
+          title: connectWithUs?.title,
+          description: connectWithUs?.description,
         }}
       />
     </>

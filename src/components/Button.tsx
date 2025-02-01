@@ -76,8 +76,8 @@ export default function Button({
   variant,
   className,
   IconButton,
-LeadingIconButton,
-disabled,
+  LeadingIconButton,
+  disabled,
   target,
   type,
 }: IButtonProps) {
@@ -88,33 +88,38 @@ disabled,
     baseClass,
     sizeClassNames,
     variantClassNames,
-    className,
+    className
   );
 
   if (href) {
     return (
       <Link href={href} className={finalClassNames} target={target}>
         <div className="flex items-center">
-          {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
-          <span>
-            {children}
-          </span>
+          {LeadingIconButton && (
+            <div className="mr-2 w-[16px]">{LeadingIconButton}</div>
+          )}
+          <span>{children}</span>
           {IconButton && <div className="ml-2 w-[16px]">{IconButton}</div>}
         </div>
       </Link>
     );
   }
 
-  if (onClick || type === 'submit') {
+  if (onClick || type === "submit") {
     return (
-      <NativeButton onClick={() => onClick?.()} type={type} disabled={disabled} className={finalClassNames}>
+      <NativeButton
+        onClick={() => onClick?.()}
+        type={type}
+        disabled={disabled}
+        className={finalClassNames}
+      >
         <div className="flex items-center">
-          {LeadingIconButton && <div className="mr-2 w-[16px]">{LeadingIconButton}</div>}
-          <span>
-            {children}
-          </span>
+          {LeadingIconButton && (
+            <div className="mr-2 w-[16px]">{LeadingIconButton}</div>
+          )}
+          <span>{children}</span>
           {IconButton && <div className="ml-2 w-[16px]">{IconButton}</div>}
-          </div>
+        </div>
       </NativeButton>
     );
   }

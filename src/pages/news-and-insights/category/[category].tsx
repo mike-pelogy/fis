@@ -70,10 +70,18 @@ const CategoryPage: NextPageWithLayout<
             height={44}
             className="w-[130px]"
           />
-          <a href='https://rss.com/podcasts/faith-and-retirement/' target="_blank" className="text-fis-blue hover:text-fis-purple transition-all">
+          <a
+            href="https://rss.com/podcasts/faith-and-retirement/"
+            target="_blank"
+            className="text-fis-blue hover:text-fis-purple transition-all"
+          >
             <Rss />
           </a>
-          <a href='https://podcasts.apple.com/ca/podcast/faith-retirement/id1769055427' target="_blank" className="text-fis-blue hover:text-fis-purple transition-all">
+          <a
+            href="https://podcasts.apple.com/ca/podcast/faith-retirement/id1769055427"
+            target="_blank"
+            className="text-fis-blue hover:text-fis-purple transition-all"
+          >
             <Podcast />
           </a>
         </div>

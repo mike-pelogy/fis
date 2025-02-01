@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import {
   MediaItem,
   Page_Kocg_DataReference,
+  Page_Kocg_Distributions,
   Page_Kocg_Documents,
   Page_Kocg_Holdings,
   Page_Kocg_Overview,
@@ -51,34 +52,6 @@ const navBar: INavBar[] = [
   { title: "Documents" },
 ];
 
-// TODO: make this come from wordpress
-const dataBinding = [
-  {
-    FundInception: "07/14/2021",
-    ISIN: "US78433H1059",
-    Gross: "0.75%",
-    PrimaryExchange: "NYSE Arca",
-    Index: "MSCI ACWI Index",
-    DistributionFrequency: "Annually",
-  },
-  {
-    FundInception: "02/08/2022",
-    ISIN: "US78433H2040",
-    Gross: "0.69%",
-    PrimaryExchange: "NYSE Arca",
-    Index: "MSCI ACWI Index",
-    DistributionFrequency: "Annually",
-  },
-  {
-    FundInception: "12/20/2024",
-    ISIN: "US78433H6264",
-    Gross: "0.65%",
-    PrimaryExchange: "NYSE Arca",
-    Index: "MSCI ACWI Index",
-    DistributionFrequency: "Annually",
-  },
-];
-
 type ETFIndexType = 0 | 1 | 2;
 
 interface ITypeIndex {
@@ -95,13 +68,13 @@ export const fancyNumberList =
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
   0: 2,
-   1: 1,
-   2: 0,
+  1: 1,
+  2: 0,
 };
 
-const formatter = Intl.NumberFormat('en-US', {
-style: 'currency',
-currency: 'USD',
+const formatter = Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
 });
 
 const Overview = ({
@@ -115,30 +88,20 @@ const Overview = ({
   daily: MediaItem;
 } & ITypeIndex) => {
   const data = dailyNav[typeToDailyMap[typeIndex]];
-  const d = dataBinding[typeIndex];
-
-  const {
-    FundInception,
-    ISIN,
-    Gross,
-    PrimaryExchange,
-    Index,
-    DistributionFrequency,
-  } = d;
 
   const { rateDate, fundTicker, CUSIP, netAssets, shares } = getDailyData(data);
 
   const info = [
-    { title: "Fund Inception", value: FundInception },
+    { title: "Fund Inception", value: overview.data?.fundInception },
     { title: "Fund Ticker", value: fundTicker },
     { title: "CUSIP", value: CUSIP },
-    { title: "ISIN", value: ISIN },
-    { title: "Gross Expense Ratio", value: Gross },
+    { title: "ISIN", value: overview.data?.isin },
+    { title: "Gross Expense Ratio", value: overview.data?.gross },
     { title: "Net Assets", value: formatter.format(netAssets) },
     { title: "Shares Outstanding", value: shares },
-    { title: "Primary Exchange", value: PrimaryExchange },
-    { title: "Index", value: Index },
-    { title: "Distribution Frequency", value: DistributionFrequency },
+    { title: "Primary Exchange", value: overview.data?.primaryExchange },
+    { title: "Index", value: overview.data?.index },
+    { title: "Distribution Frequency", value: overview.data?.distributionFrequency },
   ];
 
   return (
@@ -468,42 +431,34 @@ const Performance = ({
   );
 };
 
-const DistributionsMap = [
-  {
-    "30 Day SEC Yield": "1.19%",
-    "Ex-Div Date": ["12/29/2021", "12/29/2022"],
-    "Record Date": ["12/30/2021", "12/30/2022"],
-    "Payable Date": ["01/03/2022", "01/03/2023"],
-    "Amount ($)": ["$0.07221", "$0.39647"],
-  },
-  {
-    "30 Day SEC Yield": "1.56%",
-    "Ex-Div Date": ["12/29/2022"],
-    "Record Date": ["12/30/2022"],
-    "Payable Date": ["01/03/2023"],
-    "Amount ($)": ["$0.25961"],
-  },
-  {
-    "30 Day SEC Yield": "-",
-    "Ex-Div Date": ["-"],
-    "Record Date": ["-"],
-    "Payable Date": ["-"],
-    "Amount ($)": ["-"],
-  },
-];
-
 const Distributions = ({
   distributions,
   id,
   typeIndex,
 }: {
-  distributions: string;
+  distributions: Page_Kocg_Distributions;
   id: SectionTypes;
 } & ITypeIndex) => {
-  const data = DistributionsMap[typeIndex];
-
   const d = dailyNav[typeToDailyMap[typeIndex]];
   const { rateDate } = getDailyData(d);
+
+  const distrubtionData = (distributions?.data?.perYear || [])?.reduce<
+    Record<string, string[]>
+  >(
+    (acc, curr) => {
+      acc["Ex-Div Date"].push(curr?.exDivDate || "-");
+      acc["Record Date"].push(curr?.recordDate || "-");
+      acc["Payable Date"].push(curr?.payableDate || "-");
+      acc["Amount ($)"].push(curr?.amount || "-");
+      return acc;
+    },
+    {
+      "Ex-Div Date": [],
+      "Record Date": [],
+      "Payable Date": [],
+      "Amount ($)": [],
+    }
+  );
 
   return (
     <div className="flex justify-center w-full bg-slate-100">
@@ -511,7 +466,7 @@ const Distributions = ({
         id={id}
         className="flex flex-col container w-full py-fis-2 px-4 md:px-fis-1"
       >
-        <h3 className="text-fis-blue text-2xl mb-4">{distributions}</h3>
+        <h3 className="text-fis-blue text-2xl mb-4">{distributions.title}</h3>
         <div className="flex flex-col md:flex-row md:space-x-fis-1">
           <div className="w-full md:w-1/3">
             <div className="w-full max-w-[320px]">
@@ -520,7 +475,7 @@ const Distributions = ({
                 labelValues={[
                   {
                     label: "30 Day SEC Yeild",
-                    value: data["30 Day SEC Yield"],
+                    value: distributions.data?.daySecYield || "-",
                   },
                 ]}
               />
@@ -531,10 +486,22 @@ const Distributions = ({
               <p className="font-bold text-lg mb-4">As of {rateDate}</p>
               <div className="flex flex-col md:flex-row gap-4 md:gap-fis-1 justify-between">
                 {[
-                  { title: "Ex-Div Date", values: data["Ex-Div Date"] },
-                  { title: "Record Date", values: data["Record Date"] },
-                  { title: "Payable Date", values: data["Payable Date"] },
-                  { title: "Amount ($)", values: data["Amount ($)"] },
+                  {
+                    title: "Ex-Div Date",
+                    values: distrubtionData["Ex-Div Date"],
+                  },
+                  {
+                    title: "Record Date",
+                    values: distrubtionData["Record Date"],
+                  },
+                  {
+                    title: "Payable Date",
+                    values: distrubtionData["Payable Date"],
+                  },
+                  {
+                    title: "Amount ($)",
+                    values: distrubtionData["Amount ($)"],
+                  },
                 ].map(({ title, values }) => (
                   <SimpleDataTable
                     key={title}
@@ -722,7 +689,7 @@ export default function ETF({
   overview: Page_Kocg_Overview;
   pricing: Page_Kocg_Pricing;
   performance: Page_Kocg_Performance;
-  distributions: string;
+  distributions: Page_Kocg_Distributions;
   holdings: Page_Kocg_Holdings;
   documents: Page_Kocg_Documents;
   dataReference: Page_Kocg_DataReference;

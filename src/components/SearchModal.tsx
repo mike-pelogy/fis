@@ -7,6 +7,7 @@ import getGqlRequest from "@/data/getGqlRequest";
 import { searchPages, searchPosts, searchTeams } from "@/data/searchQuery";
 import { Page, Post, Team } from "@/gql/graphql";
 import { debounce } from "lodash";
+import { useHtmlOverflow } from "@/hooks/useHtmlOverflow";
 
 const bg =
   "before:content-[''] before:absolute before:w-full before:h-full before:bg-white before:opacity-100 md:before:opacity-80 before:rounded-lg before:left-0 before:right-0";
@@ -15,17 +16,6 @@ interface ISearchResult {
   title: string;
   link: string;
   type: string;
-}
-
-export function useHtmlOverflow() {
-  useEffect(() => {
-    const htmlTag = document.getElementsByTagName("html");
-    htmlTag[0].classList.add("overflow-hidden");
-
-    return () => {
-      htmlTag[0].classList.remove("overflow-hidden");
-    };
-  }, []);
 }
 
 export default function SearchModal({ onClose }: { onClose: () => void }) {

@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'fis-blue': 'rgb(var(--blue))',
-        'fis-teal': 'rgb(var(--teal))',
-        'fis-purple': 'rgb(var(--purple))',
+        "fis-blue": "rgb(var(--blue))",
+        "fis-teal": "rgb(var(--teal))",
+        "fis-purple": "rgb(var(--purple))",
       },
       fontFamily: {
-        sans: 'Lato',
+        sans: "Lato",
       },
       spacing: {
-        'fis-1': '30px',
-        'fis-2': '60px',
-        'fis-3': '90px',
-        'fis-4': '120px',
+        "fis-1": "30px",
+        "fis-2": "60px",
+        "fis-3": "90px",
+        "fis-4": "120px",
       },
     },
   },

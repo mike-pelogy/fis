@@ -36,6 +36,14 @@ query PrayPage {
             title
           }
         }
+        data {
+          primaryExchange
+          isin
+          index
+          gross
+          fundInception
+          distributionFrequency
+        }
       }
       documents {
         legal {
@@ -60,7 +68,19 @@ query PrayPage {
           title
         }
       }
-      distributions
+      distributions {
+        title
+        data {
+          daySecYield
+          perYear {
+            recordDate
+            payableDate
+            fieldGroupName
+            exDivDate
+            amount
+          }
+        }
+      }
       dataReference {
         dailyNav {
           mediaItemUrl
@@ -74,6 +94,9 @@ query PrayPage {
       }
     }
     title
+    customerFooter {
+      customFooter
+    }
   }
 }
 `);

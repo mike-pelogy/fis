@@ -16,29 +16,33 @@ import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 
 export const slugToImageMap: Record<string, string> = {
-  'mike-skillman': '/MikeSkillman.jpg',
-  'jay-peroni-cfp': '/JayPeroni.jpg',
-  'steve-nelson-cfa': '/SteveNelson.jpg',
-  'jason-kreke': '/JasonKreke.jpg',
-}
+  "mike-skillman": "/MikeSkillman.jpg",
+  "jay-peroni-cfp": "/JayPeroni.jpg",
+  "steve-nelson-cfa": "/SteveNelson.jpg",
+  "jason-kreke": "/JasonKreke.jpg",
+};
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
   const { data: teamData } = await getGqlRequest(teamQuery);
 
-  // eslint-disable-next-line
-  const team = teamData?.teams?.edges.map(({ node }: { node: any }) => node) as Team[] || [];
+  const team =
+    // eslint-disable-next-line
+    (teamData?.teams?.edges.map(({ node }: { node: any }) => node) as Team[]) ||
+    [];
 
   const teamTemp = team.map((member) => {
-    if(member.slug) {
-      // @ts-expect-error expected error
-      member.featuredImage = { node: { mediaItemUrl: slugToImageMap[member.slug] } };
+    if (member.slug) {
+      member.featuredImage = {
+        // @ts-expect-error expected error
+        node: { mediaItemUrl: slugToImageMap[member.slug] },
+      };
     }
 
     return {
       ...member,
-    }
-  })
+    };
+  });
 
   return {
     props: {
@@ -123,17 +127,17 @@ const TeamCard = (team: Team) => {
     <article>
       <Link className="group" href={href}>
         <div className="pb-4">
-        <div className="overflow-hidden max-w-[230px] aspect-square rounded-lg bg-slate-500">
-          <Image
-            src={
-              team.featuredImage?.node.mediaItemUrl ||
-              "/defaultFeaturedImage.png"
-            }
-            alt={team.title || ""}
-            width={500}
-            height={500}
-            className="w-full h-full object-cover"
-          />
+          <div className="overflow-hidden max-w-[230px] aspect-square rounded-lg bg-slate-500">
+            <Image
+              src={
+                team.featuredImage?.node.mediaItemUrl ||
+                "/defaultFeaturedImage.png"
+              }
+              alt={team.title || ""}
+              width={500}
+              height={500}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </Link>

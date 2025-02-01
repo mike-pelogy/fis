@@ -51,6 +51,14 @@ page(idType: DATABASE_ID, id: "63") {
           title
         }
         description
+        data {
+          primaryExchange
+          isin
+          index
+          gross
+          fundInception
+          distributionFrequency
+        }
       }
       landing {
         title
@@ -90,9 +98,24 @@ page(idType: DATABASE_ID, id: "63") {
           mediaItemUrl
         }
       }
-      distributions
+      distributions {
+        title
+        data {
+          daySecYield
+          perYear {
+            recordDate
+            payableDate
+            fieldGroupName
+            exDivDate
+            amount
+          }
+        }
+      }
     }
     title
+    customerFooter {
+      customFooter
+    }
   }
 }
 `);

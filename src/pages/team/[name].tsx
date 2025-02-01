@@ -45,14 +45,14 @@ export const getStaticProps: GetStaticProps<any, { name: string }> = async ({
 
   const teamFinal = {
     ...teamBy,
-  }
+  };
 
-  teamFinal.featuredImage =  {
+  teamFinal.featuredImage = {
     // @ts-expect-error make it work
     node: {
       mediaItemUrl: slugToImageMap[teamBy.slug as string],
     },
-  }
+  };
 
   return {
     props: {
@@ -73,7 +73,9 @@ export const TeamDetails = ({ slug, title: name, teamMember }: Team) => {
   return (
     <>
       <Link className="group" href={href}>
-        <h1 className="text-fis-blue group-hover:text-fis-purple transition-all text-lg font-bold">{name}</h1>
+        <h1 className="text-fis-blue group-hover:text-fis-purple transition-all text-lg font-bold">
+          {name}
+        </h1>
         <p className="text-base">{role}</p>
       </Link>
       <a
@@ -124,9 +126,12 @@ export default function TeamMember({
             </div>
           </div>
           <div className="w-full md:w-1/2">
-          <div className="min-h-[60vh]">
-          <div className="max-w-[500px]" dangerouslySetInnerHTML={{ __html: biography }} />
-          </div>
+            <div className="min-h-[60vh]">
+              <div
+                className="max-w-[500px]"
+                dangerouslySetInnerHTML={{ __html: biography }}
+              />
+            </div>
           </div>
         </section>
         <div

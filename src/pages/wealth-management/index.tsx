@@ -4,7 +4,7 @@ import { fancyBulletPoints } from "../about";
 import getGqlRequest from "@/data/getGqlRequest";
 import { wealthManagementPageQuery } from "@/data/wealthManagementPageQuery";
 import {
-    Page_Wealthmanagement_Cta,
+  Page_Wealthmanagement_Cta,
   Page_Wealthmanagement_Introduction,
   Page_Wealthmanagement_Modal,
   Page_Wealthmanagement_Services,
@@ -60,8 +60,8 @@ const WealthManagementPage = ({
 }: {
   introduction: Page_Wealthmanagement_Introduction;
   services: Page_Wealthmanagement_Services;
-    modal: Page_Wealthmanagement_Modal;
-    cta: Page_Wealthmanagement_Cta;
+  modal: Page_Wealthmanagement_Modal;
+  cta: Page_Wealthmanagement_Cta;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -75,8 +75,10 @@ const WealthManagementPage = ({
           {modal.title}
         </h3>
         <div className="font-[inherit] mb-fis-1">
-          <span className="&[>p]:text-base" dangerouslySetInnerHTML={{__html: modal.description || ''}}>
-          </span>
+          <span
+            className="&[>p]:text-base"
+            dangerouslySetInnerHTML={{ __html: modal.description || "" }}
+          ></span>
         </div>
         <div className="flex justify-end gap-2">
           <Button
@@ -87,10 +89,7 @@ const WealthManagementPage = ({
           >
             Cancel
           </Button>
-          <Button
-            variant="primary"
-            href={modal.redirectUrl || ''}
-          >
+          <Button variant="primary" href={modal.redirectUrl || ""}>
             Confirm
           </Button>
         </div>
@@ -163,10 +162,11 @@ const WealthManagementPage = ({
             />
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2">
-            <h3 className="text-fis-blue text-2xl mb-4">
-              {cta.title}
-            </h3>
-            <p className="font-bold mb-fis-1" dangerouslySetInnerHTML={{__html:  cta.description || ''}} />
+            <h3 className="text-fis-blue text-2xl mb-4">{cta.title}</h3>
+            <p
+              className="font-bold mb-fis-1"
+              dangerouslySetInnerHTML={{ __html: cta.description || "" }}
+            />
             <Button
               href="/contact"
               variant="secondary"

@@ -15,7 +15,7 @@ import Mail from "@/svgs/Mail";
 import classNames from "classnames";
 import getGqlRequest from "@/data/getGqlRequest";
 import { postsQuery } from "@/data/postsQuery";
-import type { Post } from "@/gql/graphql";
+import type { Post, ThemeGeneralSettings_Globaloptions } from "@/gql/graphql";
 import { postQuery } from "@/data/postQuery";
 import { relatedPostsQuery } from "@/data/relatedPostsQuery";
 import { useState } from "react";
@@ -24,6 +24,7 @@ import formatDate from "@/utils/formatDate";
 import { BASE_URL } from "@/constants";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
+import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 
 interface ICategory {
   label: string;
@@ -82,6 +83,7 @@ export const getStaticProps: GetStaticProps<any, { postId?: string }> = async ({
   }
 
   const { data } = await getGqlRequest(postQuery, { slug: postId });
+  const { data: globalData } = await getGqlRequest(globalOptionsQuery);
 
   const postBy = data.postBy as Post;
   const {
@@ -121,6 +123,8 @@ export const getStaticProps: GetStaticProps<any, { postId?: string }> = async ({
       date: formatDate(new Date(date || "")),
       categories,
       relatedPosts,
+      globalData: globalData.themeGeneralSettings
+        .globalOptions as ThemeGeneralSettings_Globaloptions,
     },
   };
 };
@@ -210,6 +214,7 @@ export default function Post({
   categories,
   relatedPosts,
   id,
+  globalData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [moreRelatedPosts, setMoreRelatedPosts] = useState([]);
   const [loadingMoreRelatedPosts, setLoadingMoreRelatedPosts] = useState(false);
@@ -227,6 +232,8 @@ export default function Post({
     setMoreRelatedPosts(normalizeRelatedPosts(relatedData || []));
   };
 
+  const global: ThemeGeneralSettings_Globaloptions = globalData;
+
   return (
     <>
       <Head>
@@ -234,7 +241,9 @@ export default function Post({
       </Head>
       <div className="flex items-center w-full relative flex-col">
         <section className="container px-4 md:px-fis-2 p-fis-2 flex flex-col w-full relative">
-          <h3 className="text-2xl text-fis-blue mb-fis-1 max-w-[700px]">{title}</h3>
+          <h3 className="text-2xl text-fis-blue mb-fis-1 max-w-[700px]">
+            {title}
+          </h3>
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <Author {...author} />
@@ -303,9 +312,11 @@ export default function Post({
           </div>
         </section>
       </div>
-      <div className="w-full bg-slate-100 pb-fis-2">
-        <SubscribeSection />
-      </div>
+      {global.subscribe && (
+        <div className="w-full bg-slate-100 pb-fis-2">
+          <SubscribeSection data={global.subscribe} />
+        </div>
+      )}
     </>
   );
 }

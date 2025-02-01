@@ -15,8 +15,10 @@ interface IPostCardProps {
 }
 
 const getDefaultImage = (post: Post) => {
-  return post.categories?.edges.find((p) => p.node.slug === 'faith-retirement') ? '/Faith-Retirement-default.jpg' : "/defaultFeaturedImage.png";
-}
+  return post.categories?.edges.find((p) => p.node.slug === "faith-retirement")
+    ? "/Faith-Retirement-default.jpg"
+    : "/defaultFeaturedImage.png";
+};
 
 export default function PostCard({
   post,

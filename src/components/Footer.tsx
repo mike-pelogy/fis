@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Menu, { beforeClass } from "./Menu";
-import { FormAndADV, menu, SocialAndPhone } from "./Header";
+import { menu } from "./Header";
 import classNames from "classnames";
 import Logo from "./Logo";
 import Link from "next/link";
+import FormAndADV from "./FormAndADV";
+import SocialAndPhone from "./SocialAndPhone";
 
 const borderTopClass =
   "relative before:content-[''] before:absolute before:w-[calc(100%-2rem)] before:h-[2px] before:top-0 before:left-[50%] before:translate-x-[-50%] before:bg-fis-purple";
@@ -63,7 +65,8 @@ export default function Footer() {
             Investors should consider the investment objectives, risks, charges
             and expenses carefully before investing. A prospectus or summary
             prospectus with this and other information about the Funds can be
-            found here, <Link href="/etfs/pray">PRAY</Link>, <Link href="/etfs/kocg">KOCG</Link>, or{" "}
+            found here, <Link href="/etfs/pray">PRAY</Link>,{" "}
+            <Link href="/etfs/kocg">KOCG</Link>, or{" "}
             <Link href="/etfs/brif">BRIF</Link>. Read the prospectus or summary
             prospectus carefully before investing.
           </p>

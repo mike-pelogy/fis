@@ -4,21 +4,27 @@ import { subLayout } from "../financial-planning";
 import { SubscribeSection } from "@/pages/contact";
 import getGqlRequest from "@/data/getGqlRequest";
 import { investmentManagementPageQuery } from "@/data/investmentManagementPageQuery";
-import { Page_Investmentmanagement } from "@/gql/graphql";
+import {
+  Page_Investmentmanagement,
+  ThemeGeneralSettings_Globaloptions,
+} from "@/gql/graphql";
 import { fancyBulletPoints } from "@/pages/about";
 import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import { individualPageQuery } from "@/data/individualPageQuery";
+import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(investmentManagementPageQuery);
   const { data: individualData } = await getGqlRequest(individualPageQuery);
+  const { data: globalData } = await getGqlRequest(globalOptionsQuery);
 
   return {
     props: {
       data: data.page.investmentManagement,
       sublayoutData: individualData.page.individual,
+      globalData: globalData.themeGeneralSettings.globalOptions,
     },
   };
 }
@@ -28,7 +34,8 @@ export const radialBg =
 
 const InvestmentManagementPage: NextPageWithLayout<{
   data: Page_Investmentmanagement;
-}> = ({ data }) => {
+  globalData: ThemeGeneralSettings_Globaloptions;
+}> = ({ data, globalData }) => {
   const {
     investmentPhilosophy,
     howWeServe,
@@ -129,9 +136,11 @@ const InvestmentManagementPage: NextPageWithLayout<{
           </div>
         </div>
       </section>
-      <div className="w-full bg-slate-100 pb-fis-2">
-        <SubscribeSection />
-      </div>
+      {globalData.subscribe && (
+        <div className="w-full bg-slate-100 pb-fis-2">
+          <SubscribeSection data={globalData.subscribe} />
+        </div>
+      )}
     </>
   );
 };

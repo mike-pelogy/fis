@@ -3,7 +3,11 @@ import { NavBar } from "@/components/NavBar";
 import TextField from "@/components/Forms/TextField";
 import FunBackground from "@/components/FunBackground";
 import WhiteContainer from "@/components/WhiteContainer";
-import { Page_Contactpage, Page_Contactpage_Subscribe } from "@/gql/graphql";
+import {
+  Page_Contactpage,
+  ThemeGeneralSettings_Globaloptions,
+  ThemeGeneralSettings_Globaloptions_Subscribe,
+} from "@/gql/graphql";
 import Phone from "@/svgs/Phone";
 import classNames from "classnames";
 import ArrowRight from "@/svgs/ArrowRight";
@@ -17,13 +21,16 @@ import Link from "next/link";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import { contactPageQuery } from "@/data/contactPageQuery";
+import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(contactPageQuery);
+  const { data: globalData } = await getGqlRequest(globalOptionsQuery);
 
   return {
     props: {
       data: data.page.contactPage as Page_Contactpage,
+      globalData: globalData.themeGeneralSettings.globalOptions,
     },
   };
 }
@@ -89,7 +96,7 @@ const ContactForm = () => {
 export const SubscribeSection = ({
   data,
 }: {
-  data: Page_Contactpage_Subscribe;
+  data: ThemeGeneralSettings_Globaloptions_Subscribe;
 }) => {
   return (
     <div className="flex justify-center">
@@ -153,7 +160,13 @@ export const SubscribeSection = ({
   );
 };
 
-export default function ContactPage({ data }: { data: Page_Contactpage }) {
+export default function ContactPage({
+  data,
+  globalData,
+}: {
+  data: Page_Contactpage;
+  globalData: ThemeGeneralSettings_Globaloptions;
+}) {
   return (
     <>
       <Head>
@@ -205,7 +218,9 @@ export default function ContactPage({ data }: { data: Page_Contactpage }) {
             </WhiteContainer>
           </div>
         </div>
-        {data.subscribe && <SubscribeSection data={data.subscribe} />}
+        {globalData.subscribe && (
+          <SubscribeSection data={globalData.subscribe} />
+        )}
       </div>
     </>
   );

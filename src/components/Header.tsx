@@ -1,19 +1,16 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import { MenuLayer } from "./Menu";
 import type { IMenuItem } from "./Menu";
 import Logo from "./Logo";
 import Link from "next/link";
-import Twitter from "@/svgs/Twitter";
-import Linkedin from "@/svgs/Linkedin";
-import Facebook from "@/svgs/Facebook";
-import ExternalLink from "@/svgs/ExternalLink";
 import Search from "@/svgs/Search";
-import Phone from "@/svgs/Phone";
-import SearchModal, { useHtmlOverflow } from "./SearchModal";
+import SearchModal from "./SearchModal";
 import Hamburger from "@/svgs/Hamburger";
 import Close from "@/svgs/Close";
 import { useRouter } from "next/router";
+import { useHtmlOverflow } from "@/hooks/useHtmlOverflow";
+import FormAndADV from "./FormAndADV";
+import SocialAndPhone from "./SocialAndPhone";
 
 export const menu: IMenuItem[] = [
   { title: "Home", path: "/" },
@@ -83,76 +80,6 @@ export const menu: IMenuItem[] = [
   },
 ];
 
-export const FormAndADV = ({
-  color = "text-fis-purple",
-}: {
-  color?: string;
-}) => {
-  return (
-    <>
-      <a
-        target="_blank"
-        href="https://adviserinfo.sec.gov/firm/summary/313337"
-        className={classNames("hover:text-fis-blue transition-all", color)}
-      >
-        ADV Disclosures
-        <span className="inline-block w-[1rem] h-[0.9rem] ml-2">
-          <ExternalLink />
-        </span>
-      </a>
-    </>
-  );
-};
-
-type SocialIconType = "facebook" | "linkedin" | "twitter";
-
-interface ISocial {
-  icon: SocialIconType;
-  url: string;
-}
-
-const iconMap: { [icon in SocialIconType]: () => ReactElement } = {
-  twitter: Twitter,
-  facebook: Facebook,
-  linkedin: Linkedin,
-};
-
-const getIconMap = (icon: SocialIconType) => {
-  return iconMap[icon];
-};
-
-const socials: ISocial[] = [
-  { icon: "facebook", url: "" },
-  { icon: "linkedin", url: "" },
-  { icon: "twitter", url: "" },
-];
-
-export const SocialAndPhone = () => {
-  return (
-    <>
-      {socials.map(({ url, icon }) => (
-        <a
-          key={icon}
-          href={url}
-          target="_blank"
-          className="flex w-[20px] h-[20px] flex justify-center text-fis-purple hover:text-fis-blue transition-all"
-        >
-          {getIconMap(icon)()}
-        </a>
-      ))}
-      <a
-        href="tel:888-586-1404"
-        className={classNames("text-fis-purple hover:text-fis-blue")}
-      >
-        <span className="inline-block w-[1rem] h-[0.9rem] mr-2">
-          <Phone />
-        </span>
-        888-586-1404
-      </a>
-    </>
-  );
-};
-
 const TopBar = ({ openSearch }: { openSearch: (val: boolean) => void }) => {
   return (
     <div className="flex flex-row justify-start md:justify-end flex-wrap gap-4 md:gap-6">
@@ -204,7 +131,6 @@ const MobileMenu = ({
   );
 };
 
-// TODO: get data for top nav
 export default function Header() {
   const { pathname } = useRouter();
 

@@ -29,6 +29,14 @@ query BRIFPageQuery {
         title
         investmentObjectives
         description
+        data {
+          primaryExchange
+          isin
+          index
+          gross
+          fundInception
+          distributionFrequency
+        }
         fundResources {
           file {
             altText
@@ -60,7 +68,19 @@ query BRIFPageQuery {
           title
         }
       }
-      distributions
+      distributions {
+        title
+        data {
+          daySecYield
+          perYear {
+            recordDate
+            payableDate
+            fieldGroupName
+            exDivDate
+            amount
+          }
+        }
+      }
       dataReference {
         dailyNav {
           mediaItemUrl
@@ -74,6 +94,9 @@ query BRIFPageQuery {
       }
     }
     title
+    customerFooter {
+      customFooter
+    }
   }
 }
 `);

@@ -4134,6 +4134,7 @@ export type Page_Aboutpage = AcfFieldGroup & {
   __typename?: 'Page_Aboutpage';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   mission?: Maybe<Page_Aboutpage_Mission>;
   values?: Maybe<Page_Aboutpage_Values>;
   valuesCopy?: Maybe<Page_Aboutpage_About>;
@@ -4170,7 +4171,7 @@ export type Page_Aboutpage_Values = AcfFieldGroup & {
 export type Page_Brif = AcfFieldGroup & {
   __typename?: 'Page_Brif';
   dataReference?: Maybe<Page_Brif_DataReference>;
-  distributions?: Maybe<Scalars['String']['output']>;
+  distributions?: Maybe<Page_Brif_Distributions>;
   distributionsCopy?: Maybe<Page_Brif_Holdings>;
   documents?: Maybe<Page_Brif_Documents>;
   /** The name of the ACF Field Group */
@@ -4189,6 +4190,35 @@ export type Page_Brif_DataReference = AcfFieldGroup & {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   monthlyPerformance?: Maybe<MediaItem>;
   quarterlyPerformance?: Maybe<MediaItem>;
+};
+
+/** Field Group */
+export type Page_Brif_Distributions = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Distributions';
+  data?: Maybe<Page_Brif_Distributions_Data>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Distributions_Data = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Distributions_Data';
+  daySecYield?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  perYear?: Maybe<Array<Maybe<Page_Brif_Distributions_Data_PerYear>>>;
+};
+
+/** Field Group */
+export type Page_Brif_Distributions_Data_PerYear = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Distributions_Data_perYear';
+  amount?: Maybe<Scalars['String']['output']>;
+  exDivDate?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  payableDate?: Maybe<Scalars['String']['output']>;
+  recordDate?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4242,12 +4272,26 @@ export type Page_Brif_Landing = AcfFieldGroup & {
 /** Field Group */
 export type Page_Brif_Overview = AcfFieldGroup & {
   __typename?: 'Page_Brif_Overview';
+  data?: Maybe<Page_Brif_Overview_Data>;
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   fundResources?: Maybe<Array<Maybe<Page_Brif_Overview_FundResources>>>;
   investmentObjectives?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Brif_Overview_Data = AcfFieldGroup & {
+  __typename?: 'Page_Brif_Overview_Data';
+  distributionFrequency?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundInception?: Maybe<Scalars['String']['output']>;
+  gross?: Maybe<Scalars['String']['output']>;
+  index?: Maybe<Scalars['String']['output']>;
+  isin?: Maybe<Scalars['String']['output']>;
+  primaryExchange?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4291,6 +4335,7 @@ export type Page_Careerspage_Subscribe = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4309,6 +4354,7 @@ export type Page_Contactpage_Subscribe = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4333,12 +4379,23 @@ export type Page_Customerfooter = AcfFieldGroup & {
 /** Field Group */
 export type Page_Endowments = AcfFieldGroup & {
   __typename?: 'Page_Endowments';
+  connectWithUs?: Maybe<Page_Endowments_ConnectWithUs>;
   educationAndACultureOfPhilanthropy?: Maybe<Page_Endowments_EducationAndACultureOfPhilanthropy>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   goverance?: Maybe<Page_Endowments_Goverance>;
   howFisHelps?: Maybe<Page_Endowments_HowFisHelps>;
+  image?: Maybe<MediaItem>;
   introduction?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Endowments_ConnectWithUs = AcfFieldGroup & {
+  __typename?: 'Page_Endowments_ConnectWithUs';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4383,6 +4440,7 @@ export type Page_Financialplanning_Collaboration = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4425,6 +4483,7 @@ export type Page_Homepage_Landing = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4454,6 +4513,7 @@ export type Page_Homepage_Services_Investment = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4464,6 +4524,7 @@ export type Page_Homepage_Services_WealthManagement = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   services?: Maybe<Array<Maybe<Page_Homepage_Services_WealthManagement_Services>>>;
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -4491,6 +4552,7 @@ export type Page_Individual_Individuals = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4530,6 +4592,7 @@ export type Page_Investmentmanagement_OurPortfolios = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4555,7 +4618,7 @@ export type Page_Investmentmanagement_WealthTransition = AcfFieldGroup & {
 export type Page_Kocg = AcfFieldGroup & {
   __typename?: 'Page_Kocg';
   dataReference?: Maybe<Page_Kocg_DataReference>;
-  distributions?: Maybe<Scalars['String']['output']>;
+  distributions?: Maybe<Page_Kocg_Distributions>;
   distributionsCopy?: Maybe<Page_Kocg_Holdings>;
   documents?: Maybe<Page_Kocg_Documents>;
   /** The name of the ACF Field Group */
@@ -4576,6 +4639,35 @@ export type Page_Kocg_DataReference = AcfFieldGroup & {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   monthlyPerformance?: Maybe<MediaItem>;
   quarterlyPerformance?: Maybe<MediaItem>;
+};
+
+/** Field Group */
+export type Page_Kocg_Distributions = AcfFieldGroup & {
+  __typename?: 'Page_Kocg_Distributions';
+  data?: Maybe<Page_Kocg_Distributions_Data>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Kocg_Distributions_Data = AcfFieldGroup & {
+  __typename?: 'Page_Kocg_Distributions_Data';
+  daySecYield?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  perYear?: Maybe<Array<Maybe<Page_Kocg_Distributions_Data_PerYear>>>;
+};
+
+/** Field Group */
+export type Page_Kocg_Distributions_Data_PerYear = AcfFieldGroup & {
+  __typename?: 'Page_Kocg_Distributions_Data_perYear';
+  amount?: Maybe<Scalars['String']['output']>;
+  exDivDate?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  payableDate?: Maybe<Scalars['String']['output']>;
+  recordDate?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4624,17 +4716,32 @@ export type Page_Kocg_Landing = AcfFieldGroup & {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type Page_Kocg_Overview = AcfFieldGroup & {
   __typename?: 'Page_Kocg_Overview';
+  data?: Maybe<Page_Kocg_Overview_Data>;
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   fundResources?: Maybe<Array<Maybe<Page_Kocg_Overview_FundResources>>>;
   investmentObjectives?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Kocg_Overview_Data = AcfFieldGroup & {
+  __typename?: 'Page_Kocg_Overview_Data';
+  distributionFrequency?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundInception?: Maybe<Scalars['String']['output']>;
+  gross?: Maybe<Scalars['String']['output']>;
+  index?: Maybe<Scalars['String']['output']>;
+  isin?: Maybe<Scalars['String']['output']>;
+  primaryExchange?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4670,6 +4777,8 @@ export type Page_Kocg_Quote = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  kocLogo?: Maybe<MediaItem>;
+  photo?: Maybe<MediaItem>;
   quote?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4688,7 +4797,7 @@ export type Page_Kocg_Values = AcfFieldGroup & {
 export type Page_Pray = AcfFieldGroup & {
   __typename?: 'Page_Pray';
   dataReference?: Maybe<Page_Pray_DataReference>;
-  distributions?: Maybe<Scalars['String']['output']>;
+  distributions?: Maybe<Page_Pray_Distributions>;
   distributionsCopy?: Maybe<Page_Pray_Holdings>;
   documents?: Maybe<Page_Pray_Documents>;
   /** The name of the ACF Field Group */
@@ -4707,6 +4816,35 @@ export type Page_Pray_DataReference = AcfFieldGroup & {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   monthlyPerformance?: Maybe<MediaItem>;
   quarterlyPerformance?: Maybe<MediaItem>;
+};
+
+/** Field Group */
+export type Page_Pray_Distributions = AcfFieldGroup & {
+  __typename?: 'Page_Pray_Distributions';
+  data?: Maybe<Page_Pray_Distributions_Data>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Pray_Distributions_Data = AcfFieldGroup & {
+  __typename?: 'Page_Pray_Distributions_Data';
+  daySecYield?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  perYear?: Maybe<Array<Maybe<Page_Pray_Distributions_Data_PerYear>>>;
+};
+
+/** Field Group */
+export type Page_Pray_Distributions_Data_PerYear = AcfFieldGroup & {
+  __typename?: 'Page_Pray_Distributions_Data_perYear';
+  amount?: Maybe<Scalars['String']['output']>;
+  exDivDate?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  payableDate?: Maybe<Scalars['String']['output']>;
+  recordDate?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4755,17 +4893,32 @@ export type Page_Pray_Landing = AcfFieldGroup & {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type Page_Pray_Overview = AcfFieldGroup & {
   __typename?: 'Page_Pray_Overview';
+  data?: Maybe<Page_Pray_Overview_Data>;
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   fundResources?: Maybe<Array<Maybe<Page_Pray_Overview_FundResources>>>;
   investmentObjectives?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type Page_Pray_Overview_Data = AcfFieldGroup & {
+  __typename?: 'Page_Pray_Overview_Data';
+  distributionFrequency?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  fundInception?: Maybe<Scalars['String']['output']>;
+  gross?: Maybe<Scalars['String']['output']>;
+  index?: Maybe<Scalars['String']['output']>;
+  isin?: Maybe<Scalars['String']['output']>;
+  primaryExchange?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4819,6 +4972,7 @@ export type Page_Retirementplans_ServicesBenefits = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   servicesAndBenefits?: Maybe<Array<Maybe<Page_Retirementplans_ServicesBenefits_ServicesAndBenefits>>>;
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -4860,6 +5014,7 @@ export type Page_Separatelymanagedaccountssma_DueDiligenceForFinancialAdvisors =
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4877,6 +5032,7 @@ export type Page_Separatelymanagedaccountssma_Top5Reasons = AcfFieldGroup & {
   __typename?: 'Page_Separatelymanagedaccountssma_Top5Reasons';
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   reasons?: Maybe<Scalars['String']['output']>;
   reasonsCopy?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
@@ -4899,6 +5055,7 @@ export type Page_Wealthmanagement_Cta = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4909,6 +5066,7 @@ export type Page_Wealthmanagement_Introduction = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -4925,6 +5083,7 @@ export type Page_Wealthmanagement_Modal = AcfFieldGroup & {
 /** Field Group */
 export type Page_Wealthmanagement_Services = AcfFieldGroup & {
   __typename?: 'Page_Wealthmanagement_Services';
+  diagram?: Maybe<MediaItem>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   services?: Maybe<Array<Maybe<Page_Wealthmanagement_Services_Services>>>;
@@ -9354,6 +9513,7 @@ export type Team_Teammember = AcfFieldGroup & {
   email?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  linkedin?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   titles?: Maybe<Array<Maybe<Team_Teammember_Titles>>>;
 };
@@ -9614,8 +9774,40 @@ export type ThemeConnectionPageInfo = {
 /** Theme General Settings options. */
 export type ThemeGeneralSettings = {
   __typename?: 'ThemeGeneralSettings';
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;Global options&quot; was set to Show in GraphQL. */
+  globalOptions?: Maybe<ThemeGeneralSettings_Globaloptions>;
   pageSlug?: Maybe<Scalars['String']['output']>;
   pageTitle?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type ThemeGeneralSettings_Globaloptions = AcfFieldGroup & {
+  __typename?: 'ThemeGeneralSettings_Globaloptions';
+  advUrl?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  footerDisclosure?: Maybe<Scalars['String']['output']>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  socials?: Maybe<Array<Maybe<ThemeGeneralSettings_Globaloptions_Socials>>>;
+  subscribe?: Maybe<ThemeGeneralSettings_Globaloptions_Subscribe>;
+};
+
+/** Field Group */
+export type ThemeGeneralSettings_Globaloptions_Subscribe = AcfFieldGroup & {
+  __typename?: 'ThemeGeneralSettings_Globaloptions_Subscribe';
+  description?: Maybe<Scalars['String']['output']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type ThemeGeneralSettings_Globaloptions_Socials = AcfFieldGroup & {
+  __typename?: 'ThemeGeneralSettings_Globaloptions_socials';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Any node that has a URI */

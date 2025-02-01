@@ -11,14 +11,20 @@ import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 import Image from "next/image";
 import { careerPageQuery } from "@/data/careerPageQuery";
-import { Page_Careerspage, Page_Contactpage_Subscribe } from "@/gql/graphql";
+import {
+  Page_Careerspage,
+  ThemeGeneralSettings_Globaloptions,
+} from "@/gql/graphql";
+import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(careerPageQuery);
+  const { data: globalData } = await getGqlRequest(globalOptionsQuery);
 
   return {
     props: {
       data: data.page.careersPage as Page_Careerspage,
+      globalData: globalData.themeGeneralSettings.globalOptions,
     },
   };
 }
@@ -82,7 +88,13 @@ const CareerForm = () => {
   );
 };
 
-export default function CareerPage({ data }: { data: Page_Careerspage }) {
+export default function CareerPage({
+  data,
+  globalData,
+}: {
+  data: Page_Careerspage;
+  globalData: ThemeGeneralSettings_Globaloptions;
+}) {
   return (
     <>
       <Head>
@@ -121,10 +133,8 @@ export default function CareerPage({ data }: { data: Page_Careerspage }) {
             </WhiteContainer>
           </div>
         </div>
-        {data.subscribe && (
-          <SubscribeSection
-            data={data.subscribe as Page_Contactpage_Subscribe}
-          />
+        {globalData.subscribe && (
+          <SubscribeSection data={globalData.subscribe} />
         )}
       </div>
     </>
