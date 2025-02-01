@@ -53,12 +53,12 @@ const Landing = ({
           />
           <div className="flex justify-end mt-8">
             <Button variant="primary" href="#Kocg" IconButton={<ArrowRight />}>
-              {landing.cta?.title}
+            Learn more
             </Button>
           </div>
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
+          <VideoPlayer src={landing.video || ''} />
         </div>
       </section>
     </div>
@@ -78,7 +78,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
         <WhiteContainer>
           <div className="flex flex-col-reverse md:flex-row">
             <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mt-fis-2 md:mt-0">
-              <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
+              <VideoPlayer src={values.video || ''} />
             </div>
             <div className="w-full md:w-1/2">
               <div

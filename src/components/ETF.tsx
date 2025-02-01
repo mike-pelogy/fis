@@ -101,7 +101,10 @@ const Overview = ({
     { title: "Shares Outstanding", value: shares },
     { title: "Primary Exchange", value: overview.data?.primaryExchange },
     { title: "Index", value: overview.data?.index },
-    { title: "Distribution Frequency", value: overview.data?.distributionFrequency },
+    {
+      title: "Distribution Frequency",
+      value: overview.data?.distributionFrequency,
+    },
   ];
 
   return (
@@ -271,6 +274,7 @@ const Pricing = ({
             />
             <Button
               href={pricing.premiumOrDiscountInfo?.url as string}
+              target="_blank"
               variant="secondary"
               IconButton={<ArrowRight />}
             >
@@ -629,7 +633,16 @@ const Documents = ({
     },
     {
       title: "Fund Resources",
-      items: documents?.fundResources,
+      items: [
+        ...(documents?.fundResources || []),
+        {
+          title: "Recent content",
+          file: {
+            mediaItemUrl: "/news-and-insights",
+            title: null,
+          },
+        },
+      ],
     },
   ];
 

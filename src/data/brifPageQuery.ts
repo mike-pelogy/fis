@@ -38,6 +38,7 @@ query BRIFPageQuery {
           distributionFrequency
         }
         fundResources {
+          title
           file {
             altText
             mediaItemUrl
@@ -47,6 +48,7 @@ query BRIFPageQuery {
       }
       documents {
         legal {
+          title
           file {
             altText
             title
@@ -54,6 +56,7 @@ query BRIFPageQuery {
           }
         }
         fundResources {
+          title
           file {
             altText
             title

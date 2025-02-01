@@ -8,6 +8,7 @@ query PrayPage {
         title
         subtitle
         description
+        video
         cta {
           target
           title
@@ -30,6 +31,7 @@ query PrayPage {
         investmentObjectives
         description
         fundResources {
+          title
           file {
             altText
             mediaItemUrl
@@ -47,6 +49,7 @@ query PrayPage {
       }
       documents {
         legal {
+          title
           file {
             altText
             title
@@ -54,6 +57,7 @@ query PrayPage {
           }
         }
         fundResources {
+          title
           file {
             altText
             title

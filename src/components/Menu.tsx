@@ -112,7 +112,7 @@ export function MenuLayer({
             {children && (
               <div
                 className={classNames(
-                  "rounded px-4 z-10 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-all",
+                  "rounded px-4 z-10  pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-all",
                   {
                   "py-1 bg-slate-100": isMobile,
                     "drop-shadow-xl bg-white absolute top-[100%] opacity-0 py-3": !isMobile,

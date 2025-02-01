@@ -60,7 +60,7 @@ const Landing = ({
           </div>
         </div>
         <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-          <VideoPlayer src="https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a7/How_to_make_video.webm/How_to_make_video.webm.1080p.vp9.webm" />
+          <VideoPlayer src={landing.video || ""} />
         </div>
       </section>
     </div>

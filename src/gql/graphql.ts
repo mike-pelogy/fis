@@ -4792,6 +4792,7 @@ export type Page_Kocg_Values = AcfFieldGroup & {
   guidelines?: Maybe<Scalars['String']['output']>;
   investmentPolicy?: Maybe<Scalars['String']['output']>;
   moreInfo?: Maybe<AcfLink>;
+  video?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4928,6 +4929,7 @@ export type Page_Pray_Overview_FundResources = AcfFieldGroup & {
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */

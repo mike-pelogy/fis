@@ -23,6 +23,7 @@ page(idType: DATABASE_ID, id: "2827") {
         investmentPolicy
         guidelines
         description
+        video
       }
       quote {
         quote
@@ -64,6 +65,7 @@ page(idType: DATABASE_ID, id: "2827") {
         title
         subtitle
         description
+        video
         cta {
           url
           title
