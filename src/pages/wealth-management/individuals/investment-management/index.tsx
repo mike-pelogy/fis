@@ -127,10 +127,10 @@ const InvestmentManagementPage: NextPageWithLayout<{
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 mt-fis-2 md:mt-0">
             <Image
-              src="/Our portfolios.png"
-              alt="You worked hard to secure your wealth"
-              width={1500}
-              height={1500}
+              src={ourPortfolios?.image?.mediaItemUrl || ''}
+              alt={ourPortfolios?.image?.altText || ''}
+              width={550}
+              height={550}
               className="rounded-lg"
             />
           </div>

@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 
-export const investmentManagementPageQuery = gql(`
-query investmentManagementPage {
+export const investmentManagementPageQuery = gql(`query investmentManagementPage {
   page(id: "2845", idType: DATABASE_ID) {
     title
     investmentManagement {
@@ -16,6 +15,10 @@ query investmentManagementPage {
       ourPortfolios {
         title
         description
+        image {
+          altText
+          mediaItemUrl
+        }
       }
       investmentPhilosophy {
         title
@@ -27,5 +30,4 @@ query investmentManagementPage {
       }
     }
   }
-}
-`);
+}`);

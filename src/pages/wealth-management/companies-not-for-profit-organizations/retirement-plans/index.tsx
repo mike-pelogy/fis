@@ -116,8 +116,8 @@ const FinancialPlanningPage: NextPageWithLayout<{
           </div>
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
             <Image
-              src="/035_Faith_Investors.jpg"
-              alt="You worked hard to secure your wealth"
+              src={servicesBenefits?.image?.mediaItemUrl || ''}
+              alt={servicesBenefits?.image?.altText || ''}
               width={1500}
               height={1500}
               className="rounded-lg"

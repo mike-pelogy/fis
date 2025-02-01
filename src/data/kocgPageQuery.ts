@@ -1,9 +1,8 @@
 import gql from "graphql-tag";
 
-export const kocgPageQuery = gql(`
-query KocgPage {
-page(idType: DATABASE_ID, id: "2827") {
-  kocg {
+export const kocgPageQuery = gql(`query KocgPage {
+  page(idType: DATABASE_ID, id: "2827") {
+    kocg {
       dataReference {
         dailyNav {
           mediaItemUrl
@@ -28,6 +27,14 @@ page(idType: DATABASE_ID, id: "2827") {
       quote {
         quote
         description
+        photo {
+          altText
+          mediaItemUrl
+        }
+        kocLogo {
+          altText
+          mediaItemUrl
+        }
       }
       pricing {
         title
@@ -119,5 +126,4 @@ page(idType: DATABASE_ID, id: "2827") {
       customFooter
     }
   }
-}
-`);
+}`);

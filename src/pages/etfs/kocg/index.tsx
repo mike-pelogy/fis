@@ -131,8 +131,8 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
             <div>
               <Image
                 className="w-[120px]"
-                src="/Knights-logo 2.png"
-                alt="KOC logo"
+                src={quote.kocLogo?.mediaItemUrl || ''}
+                alt={quote.kocLogo?.altText || ''}
                 width={300}
                 height={120}
               />
@@ -146,8 +146,8 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
         <div className="flex justify-center items-end">
           <Image
             className="w-[325px] h-[325px] object-contain object-bottom"
-            src="/Patrick-2.png"
-            alt="Patrick Kelly"
+            src={quote.photo?.mediaItemUrl || ''}
+            alt={quote.photo?.altText || ''}
             width={650}
             height={800}
           />

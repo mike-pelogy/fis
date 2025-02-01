@@ -21,6 +21,10 @@ query endowmentsPageQuery {
         title
         description
       }
+      image {
+        altText
+        mediaItemUrl
+      }
     }
   }
 }

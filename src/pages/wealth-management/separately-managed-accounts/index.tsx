@@ -108,8 +108,8 @@ const EndowmentsPage: NextPageWithLayout<{
           </div>
           <div className="w-full md:w-1/2 pl-0 md:pl-fis-2 md:pr-fis-3 mt-fis-2 md:mt-0">
             <Image
-              src="/Top5Reasons.png"
-              alt="Top 5 Reasons"
+              src={top5Reasons?.image?.mediaItemUrl || ''}
+              alt={top5Reasons?.image?.altText || ''}
               width={1500}
               height={1500}
               className="rounded-lg"
@@ -121,8 +121,8 @@ const EndowmentsPage: NextPageWithLayout<{
         <div className="container flex px-4 md:px-0 flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
             <Image
-              src="/DueDiligence.png"
-              alt={dueDiligenceForFinancialAdvisors?.title || ""}
+              src={dueDiligenceForFinancialAdvisors?.image?.mediaItemUrl || ''}
+              alt={dueDiligenceForFinancialAdvisors?.image?.altText || ''}
               width={1500}
               height={1500}
               className="rounded-lg"

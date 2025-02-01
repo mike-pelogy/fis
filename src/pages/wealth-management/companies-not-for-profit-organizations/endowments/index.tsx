@@ -93,10 +93,10 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
           </div>
           <div className="w-1/2 h-full">
             <Image
-              src="/FISHelp.png"
-              alt="FIS helps"
-              width={1500}
-              height={1500}
+              src={data.image?.mediaItemUrl || ''}
+              alt={data.image?.altText || ''}
+              width={700}
+              height={1000}
               className="h-full"
             />
           </div>
