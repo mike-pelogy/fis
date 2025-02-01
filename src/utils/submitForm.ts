@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
 
-export const handleSubmit = async (event: FormEvent) => {
+export const handleSubmit = (isForm = false) => async (event: FormEvent) => {
   event.preventDefault();
 
   const myForm = event.target as HTMLFormElement;
@@ -10,7 +10,7 @@ export const handleSubmit = async (event: FormEvent) => {
 
   await fetch("/", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: !isForm ? { "Content-Type": "application/x-www-form-urlencoded" } : {},
     body: new URLSearchParams(formData).toString(),
   })
     .then(() => {

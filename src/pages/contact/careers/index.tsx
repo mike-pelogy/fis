@@ -33,7 +33,7 @@ const CareerForm = () => {
   return (
     <form
       name="career"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(true)}
       data-netlify="true"
       className="flex flex-col gap-4"
     >

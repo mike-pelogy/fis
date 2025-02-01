@@ -46,7 +46,7 @@ const ContactForm = () => {
   return (
     <form
       name="contactForm"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit()}
       data-netlify="true"
       className="flex flex-col gap-4"
     >
@@ -116,7 +116,7 @@ export const SubscribeSection = ({
             className="font-bold block mb-4 max-w-[400px]"
             dangerouslySetInnerHTML={{ __html: data.description || "" }}
           />
-          <form onSubmit={handleSubmit} name="subscribe" data-netlify="true">
+          <form onSubmit={handleSubmit()} name="subscribe" data-netlify="true">
             <input type="hidden" name="form-name" value="subscribe" />
             <div className="flex flex-wrap md:flex-nowrap gap-4">
               <div className="w-full md:w-1/2">
