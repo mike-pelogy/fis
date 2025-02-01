@@ -10,6 +10,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import img from "../../public/defaultFeaturedImage.png";
 import { FontContextProvider } from "@/components/FontProvider";
+import ComingSoon from "@/components/ComingSoon";
 
 const lato = Lato({
   weight: ["300", "400", "700"],
@@ -35,6 +36,8 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const IS_LIVE = false;
+
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   const getSubLayout = Component.getSubLayout ?? ((page) => page);
@@ -58,13 +61,19 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <div className={lato.className}>
         <FontContextProvider value={{ fontClassName: lato.className }}>
-          {getLayout(
-            <Layout>
-              {getSubLayout(<Component {...pageProps} />, pageProps)}
-            </Layout>,
-            pageProps
+          {IS_LIVE ? (
+            <>
+              {getLayout(
+                <Layout>
+                  {getSubLayout(<Component {...pageProps} />, pageProps)}
+                </Layout>,
+                pageProps
+              )}
+              <ToastContainer position="bottom-left" />
+            </>
+          ) : (
+            <ComingSoon />
           )}
-          <ToastContainer position="bottom-left" />
         </FontContextProvider>
       </div>
     </>
