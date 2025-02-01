@@ -1,4 +1,4 @@
-import { API, AUTH } from "@/constants";
+import { API } from "@/constants";
 import request from "graphql-request";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,9 +8,6 @@ export default async function getGqlRequest(document: any, variables?: any) {
     url: API,
     document,
     variables,
-    requestHeaders: {
-      authorization: AUTH,
-    },
   }).catch(console.error);
 
   return {

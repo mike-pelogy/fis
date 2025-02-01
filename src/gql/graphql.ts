@@ -4464,6 +4464,7 @@ export type Page_Homepage_AboutSection = AcfFieldGroup & {
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -9783,12 +9784,8 @@ export type ThemeGeneralSettings = {
 /** Field Group */
 export type ThemeGeneralSettings_Globaloptions = AcfFieldGroup & {
   __typename?: 'ThemeGeneralSettings_Globaloptions';
-  advUrl?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  footerDisclosure?: Maybe<Scalars['String']['output']>;
-  phoneNumber?: Maybe<Scalars['String']['output']>;
-  socials?: Maybe<Array<Maybe<ThemeGeneralSettings_Globaloptions_Socials>>>;
   subscribe?: Maybe<ThemeGeneralSettings_Globaloptions_Subscribe>;
 };
 
@@ -9798,16 +9795,8 @@ export type ThemeGeneralSettings_Globaloptions_Subscribe = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   title?: Maybe<Scalars['String']['output']>;
-};
-
-/** Field Group */
-export type ThemeGeneralSettings_Globaloptions_Socials = AcfFieldGroup & {
-  __typename?: 'ThemeGeneralSettings_Globaloptions_socials';
-  /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Any node that has a URI */

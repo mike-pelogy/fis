@@ -5,9 +5,8 @@ const nextConfig = {
     unoptimized: true,
     remotePatterns: [
       {
-        // TODO: fix hostname at launch
         protocol: "https",
-        hostname: "old-earth.localsite.io",
+        hostname: "faithinvestorservices.flywheelsites.com",
         port: "",
       },
     ],

@@ -31,7 +31,7 @@ export const normalizePosts = (data: any) => {
   ) as PostWithCursor[];
 };
 
-const DEFAULT_ID = 4;
+const DEFAULT_ID = 3;
 
 export async function getStaticProps() {
   const catId = DEFAULT_ID;

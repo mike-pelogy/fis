@@ -28,7 +28,7 @@ query teams {
 
 export const aboutPageQuery = gql(`
 query Aboutpage {
-page(idType: DATABASE_ID, id: "52") {
+page(idType: DATABASE_ID, id: "2798") {
   aboutPage {
       valuesCopy {
         title
@@ -41,6 +41,10 @@ page(idType: DATABASE_ID, id: "52") {
       mission {
         title
         description
+      }
+      image {
+        altText
+        mediaItemUrl
       }
     }
   }

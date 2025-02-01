@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const brifPageQuery = gql(`
 query BRIFPageQuery {
-  page(idType: DATABASE_ID, id: "2547") {
+  page(idType: DATABASE_ID, id: "2825") {
     brif {
       landing {
         title

@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const contactPageQuery = gql(`
 query contactPage {
-  page(id: "46", idType: DATABASE_ID) {
+  page(id: "2815", idType: DATABASE_ID) {
     title
     contactPage {
       contact {
@@ -12,6 +12,10 @@ query contactPage {
       }
       subscribe {
         title
+        image {
+          altText
+          mediaItemUrl
+        }
         description
       }
     }

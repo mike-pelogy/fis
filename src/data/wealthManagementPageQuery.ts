@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const wealthManagementPageQuery = gql(`
 query wealthManagementPage {
-  page(id: "57", idType: DATABASE_ID) {
+  page(id: "2833", idType: DATABASE_ID) {
     wealthManagement {
       services {
         services {

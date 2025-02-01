@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const prayPageQuery = gql(`
 query PrayPage {
-  page(idType: DATABASE_ID, id: "60") {
+  page(idType: DATABASE_ID, id: "2823") {
     pray {
       landing {
         title

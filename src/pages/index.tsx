@@ -42,7 +42,7 @@ export async function getStaticProps() {
   };
 }
 
-const LandingVideo = () => {
+const LandingVideo = ({ video }: { video: string }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const start = () => {
@@ -73,7 +73,7 @@ const LandingVideo = () => {
         </div>
       </div>
       <VideoPlayer
-        src="https://vimeo.com/1047160208/84cc34d69e"
+        src={video}
         light={false}
         onStart={start}
         onPause={stop}
@@ -119,8 +119,8 @@ const LandingAndAbout = ({
           </div>
           <div className="w-full md:w-1/2 pl-0 pt-fis-2 md:pt-0 md:pl-fis-2">
             <Image
-              src="/Splash1.jpg"
-              alt="nice"
+              src={landing.image?.mediaItemUrl || ''}
+              alt={landing.image?.altText || ''}
               width={1500}
               height={1500}
               className="rounded-lg"
@@ -129,7 +129,7 @@ const LandingAndAbout = ({
         </section>
         <section className="container items-stretch rounded-lg overflow-hidden flex flex-col-reverse md:flex-row items-center relative before:content-[''] before:absolute before:w-full before:rounded-lg before:h-full before:bg-slate-100 before:opacity-95 before:left-0 before:right-0">
           <div className="w-full md:w-1/2 relative flex items-center">
-            <LandingVideo />
+            {aboutSection.video && <LandingVideo video={aboutSection.video} />}
           </div>
           <div className="px-4 p-fis-2 md:p-fis-2 w-full flex flex-col justify-center md:w-1/2 relative">
             <h2
@@ -186,8 +186,8 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <Image
-            src="/Investment Management image.png"
-            alt="investment management"
+              src={services.investment?.image?.mediaItemUrl || ''}
+              alt={services.investment?.image?.altText || ''}
             width={1200}
             height={1200}
             className="rounded-lg"
@@ -198,8 +198,8 @@ const Services = ({ services }: { services: Page_Homepage_Services }) => {
         <div className="flex flex-col-reverse md:flex-row">
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
             <Image
-              src="/services.png"
-              alt="Services"
+              src={services.wealthManagement?.image?.mediaItemUrl || ''}
+              alt={services.wealthManagement?.image?.altText || ''}
               width={1200}
               height={1200}
               className="rounded-lg"

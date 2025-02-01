@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const endowmentsPageQuery = gql(`
 query endowmentsPageQuery {
-  page(id: "189", idType: DATABASE_ID) {
+  page(id: "2837", idType: DATABASE_ID) {
     endowments {
       connectWithUs {
         description

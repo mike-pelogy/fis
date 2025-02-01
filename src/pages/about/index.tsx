@@ -15,13 +15,6 @@ import Image from "next/image";
 import Head from "next/head";
 import buildPageTitle from "@/utils/buildPageTitle";
 
-export const slugToImageMap: Record<string, string> = {
-  "mike-skillman": "/MikeSkillman.jpg",
-  "jay-peroni-cfp": "/JayPeroni.jpg",
-  "steve-nelson-cfa": "/SteveNelson.jpg",
-  "jason-kreke": "/JasonKreke.jpg",
-};
-
 export async function getStaticProps() {
   const { data } = await getGqlRequest(aboutPageQuery);
   const { data: teamData } = await getGqlRequest(teamQuery);
@@ -31,23 +24,11 @@ export async function getStaticProps() {
     (teamData?.teams?.edges.map(({ node }: { node: any }) => node) as Team[]) ||
     [];
 
-  const teamTemp = team.map((member) => {
-    if (member.slug) {
-      member.featuredImage = {
-        // @ts-expect-error expected error
-        node: { mediaItemUrl: slugToImageMap[member.slug] },
-      };
-    }
-
-    return {
-      ...member,
-    };
-  });
 
   return {
     props: {
       data: data.page.aboutPage as Page_Aboutpage,
-      team: teamTemp,
+      team,
     },
   };
 }
@@ -61,9 +42,11 @@ const bg =
 const MissionAndValues = ({
   mission,
   values,
+  image,
 }: {
   mission: Page_Aboutpage_Mission;
   values: Page_Aboutpage_Values;
+    image: Page_Aboutpage['image'];
 }) => {
   return (
     <div className="flex justify-center relative w-full pt-fis-2 pb-fis-2">
@@ -107,8 +90,8 @@ const MissionAndValues = ({
             </div>
             <div className="w-full md:w-1/2  relative">
               <Image
-                src="/aboutPage.png"
-                alt="Wealth Management"
+                src={image?.mediaItemUrl || ''}
+                alt={image?.altText || ''}
                 width={1200}
                 height={1200}
                 className="object-cover h-full"
@@ -190,7 +173,7 @@ export default function AboutPage({
         <title>{buildPageTitle("About")}</title>
       </Head>
       {data.mission && data.values && (
-        <MissionAndValues mission={data.mission} values={data.values} />
+        <MissionAndValues mission={data.mission} values={data.values} image={data.image}  />
       )}
       {data.valuesCopy && <AboutOurTeam about={data.valuesCopy} team={team} />}
     </>

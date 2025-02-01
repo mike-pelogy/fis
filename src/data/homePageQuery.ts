@@ -29,10 +29,9 @@ query relatedPostQuery($first: Int = 5) {
 }
 `);
 
-export const homePageQuery = gql(`
-query Homepage {
-page(idType: DATABASE_ID, id: "6") {
-homepage {
+export const homePageQuery = gql(`query Homepage {
+  page(idType: DATABASE_ID, id: "2829") {
+    homepage {
       aboutSection {
         callToAction {
           url
@@ -40,6 +39,7 @@ homepage {
           target
         }
         title
+        video
         description
       }
       landing {
@@ -49,6 +49,10 @@ homepage {
           target
           title
           url
+        }
+        image {
+          mediaItemUrl
+          altText
         }
       }
       services {
@@ -62,6 +66,10 @@ homepage {
             title
             target
           }
+          image {
+            altText
+            mediaItemUrl
+          }
         }
         wealthManagement {
           title
@@ -74,6 +82,10 @@ homepage {
             url
             title
             target
+          }
+          image {
+            altText
+            mediaItemUrl
           }
         }
       }
@@ -94,5 +106,4 @@ homepage {
       }
     }
   }
-}
-`);
+}`);

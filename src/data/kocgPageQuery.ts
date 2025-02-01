@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const kocgPageQuery = gql(`
 query KocgPage {
-page(idType: DATABASE_ID, id: "63") {
+page(idType: DATABASE_ID, id: "2827") {
   kocg {
       dataReference {
         dailyNav {

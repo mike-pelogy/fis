@@ -103,8 +103,8 @@ export const SubscribeSection = ({
       <section className="flex flex-col-reverse md:flex-row pt-fis-2 container px-4 md:px-fis-2 items-center">
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <Image
-            src="/Subscribe.png"
-            alt="subscribe image"
+            src={data.image?.mediaItemUrl || ''}
+            alt={data.image?.altText || ''}
             width={1200}
             height={600}
             className="rounded-lg"
