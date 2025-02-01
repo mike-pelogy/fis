@@ -118,8 +118,8 @@ const WealthManagementPage = ({
           </div>
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
             <Image
-              src="/wealthManagement.png"
-              alt="Wealth Management"
+              src={introduction.image?.mediaItemUrl || ''}
+              alt={introduction.image?.altText || ''}
               width={1200}
               height={1200}
               className="rounded-lg"
@@ -141,7 +141,7 @@ const WealthManagementPage = ({
           </div>
           <div className="flex justify-center">
             <Image
-              src="/wheel.png"
+              src={services.diagram?.mediaItemUrl || ''}
               alt="Wealth Management"
               width={1200}
               height={1200}
@@ -154,8 +154,8 @@ const WealthManagementPage = ({
         <section className="container px-4 md:px-fis-2 flex flex-col-reverse md:flex-row items-center">
           <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
             <Image
-              src="/laptop-3196481_1920.jpg"
-              alt="Wealth Management"
+              src={cta.image?.mediaItemUrl || ''}
+              alt={cta.image?.altText || ''}
               width={1200}
               height={600}
               className="rounded-lg"

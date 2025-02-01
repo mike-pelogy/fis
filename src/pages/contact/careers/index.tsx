@@ -121,10 +121,10 @@ export default function CareerPage({
                   </div>
                   <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
                     <Image
-                      src="/team.png"
+                      src={data.image?.mediaItemUrl || ''}
                       width={1200}
                       height={800}
-                      alt="team photo"
+                      alt={data.image?.altText || ""}
                       className="rounded-lg"
                     />
                   </div>

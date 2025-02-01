@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 
-export const wealthManagementPageQuery = gql(`
-query wealthManagementPage {
+export const wealthManagementPageQuery = gql(`query wealthManagementPage {
   page(id: "2833", idType: DATABASE_ID) {
     wealthManagement {
       services {
@@ -10,6 +9,10 @@ query wealthManagementPage {
           description
         }
         title
+        diagram {
+          altText
+          mediaItemUrl
+        }
       }
       introduction {
         title
@@ -18,6 +21,10 @@ query wealthManagementPage {
           url
           title
           target
+        }
+        image {
+          altText
+          mediaItemUrl
         }
       }
       modal {
@@ -28,8 +35,11 @@ query wealthManagementPage {
       cta {
         title
         description
+        image {
+          altText
+          mediaItemUrl
+        }
       }
     }
   }
-}
-`);
+}`);

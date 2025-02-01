@@ -4300,6 +4300,7 @@ export type Page_Brif_Overview_FundResources = AcfFieldGroup & {
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   file?: Maybe<MediaItem>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4326,6 +4327,7 @@ export type Page_Careerspage = AcfFieldGroup & {
   description?: Maybe<Scalars['String']['output']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<MediaItem>;
   subscribe?: Maybe<Page_Careerspage_Subscribe>;
 };
 

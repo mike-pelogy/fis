@@ -6,6 +6,10 @@ query careersPage {
     title
     careersPage {
       description
+      image {
+        altText
+        mediaItemUrl
+      }
       subscribe {
         title
         description
