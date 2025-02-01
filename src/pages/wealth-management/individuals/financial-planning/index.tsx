@@ -76,8 +76,8 @@ const FinancialPlanningPage: NextPageWithLayout<{
                   </div>
                   <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
                     <Image
-                      src="/Collaboration.png"
-                      alt="You worked hard to secure your wealth"
+                      src={collaboration?.image?.mediaItemUrl || ''}
+                      alt={collaboration?.image?.altText || ''}
                       width={1500}
                       height={1500}
                       className="rounded-lg"
@@ -166,8 +166,8 @@ export const subLayout = (page: ReactElement, pageProps: any) => {
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
           <Image
-            src="/Individuals.png"
-            alt={individuals?.title || ""}
+            src={individuals?.image?.mediaItemUrl || ''}
+            alt={individuals?.image?.altText || ''}
             width={1500}
             height={1500}
             className="rounded-lg"

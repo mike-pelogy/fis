@@ -8,6 +8,10 @@ query financialPlanningPageQuery {
       collaboration {
         title
         description
+        image {
+          altText
+          mediaItemUrl
+        }
       }
     }
   }
