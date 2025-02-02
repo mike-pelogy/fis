@@ -53,7 +53,7 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
         </div>
       </section>
       <section className="w-full flex justify-center">
-        <div className="container flex flex-col md:flex-row items-center bg-slate-100 rounded-lg">
+        <div className="container flex flex-col md:flex-row items-center bg-slate-100 rounded-lg overflow-hidden">
           <div className="w-full md:w-1/2 px-4 md:p-fis-2 p-fis-2">
             <div className="mb-fis-2">
               <div
@@ -91,13 +91,13 @@ const EndowmentsPage: NextPageWithLayout<{ data: Page_Endowments }> = ({
               />
             </div>
           </div>
-          <div className="w-1/2 h-full">
+          <div className="w-full md:w-1/2 h-full">
             <Image
               src={data.image?.mediaItemUrl || ''}
               alt={data.image?.altText || ''}
               width={700}
               height={1000}
-              className="h-full"
+              className="h-full object-cover w-full"
             />
           </div>
         </div>
