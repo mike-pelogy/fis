@@ -17,13 +17,18 @@ export const handleSubmit =
         : {},
       body: new URLSearchParams(formData).toString(),
     })
-      .then(() => {
-        toast.success("Form submitted successfully");
+      .then((res) => {
+        if (String(res.status).startsWith("2")) {
+          toast.success("Form submitted successfully");
+        } else {
+          toast.error("Form submission failed");
+        }
         myForm.reset();
-        myForm.querySelectorAll('[input="file"]').forEach((value) => {
-          const v = value as HTMLInputElement;
+        myForm.querySelectorAll('input[type="file"]').forEach((ele) => {
+          const v = ele as HTMLInputElement;
           v.value = "";
         });
+        document.dispatchEvent(new CustomEvent("resetField"));
       })
       .catch((e) => {
         console.error(e);

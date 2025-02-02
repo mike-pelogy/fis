@@ -1,6 +1,6 @@
 import Download from "@/svgs/Download";
 import Field, { IFieldProps } from "./Field";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 interface ITextFieldProps extends Omit<IFieldProps, "children"> {
@@ -15,11 +15,21 @@ export default function FileField({ label, name, required }: ITextFieldProps) {
   const [fileName, setFileName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    function resetFileField() {
+      setFileName('');
+    }
+    document.addEventListener("resetField", resetFileField);
+    return () => {
+      document.removeEventListener("resetField", resetFileField);
+    };
+  }, []);
+
   return (
     <Field label={label} name={name}>
       <input
         ref={inputRef}
-        name="file"
+        name={name}
         id={name}
         type="file"
         required={required}
