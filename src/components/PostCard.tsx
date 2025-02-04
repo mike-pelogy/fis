@@ -56,7 +56,7 @@ export default function PostCard({
           "mb-4": showButton,
         })}
       >
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 mb-0">
           {formatDate(new Date(date || ""))}
         </p>
         <div className="flex gap-1">
