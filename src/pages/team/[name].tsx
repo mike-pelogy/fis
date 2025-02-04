@@ -1,6 +1,7 @@
 import getGqlRequest from "@/data/getGqlRequest";
 import { teamMemberQuery, teamsQuery } from "@/data/teamPageQuery";
 import { Team } from "@/gql/graphql";
+import Linkedin from "@/svgs/Linkedin";
 import Mail from "@/svgs/Mail";
 import Phone from "@/svgs/Phone";
 import buildPageTitle from "@/utils/buildPageTitle";
@@ -42,7 +43,6 @@ export const getStaticProps: GetStaticProps<any, { name: string }> = async ({
   const teamBy: Team = data.teamBy;
   const { title, content: biography } = teamBy;
 
-
   return {
     props: {
       name: title || "",
@@ -56,7 +56,7 @@ const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--purple)/0.2)_0%,rgba(256,256,256,1)_60%)]";
 
 export const TeamDetails = ({ slug, title: name, teamMember }: Team) => {
-  const { email, phone } = teamMember || {};
+  const { email, phone, linkedin } = teamMember || {};
   const role = teamMember?.titles?.map((t) => t?.title).join(", ");
   const href = `/team/${slug}`;
   return (
@@ -81,6 +81,15 @@ export const TeamDetails = ({ slug, title: name, teamMember }: Team) => {
         <Mail />
         <span>{email}</span>
       </a>
+      {linkedin && (
+        <a
+          href={linkedin}
+          target="_blank"
+          className="text-fis-purple hover:text-fis-blue transition-all max-w-[16px] flex"
+        >
+          <Linkedin />
+        </a>
+      )}
     </>
   );
 };

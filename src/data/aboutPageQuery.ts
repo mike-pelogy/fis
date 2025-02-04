@@ -15,6 +15,7 @@ query teams {
         }
         teamMember {
           phone
+          linkedin
           email
           titles {
             title

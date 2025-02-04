@@ -14,6 +14,7 @@ query teamMember($slug: String!) {
     teamMember {
       phone
       email
+      linkedin
       titles {
         title
       }

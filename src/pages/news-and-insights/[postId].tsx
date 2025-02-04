@@ -19,7 +19,6 @@ import type { Post, ThemeGeneralSettings_Globaloptions } from "@/gql/graphql";
 import { postQuery } from "@/data/postQuery";
 import { relatedPostsQuery } from "@/data/relatedPostsQuery";
 import { useState } from "react";
-import Image from "next/image";
 import formatDate from "@/utils/formatDate";
 import { BASE_URL } from "@/constants";
 import Head from "next/head";
@@ -29,11 +28,6 @@ import { globalOptionsQuery } from "@/data/globalOptionsQuery";
 interface ICategory {
   label: string;
   url: string;
-}
-
-interface IAuthorProps {
-  name: string;
-  img: string;
 }
 
 export const getStaticPaths = (async () => {
@@ -146,17 +140,6 @@ const Categories = ({ categories }: { categories: ICategory[] }) => {
   );
 };
 
-const Author = ({ name, img }: IAuthorProps) => {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="rounded-[100%] border-[1px] w-[50px] aspect-square overflow-hidden">
-        <Image src={img} width={50} height={50} alt={name} />
-      </div>
-      <p className="text-lg">{name}</p>
-    </div>
-  );
-};
-
 const aClass = "text-fis-purple hover:text-fis-blue transition-all";
 
 const createPostShareUrl = (url: string) => {
@@ -209,7 +192,6 @@ export default function Post({
   title,
   content,
   url,
-  author,
   date,
   categories,
   relatedPosts,
@@ -246,7 +228,6 @@ export default function Post({
           </h3>
           <div className="w-full flex flex-col md:flex-row gap-4 justify-between">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-              <Author {...author} />
               <Categories categories={categories || []} />
               <span className="text-slate-600">{date}</span>
             </div>
