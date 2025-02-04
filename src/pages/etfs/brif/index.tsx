@@ -20,6 +20,7 @@ import Head from "next/head";
 import getEtfFooterLayout from "@/components/EtfFooterLayout";
 import type { ETFDataType } from "@/utils/getEtfData";
 import useEtfData from "@/hooks/useEtfData";
+import { fetchAndDownloadCsv } from "@/utils/fetchAndDownload";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(brifPageQuery);
@@ -83,6 +84,10 @@ const BrifPage: NextPageWithLayout<{
     holdingsRes,
   };
 
+  const handleDownloadHoldings = () => {
+    fetchAndDownloadCsv("/download/holdings/brif");
+  };
+
   return (
     <>
       <Head>
@@ -100,6 +105,7 @@ const BrifPage: NextPageWithLayout<{
         data.documents && (
           <ETF
             etfData={etfData}
+            handleDownloadHoldings={handleDownloadHoldings}
             typeIndex={2}
             overview={data.overview as Page_Kocg_Overview}
             pricing={data.pricing as Page_Kocg_Pricing}

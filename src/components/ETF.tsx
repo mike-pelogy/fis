@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import Button from "@/components/Button";
 import {
   MediaItem,
@@ -206,7 +206,9 @@ const Pricing = ({
   const { etfData } = useContext(EtfContext);
   const daily = etfData?.dailyRes;
 
-  console.log(handleDownloadPrem);
+  useEffect(() => {
+    handleDownloadPrem?.();
+  }, [handleDownloadPrem]);
 
   const data = daily[typeToDailyMap[typeIndex]];
 
@@ -278,7 +280,6 @@ const Pricing = ({
             />
             <Button
               href={pricing.premiumOrDiscountInfo?.url as string}
-              //onClick={handleDownloadPrem}
               target="_blank"
               variant="secondary"
               IconButton={<ArrowRight />}
@@ -574,7 +575,6 @@ const Holdings = ({
   const { etfData } = useContext(EtfContext);
   const daily = etfData?.dailyRes;
   const h = etfData?.holdingsRes;
-  console.log(handleDownloadHoldings);
 
   const items = [
     { name: "", ticker: "Ticker", weight: "Weighting (%)" },
@@ -602,8 +602,7 @@ const Holdings = ({
             <p className="ml-4 text-slate-600">Data as of {rateDate}</p>
           </div>
           <Button
-            href={holdings.download?.url as string}
-            //onClick={handleDownloadHoldings}
+            onClick={handleDownloadHoldings}
             variant="tertiary"
             IconButton={<ArrowRight />}
           >
@@ -713,7 +712,6 @@ const Documents = ({
     </div>
   );
 };
-
 
 export default function ETF({
   overview,

@@ -18,9 +18,10 @@ import buildPageTitle from "@/utils/buildPageTitle";
 import classNames from "classnames";
 import Head from "next/head";
 import Image from "next/image";
-import fetchAndDownload from "@/utils/fetchAndDownload";
+import { fetchAndDownloadCsv } from "@/utils/fetchAndDownload";
 import type { ETFDataType } from "@/utils/getEtfData";
 import useEtfData from "@/hooks/useEtfData";
+import { API_REST } from "@/constants";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(kocgPageQuery);
@@ -175,7 +176,11 @@ const KocgPage: NextPageWithLayout<{
   };
 
   const handleDownloadPrem = () => {
-    fetchAndDownload("/download/premium/kocg");
+    fetch(`${API_REST}/refresh/premium/kocg`);
+  };
+
+  const handleDownloadHoldings = () => {
+    fetchAndDownloadCsv("/download/holdings");
   };
 
   return (
@@ -198,6 +203,7 @@ const KocgPage: NextPageWithLayout<{
         data.dataReference && (
           <ETF
             handleDownloadPrem={handleDownloadPrem}
+            handleDownloadHoldings={handleDownloadHoldings}
             etfData={etfData}
             typeIndex={0}
             overview={data.overview}

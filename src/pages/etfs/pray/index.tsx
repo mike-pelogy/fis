@@ -3,6 +3,7 @@ import ETF from "@/components/ETF";
 import getEtfFooterLayout from "@/components/EtfFooterLayout";
 import EtfSkeleton from "@/components/EtfSkeleton";
 import VideoPlayer from "@/components/VideoPlayer";
+import { API_REST } from "@/constants";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
@@ -20,7 +21,7 @@ import useEtfData from "@/hooks/useEtfData";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
-import fetchAndDownload from "@/utils/fetchAndDownload";
+import { fetchAndDownloadCsv } from "@/utils/fetchAndDownload";
 import type { ETFDataType } from "@/utils/getEtfData";
 import Head from "next/head";
 
@@ -86,11 +87,11 @@ const PrayPage: NextPageWithLayout<{
   };
 
   const handleDownloadPrem = () => {
-    fetchAndDownload("/download/premium/pray");
+    fetch(`${API_REST}/refresh/premium/pray`);
   };
 
   const handleDownloadHoldings = () => {
-    fetchAndDownload("/download/holdings");
+    fetchAndDownloadCsv("/download/holdings");
   };
 
 

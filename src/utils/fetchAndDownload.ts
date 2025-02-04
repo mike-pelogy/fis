@@ -1,51 +1,26 @@
 import { API_REST } from "@/constants";
 import { toast } from "react-toastify";
 
-const getFileNameFromRes = function (header: string) {
-  const contentDispostion = header.split(";");
-  const fileNameToken = `filename*=UTF-8''`;
-
-  console.log({header});
-
-  let fileName = "downloaded.pdf";
-  for (const thisValue of contentDispostion) {
-    if (thisValue.trim().indexOf(fileNameToken) === 0) {
-      fileName = decodeURIComponent(
-        thisValue.trim().replace(fileNameToken, "")
-      );
-      break;
-    }
-  }
-
-  return fileName;
-};
-
-export default async function fetchAndDownload(route: string) {
+export async function fetchAndDownloadCsv(route: string) {
   return fetch(`${API_REST}${route}`)
-    .then(async (res) => {
-      const h = res.headers.get("Content-Disposition");
-      console.log(res.headers.get('content-disposition'));
-      return {
-        filename: h ? getFileNameFromRes(h) : "file",
-        blob: await res.blob(),
-      };
+    .then((res) => {
+        return res.text();
     })
-    .then((resObj) => {
-      // It is necessary to create a new blob object with mime-type explicitly set for all browsers except Chrome, but it works for Chrome too.
-      const newBlob = new Blob([resObj.blob], { type: "application/pdf" });
+    .then((txt) => {
+      const trimmedStart = txt.substring(1);
+      const trimmedEnd = trimmedStart.substring(0, trimmedStart.length - 1);
+      const text = trimmedEnd.trim().split('\\r\\n');
 
-      // For other browsers: create a link pointing to the ObjectURL containing the blob.
-      const objUrl = window.URL.createObjectURL(newBlob);
+      let csvContent = "data:text/csv;charset=utf-8,";
+
+      text.forEach(t => {
+        csvContent += t + "\r\n"
+      })
 
       const link = document.createElement("a");
-      link.href = objUrl;
-      link.download = resObj.filename;
+      link.href = csvContent;
+      link.download = 'holdings';
       link.click();
-
-      // For Firefox it is necessary to delay revoking the ObjectURL.
-      setTimeout(() => {
-        window.URL.revokeObjectURL(objUrl);
-      }, 250);
     })
     .then(() => {
       toast.success("File downloaded successfully.");
