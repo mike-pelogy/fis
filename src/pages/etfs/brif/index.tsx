@@ -3,7 +3,6 @@ import ETF from "@/components/ETF";
 import getGqlRequest from "@/data/getGqlRequest";
 import { brifPageQuery } from "@/data/brifPageQuery";
 import {
-  Page_Brif,
   Page_Kocg_DataReference,
   Page_Kocg_Distributions,
   Page_Kocg_Documents,
@@ -19,29 +18,17 @@ import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
 import Head from "next/head";
 import getEtfFooterLayout from "@/components/EtfFooterLayout";
-import getEtfData, { ETFDataType } from "@/utils/getEtfData";
+import type { ETFDataType } from "@/utils/getEtfData";
+import useEtfData from "@/hooks/useEtfData";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(brifPageQuery);
-  const brif = data.page.brif as Page_Brif;
-
-  const etfData = await getEtfData({
-    // @ts-expect-error: types
-    daily: brif.dataReference?.dailyNav,
-    // @ts-expect-error: types
-    monthly: brif.dataReference?.monthlyPerformance,
-    // @ts-expect-error: types
-    quarterly: brif.dataReference?.quarterlyPerformance,
-    // @ts-expect-error: types
-    holdings: brif.distributionsCopy?.file,
-  });
 
   return {
     props: {
       data: data.page.brif,
       title: data.page.title,
       customFooter: data.page.customerFooter,
-      etfData,
     },
   };
 }
@@ -85,8 +72,17 @@ const Landing = ({
 const BrifPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
-  etfData: ETFDataType;
-}> = ({ data, title, etfData }) => {
+}> = ({ data, title }) => {
+  const { isLoading, dailyRes, monthlyRes, quarterlyRes, holdingsRes } =
+    useEtfData();
+
+  const etfData: ETFDataType = {
+    dailyRes,
+    monthlyRes,
+    quarterlyRes,
+    holdingsRes,
+  };
+
   return (
     <>
       <Head>
@@ -95,7 +91,8 @@ const BrifPage: NextPageWithLayout<{
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}
-      {data.overview &&
+      {!isLoading &&
+        data.overview &&
         data.pricing &&
         data.performance &&
         data.distributions &&

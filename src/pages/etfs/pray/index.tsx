@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import ETF from "@/components/ETF";
 import getEtfFooterLayout from "@/components/EtfFooterLayout";
+import EtfSkeleton from "@/components/EtfSkeleton";
 import VideoPlayer from "@/components/VideoPlayer";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
@@ -15,33 +16,22 @@ import {
   Page_Pray,
   Page_Pray_Landing,
 } from "@/gql/graphql";
+import useEtfData from "@/hooks/useEtfData";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
-import getEtfData, { ETFDataType } from "@/utils/getEtfData";
+import fetchAndDownload from "@/utils/fetchAndDownload";
+import type { ETFDataType } from "@/utils/getEtfData";
 import Head from "next/head";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(prayPageQuery);
-  const pray = data.page.pray as Page_Pray;
-
-  const etfData = await getEtfData({
-    // @ts-expect-error: types
-    daily: pray.dataReference?.dailyNav,
-    // @ts-expect-error: types
-    monthly: pray.dataReference?.monthlyPerformance,
-    // @ts-expect-error: types
-    quarterly: pray.dataReference?.quarterlyPerformance,
-    // @ts-expect-error: types
-    holdings: pray.distributionsCopy?.file,
-  });
 
   return {
     props: {
       data: data.page.pray,
       title: data.page.title,
       customFooter: data.page.customerFooter,
-      etfData,
     },
   };
 }
@@ -84,8 +74,26 @@ const Landing = ({
 const PrayPage: NextPageWithLayout<{
   data: Page_Pray;
   title: string;
-  etfData: ETFDataType;
-}> = ({ data, title, etfData }) => {
+}> = ({ data, title }) => {
+  const { isLoading, dailyRes, monthlyRes, quarterlyRes, holdingsRes } =
+    useEtfData();
+
+  const etfData: ETFDataType = {
+    dailyRes,
+    monthlyRes,
+    quarterlyRes,
+    holdingsRes,
+  };
+
+  const handleDownloadPrem = () => {
+    fetchAndDownload("/download/premium/pray");
+  };
+
+  const handleDownloadHoldings = () => {
+    fetchAndDownload("/download/holdings");
+  };
+
+
   return (
     <>
       <Head>
@@ -94,7 +102,9 @@ const PrayPage: NextPageWithLayout<{
       {data.landing && title && (
         <Landing landing={data.landing} title={title} />
       )}
-      {data.overview &&
+      { isLoading && <EtfSkeleton /> }
+      {!isLoading &&
+        data.overview &&
         data.pricing &&
         data.performance &&
         data.distributions &&
@@ -102,6 +112,8 @@ const PrayPage: NextPageWithLayout<{
         data.documents && (
           <ETF
             etfData={etfData}
+            handleDownloadPrem={handleDownloadPrem}
+            handleDownloadHoldings={handleDownloadHoldings}
             typeIndex={1}
             overview={data.overview as Page_Kocg_Overview}
             pricing={data.pricing as Page_Kocg_Pricing}

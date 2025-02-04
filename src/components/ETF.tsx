@@ -197,12 +197,16 @@ const Pricing = ({
   pricing,
   id,
   typeIndex = 0,
+  handleDownloadPrem,
 }: {
   pricing: Page_Kocg_Pricing;
   id: SectionTypes;
+  handleDownloadPrem?: () => void;
 } & ITypeIndex) => {
   const { etfData } = useContext(EtfContext);
   const daily = etfData?.dailyRes;
+
+  console.log(handleDownloadPrem);
 
   const data = daily[typeToDailyMap[typeIndex]];
 
@@ -274,6 +278,7 @@ const Pricing = ({
             />
             <Button
               href={pricing.premiumOrDiscountInfo?.url as string}
+              //onClick={handleDownloadPrem}
               target="_blank"
               variant="secondary"
               IconButton={<ArrowRight />}
@@ -560,13 +565,16 @@ const Holdings = ({
   holdings,
   id,
   typeIndex = 0,
+  handleDownloadHoldings,
 }: {
   holdings: Page_Kocg_Holdings;
   id: SectionTypes;
+  handleDownloadHoldings?: () => void;
 } & ITypeIndex) => {
   const { etfData } = useContext(EtfContext);
   const daily = etfData?.dailyRes;
   const h = etfData?.holdingsRes;
+  console.log(handleDownloadHoldings);
 
   const items = [
     { name: "", ticker: "Ticker", weight: "Weighting (%)" },
@@ -595,6 +603,7 @@ const Holdings = ({
           </div>
           <Button
             href={holdings.download?.url as string}
+            //onClick={handleDownloadHoldings}
             variant="tertiary"
             IconButton={<ArrowRight />}
           >
@@ -705,6 +714,7 @@ const Documents = ({
   );
 };
 
+
 export default function ETF({
   overview,
   pricing,
@@ -715,6 +725,8 @@ export default function ETF({
   dataReference,
   typeIndex,
   etfData,
+  handleDownloadPrem,
+  handleDownloadHoldings,
 }: {
   overview: Page_Kocg_Overview;
   pricing: Page_Kocg_Pricing;
@@ -724,6 +736,8 @@ export default function ETF({
   documents: Page_Kocg_Documents;
   dataReference: Page_Kocg_DataReference;
   etfData: ETFDataType;
+  handleDownloadPrem?: () => void;
+  handleDownloadHoldings?: () => void;
 } & ITypeIndex) {
   return (
     <EtfContext.Provider value={{ etfData }}>
@@ -743,7 +757,12 @@ export default function ETF({
           />
         )}
       </div>
-      <Pricing pricing={pricing} id="Pricing" typeIndex={typeIndex} />
+      <Pricing
+        pricing={pricing}
+        id="Pricing"
+        typeIndex={typeIndex}
+        handleDownloadPrem={handleDownloadPrem}
+      />
       {dataReference?.monthlyPerformance &&
         dataReference?.quarterlyPerformance && (
           <Performance
@@ -759,7 +778,13 @@ export default function ETF({
         id="Distributions"
         typeIndex={typeIndex}
       />
-      <Holdings holdings={holdings} id="Holdings" typeIndex={typeIndex} />
+      <Holdings
+        holdings={holdings}
+        id="Holdings"
+        typeIndex={typeIndex}
+        handleDownloadHoldings={handleDownloadHoldings}
+      />
+      etf
       <Documents documents={documents} id="Documents" />
     </EtfContext.Provider>
   );

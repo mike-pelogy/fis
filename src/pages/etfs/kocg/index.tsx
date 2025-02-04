@@ -15,32 +15,21 @@ import {
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
 import buildPageTitle from "@/utils/buildPageTitle";
-import getEtfData, { ETFDataType } from "@/utils/getEtfData";
 import classNames from "classnames";
 import Head from "next/head";
 import Image from "next/image";
+import fetchAndDownload from "@/utils/fetchAndDownload";
+import type { ETFDataType } from "@/utils/getEtfData";
+import useEtfData from "@/hooks/useEtfData";
 
 export async function getStaticProps() {
   const { data } = await getGqlRequest(kocgPageQuery);
-  const kocg = data.page.kocg as Page_Kocg;
-
-  const etfData = await getEtfData({
-    // @ts-expect-error: types
-    daily: kocg.dataReference?.dailyNav,
-    // @ts-expect-error: types
-    monthly: kocg.dataReference?.monthlyPerformance,
-    // @ts-expect-error: types
-    quarterly: kocg.dataReference?.quarterlyPerformance,
-    // @ts-expect-error: types
-    holdings: kocg.distributionsCopy?.file,
-  });
 
   return {
     props: {
       data: data.page.kocg,
       title: data.page.title,
       customFooter: data.page.customerFooter,
-      etfData,
     },
   };
 }
@@ -174,8 +163,21 @@ const Quote = ({ quote }: { quote: Page_Kocg_Quote }) => {
 const KocgPage: NextPageWithLayout<{
   data: Page_Kocg;
   title: string;
-  etfData: ETFDataType;
-}> = ({ data, title, etfData }) => {
+}> = ({ data, title }) => {
+  const { isLoading, dailyRes, monthlyRes, quarterlyRes, holdingsRes } =
+    useEtfData();
+
+  const etfData: ETFDataType = {
+    dailyRes,
+    monthlyRes,
+    quarterlyRes,
+    holdingsRes,
+  };
+
+  const handleDownloadPrem = () => {
+    fetchAndDownload("/download/premium/kocg");
+  };
+
   return (
     <>
       <Head>
@@ -186,7 +188,8 @@ const KocgPage: NextPageWithLayout<{
       )}
       {data.values && <Values values={data.values} />}
       {data.quote && <Quote quote={data.quote} />}
-      {data.overview &&
+      {!isLoading &&
+        data.overview &&
         data.pricing &&
         data.performance &&
         data.distributions &&
@@ -194,6 +197,7 @@ const KocgPage: NextPageWithLayout<{
         data.documents &&
         data.dataReference && (
           <ETF
+            handleDownloadPrem={handleDownloadPrem}
             etfData={etfData}
             typeIndex={0}
             overview={data.overview}
