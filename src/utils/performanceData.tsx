@@ -51,19 +51,27 @@ interface IDateRow {
   secondSinceInception: string;
 }
 
+const msciTypeMap = [
+  "MSCI ACWI Index (Benchmark)",
+  "MSCI World Index (Benchmark)",
+  "MSCI World Index (Benchmark)",
+];
+
 const buildPerfData = ({
   navData,
   marketData,
   MWI,
+  index,
 }: {
   navData: IPerfData;
   marketData: IPerfData;
   MWI: IPerfData;
+    index: number;
 }) => {
   const dArray = [
     { name: "NAV Performance", data: navData },
     { name: "Market Price Performance", data: marketData },
-    { name: "MSCI World Index (Benchmark)", data: MWI },
+    { name: msciTypeMap[index], data: MWI },
   ];
 
   return [
@@ -140,5 +148,6 @@ export const getPerfList = (etfIndex: number, data: any) => {
     navData: NavData,
     marketData: marketData,
     MWI: MWIData,
+    index: etfIndex,
   });
 };
