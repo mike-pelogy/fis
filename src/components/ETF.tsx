@@ -224,6 +224,18 @@ const Pricing = ({
     medium30DaySpreadPercentage,
   } = getDailyData(data);
 
+console.log({
+    rateDate,
+    NAV,
+    NavChangePercentage,
+    NavChangeDollars,
+    marketPrice,
+    marketPriceChangePercentage,
+    marketPriceChangeDollars,
+    PremiumDiscountPercentage,
+    medium30DaySpreadPercentage,
+  });
+
   return (
     <div className="flex justify-center w-full">
       <section
@@ -243,12 +255,9 @@ const Pricing = ({
               className="rounded-lg bg-slate-100 p-8"
               title="Closing NAV Price"
               labelValues={[
-                { label: "Net Asset Value", value: `$${marketPrice}` },
-                { label: "Daily Change ($)", value: marketPriceChangeDollars },
-                {
-                  label: "Daily Change (%)",
-                  value: marketPriceChangePercentage,
-                },
+                { label: "Net Asset Value", value: `$${NAV}` },
+                { label: "Daily Change ($)", value: NavChangeDollars },
+                { label: "Daily Change (%)", value: NavChangePercentage },
               ]}
             />
           </div>
@@ -257,9 +266,12 @@ const Pricing = ({
               className="rounded-lg p-8"
               title="Closing Market Price"
               labelValues={[
-                { label: "Net Asset Value", value: `$${NAV}` },
-                { label: "Daily Change ($)", value: NavChangeDollars },
-                { label: "Daily Change (%)", value: NavChangePercentage },
+                { label: "Net Asset Value", value: `$${marketPrice}` },
+                { label: "Daily Change ($)", value: marketPriceChangeDollars },
+                {
+                  label: "Daily Change (%)",
+                  value: marketPriceChangePercentage,
+                },
               ]}
             />
           </div>
@@ -323,22 +335,15 @@ const Performance = ({
   quarterly: MediaItem;
 } & ITypeIndex) => {
   const { etfData } = useContext(EtfContext);
-  const daily = etfData?.dailyRes;
-
-  const d = daily[typeToDailyMap[typeIndex]];
-  const { rateDate } = getDailyData(d);
 
   const [active, setActive] = useState(perfNav[0].title);
 
   const monthlyP = etfData?.monthlyRes;
   const quarterlyP = etfData?.quarterlyRes;
 
-  const monthlyList = getPerfList(typeIndex, monthlyP);
-  const quarterlyList = getPerfList(typeIndex, quarterlyP);
-
   const toShow = {
-    [perfNav[0].title]: monthlyList,
-    [perfNav[1].title]: quarterlyList,
+    [perfNav[0].title]: getPerfList(typeIndex, monthlyP),
+    [perfNav[1].title]: getPerfList(typeIndex, quarterlyP),
   };
 
   return (
@@ -356,10 +361,10 @@ const Performance = ({
           }}
         />
         <div>
-          <p className="text-slate-600 mb-4">Data as of {rateDate}</p>
+          <p className="text-slate-600 mb-4">Data as of {toShow[active].date}</p>
           <div className="mb-fis-2 overflow-x-auto">
             <div className="flex flex-col gap-4 w-full min-w-[900px]">
-              {toShow[active].map((item, i) => {
+              {toShow[active].data.map((item, i) => {
                 const headerClass = i === 0 ? "!text-black" : "";
                 return (
                   <div
@@ -573,16 +578,12 @@ const Holdings = ({
   handleDownloadHoldings?: () => void;
 } & ITypeIndex) => {
   const { etfData } = useContext(EtfContext);
-  const daily = etfData?.dailyRes;
   const h = etfData?.holdingsRes;
 
   const items = [
     { name: "", ticker: "Ticker", weight: "Weighting (%)" },
     ...getTopHoldingsData(h, typeIndex),
   ];
-
-  const data = daily[typeToDailyMap[typeIndex]];
-  const { rateDate } = getDailyData(data);
 
   return (
     <div className="flex justify-center w-full">
@@ -599,7 +600,7 @@ const Holdings = ({
               className="text-fis-blue text-2xl"
               dangerouslySetInnerHTML={{ __html: holdings.title as string }}
             />
-            <p className="ml-4 text-slate-600">Data as of {rateDate}</p>
+            <p className="ml-4 text-slate-600">Data as of {h[0].Date}</p>
           </div>
           <Button
             onClick={handleDownloadHoldings}

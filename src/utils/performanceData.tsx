@@ -16,6 +16,7 @@ const getPerfData = (data: any = {}) => {
     "5 Year": fiveYear,
     "6 Month": sixMonth,
     YTD,
+    Date,
     "Fund Name": fundName,
     "Fund Ticker": fundTicker,
     "Since Inception Annualized": sinceInceptionAnnualized,
@@ -30,6 +31,7 @@ const getPerfData = (data: any = {}) => {
     fiveYear,
     sixMonth,
     YTD,
+    Date,
     fundName,
     fundTicker,
     sinceInceptionAnnualized,
@@ -66,7 +68,7 @@ const buildPerfData = ({
   navData: IPerfData;
   marketData: IPerfData;
   MWI: IPerfData;
-    index: number;
+  index: number;
 }) => {
   const dArray = [
     { name: "NAV Performance", data: navData },
@@ -144,10 +146,13 @@ export const getPerfList = (etfIndex: number, data: any) => {
   const marketData = findData(data, etfIndex, "market");
   const MWIData = findData(data, etfIndex, "mwi");
 
-  return buildPerfData({
-    navData: NavData,
-    marketData: marketData,
-    MWI: MWIData,
-    index: etfIndex,
-  });
+  return {
+    data: buildPerfData({
+      navData: NavData,
+      marketData: marketData,
+      MWI: MWIData,
+      index: etfIndex,
+    }),
+    date: NavData.Date,
+  };
 };
