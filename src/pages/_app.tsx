@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import { Lato } from "next/font/google";
@@ -76,6 +77,8 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           )}
         </FontContextProvider>
       </div>
+      <GoogleTagManager gtmId="GTM-TGVWB7B" />
+      <GoogleAnalytics gaId="G-QC9WKRHL40" />
     </>
   );
 }
