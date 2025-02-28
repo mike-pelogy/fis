@@ -180,7 +180,7 @@ const KocgPage: NextPageWithLayout<{
   };
 
   const handleDownloadHoldings = () => {
-    fetchAndDownloadCsv("/download/holdings");
+    fetchAndDownloadCsv("/download/holdings/kocg");
   };
 
   return (

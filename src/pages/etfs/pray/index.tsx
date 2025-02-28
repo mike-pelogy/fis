@@ -91,7 +91,7 @@ const PrayPage: NextPageWithLayout<{
   };
 
   const handleDownloadHoldings = () => {
-    fetchAndDownloadCsv("/download/holdings");
+    fetchAndDownloadCsv("/download/holdings/pray");
   };
 
 

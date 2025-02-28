@@ -9,7 +9,7 @@ export async function fetchAndDownloadCsv(route: string) {
     .then((txt) => {
       const trimmedStart = txt.substring(1);
       const trimmedEnd = trimmedStart.substring(0, trimmedStart.length - 1);
-      const text = trimmedEnd.trim().split('\\r\\n');
+      const text = trimmedEnd.trim().split('\\n');
 
       let csvContent = "data:text/csv;charset=utf-8,";
 
