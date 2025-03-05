@@ -62,7 +62,7 @@ const Landing = ({
           </div>
         </div>
         <div className="w-full md:w-1/2 pt-fis-2 md:pt-0">
-          <VideoPlayer src={landing.video || ""} />
+          <VideoPlayer src={landing.video || ""} overlayImageSrc="/video-grab-1.jpg" />
         </div>
       </section>
     </div>
@@ -82,7 +82,7 @@ const Values = ({ values }: { values: Page_Kocg_Values }) => {
         <WhiteContainer>
           <div className="flex flex-col-reverse md:flex-row">
             <div className="w-full md:w-1/2 pr-0 md:pr-fis-2 mt-fis-2 md:mt-0">
-              <VideoPlayer src={values.video || ""} />
+              <VideoPlayer src={values.video || ""} overlayImageSrc="/video-grab-2.jpg" />
             </div>
             <div className="w-full md:w-1/2">
               <div

@@ -11,7 +11,7 @@ interface IVideoPlayerProps extends ReactPlayerProps {
 
 export default function VideoPlayer({
   src,
-  overlayImageSrc = "/defaultFeaturedImage.png",
+  overlayImageSrc = "/video-grab-1.png",
   ...rest
 }: IVideoPlayerProps) {
   return (
