@@ -500,7 +500,7 @@ const Distributions = ({
                 title={`As of ${rateDate}`}
                 labelValues={[
                   {
-                    label: "30 Day SEC Yeild",
+                    label: "30 Day SEC Yield",
                     value: distributions.data?.daySecYield || "-",
                   },
                 ]}
