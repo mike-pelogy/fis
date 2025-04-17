@@ -33,7 +33,7 @@ export const menu: IMenuItem[] = [
         ],
       },
       {
-        title: "Companies not for profit organizations",
+        title: "Companies & Not-for-Profit Organizations",
         path: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
         children: [
           {
