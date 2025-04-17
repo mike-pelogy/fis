@@ -62,7 +62,7 @@ const LandingVideo = ({ video }: { video: string }) => {
         onClick={start}
       >
         <Image
-          src="/defaultFeaturedImage.png"
+          src="/home-video.jpg"
           alt="video overlay"
           width={1920}
           height={1080}

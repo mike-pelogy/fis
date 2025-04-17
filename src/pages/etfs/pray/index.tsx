@@ -65,7 +65,7 @@ const Landing = ({
           </div>
         </div>
         <div className="w-full md:w-1/2 mt-fis-2 md:mt-0">
-          <VideoPlayer src={landing.video || ""} />
+          <VideoPlayer src={landing.video || ""} overlayImageSrc="/pray-video.jpg" />
         </div>
       </section>
     </div>
