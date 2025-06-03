@@ -11,6 +11,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/pray",
+        destination: "/etfs/pray",
+        permanent: true,
+      },
+    ];
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.csv$/,
