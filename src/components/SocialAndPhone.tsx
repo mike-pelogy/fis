@@ -43,7 +43,7 @@ export default function SocialAndPhone () {
         </a>
       ))}
       <a
-        href="tel:+18885037671"
+        href="tel:+18885861404"
         className={classNames("text-fis-purple hover:text-fis-blue")}
       >
         <span className="inline-block w-[1rem] h-[0.9rem] mr-2">
