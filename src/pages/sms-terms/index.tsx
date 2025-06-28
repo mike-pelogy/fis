@@ -23,7 +23,7 @@ export default function SmsTerms() {
           <h1 className="mb-4 text-3xl text-fis-blue">SMS Terms and Conditions of Service</h1>
           <div className={fancyBulletPoints}>
             <p>
-              By opting into SMS from a web form or other medium, you are agreeing to receive SMS messages from Faith Investor Services. This includes SMS messages for appointment scheduling, appointment reminders, post-visit instructions, billing notifications, and other communication needs. Message frequency varies. Message and data rates may apply. See privacy policy at <Link href="/privacy-policy" className="text-fis-blue hover:underline">Privacy Policy</Link>. Message HELP for help. Reply STOP to any message to opt out.
+              By opting into SMS from a web form or other medium, you are agreeing to receive SMS messages from Faith Investor Services. This includes SMS messages for appointment scheduling, appointment reminders, post-visit instructions, billing notifications, and other communication needs. Message frequency varies. Message and data rates may apply. See our <Link href="/privacy-policy" className="text-fis-blue hover:underline">Privacy Policy</Link> for more information. Message HELP for help. Reply STOP to any message to opt out.
             </p>
           </div>
         </section>
