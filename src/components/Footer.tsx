@@ -46,6 +46,15 @@ export default function Footer() {
             >
               Privacy Policy
             </Link>
+            <Link
+              href="/sms-terms"
+              className={classNames(
+                beforeClass,
+                "text-black hover:text-fis-blue transition-all"
+              )}
+            >
+              SMS Terms and Conditions of Service
+            </Link>
           </div>
           <div>
             <p className="font-bold text-sm">
