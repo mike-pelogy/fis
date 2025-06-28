@@ -49,7 +49,7 @@ export default function SocialAndPhone () {
         <span className="inline-block w-[1rem] h-[0.9rem] mr-2">
           <Phone />
         </span>
-        888-503-7671
+        888-586-1404
       </a>
     </>
   );
