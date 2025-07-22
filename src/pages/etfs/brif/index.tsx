@@ -3,15 +3,15 @@ import ETF from "@/components/ETF";
 import getGqlRequest from "@/data/getGqlRequest";
 import { brifPageQuery } from "@/data/brifPageQuery";
 import {
-  Page_Kocg_DataReference,
-  Page_Kocg_Distributions,
-  Page_Kocg_Documents,
-  Page_Kocg_Holdings,
-  Page_Kocg_Overview,
-  Page_Kocg_Performance,
-  Page_Kocg_Pricing,
-  Page_Pray,
-  Page_Pray_Landing,
+  Page_Brif,
+  Page_Brif_DataReference,
+  Page_Brif_Distributions,
+  Page_Brif_Documents,
+  Page_Brif_Holdings,
+  Page_Brif_Landing,
+  Page_Brif_Overview,
+  Page_Brif_Performance,
+  Page_Brif_Pricing,
 } from "@/gql/graphql";
 import { NextPageWithLayout } from "@/pages/_app";
 import ArrowRight from "@/svgs/ArrowRight";
@@ -38,7 +38,7 @@ const Landing = ({
   landing,
   title,
 }: {
-  landing: Page_Pray_Landing;
+  landing: Page_Brif_Landing;
   title: string;
 }) => {
   return (
@@ -71,7 +71,7 @@ const Landing = ({
 };
 
 const BrifPage: NextPageWithLayout<{
-  data: Page_Pray;
+  data: Page_Brif;
   title: string;
 }> = ({ data, title }) => {
   const { isLoading, dailyRes, monthlyRes, quarterlyRes, holdingsRes } =
@@ -106,14 +106,14 @@ const BrifPage: NextPageWithLayout<{
           <ETF
             etfData={etfData}
             handleDownloadHoldings={handleDownloadHoldings}
-            typeIndex={2}
-            overview={data.overview as Page_Kocg_Overview}
-            pricing={data.pricing as Page_Kocg_Pricing}
-            performance={data.performance as Page_Kocg_Performance}
-            distributions={data.distributions as Page_Kocg_Distributions}
-            holdings={data.distributionsCopy as Page_Kocg_Holdings}
-            documents={data.documents as Page_Kocg_Documents}
-            dataReference={data.dataReference as Page_Kocg_DataReference}
+            typeIndex={1}
+            overview={data.overview as Page_Brif_Overview}
+            pricing={data.pricing as Page_Brif_Pricing}
+            performance={data.performance as Page_Brif_Performance}
+            distributions={data.distributions as Page_Brif_Distributions}
+            holdings={data.distributionsCopy as Page_Brif_Holdings}
+            documents={data.documents as Page_Brif_Documents}
+            dataReference={data.dataReference as Page_Brif_DataReference}
           />
         )}
     </>

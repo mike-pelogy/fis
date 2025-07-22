@@ -2,13 +2,20 @@ import React, { createContext, useContext, useEffect } from "react";
 import Button from "@/components/Button";
 import {
   MediaItem,
-  Page_Kocg_DataReference,
-  Page_Kocg_Distributions,
-  Page_Kocg_Documents,
-  Page_Kocg_Holdings,
-  Page_Kocg_Overview,
-  Page_Kocg_Performance,
-  Page_Kocg_Pricing,
+  Page_Brif_DataReference,
+  Page_Brif_Distributions,
+  Page_Brif_Documents,
+  Page_Brif_Holdings,
+  Page_Brif_Overview,
+  Page_Brif_Performance,
+  Page_Brif_Pricing,
+  Page_Pray_DataReference,
+  Page_Pray_Distributions,
+  Page_Pray_Documents,
+  Page_Pray_Holdings,
+  Page_Pray_Overview,
+  Page_Pray_Performance,
+  Page_Pray_Pricing,
 } from "@/gql/graphql";
 import classNames from "classnames";
 import { useState } from "react";
@@ -47,13 +54,12 @@ const navBar: INavBar[] = [
   { title: "Documents" },
 ];
 
-type ETFIndexType = 0 | 1 | 2;
+type ETFIndexType = 0 | 1;
 
 interface ITypeIndex {
   /**
-   * 0 - KOCG
-   * 1 - PRAY
-   * 2 - BRIF
+   * 0 - PRAY
+   * 1 - BRIF
    */
   typeIndex: ETFIndexType;
 }
@@ -62,9 +68,8 @@ export const fancyNumberList =
   "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
-  0: 1,
-  1: 2,
-  2: 0,
+  0: 0,
+  1: 1,
 };
 
 const formatter = Intl.NumberFormat("en-US", {
@@ -77,7 +82,7 @@ const Overview = ({
   id,
   typeIndex = 0,
 }: {
-  overview: Page_Kocg_Overview;
+  overview: Page_Brif_Overview | Page_Pray_Overview;
   id: SectionTypes;
   daily: MediaItem;
 } & ITypeIndex) => {
@@ -199,7 +204,7 @@ const Pricing = ({
   typeIndex = 0,
   handleDownloadPrem,
 }: {
-  pricing: Page_Kocg_Pricing;
+  pricing: Page_Brif_Pricing | Page_Pray_Pricing;
   id: SectionTypes;
   handleDownloadPrem?: () => void;
 } & ITypeIndex) => {
@@ -329,7 +334,7 @@ const Performance = ({
   id,
   typeIndex = 0,
 }: {
-  performance: Page_Kocg_Performance;
+  performance: Page_Brif_Performance | Page_Pray_Performance;
   id: SectionTypes;
   monthly: MediaItem;
   quarterly: MediaItem;
@@ -459,7 +464,7 @@ const Distributions = ({
   id,
   typeIndex,
 }: {
-  distributions: Page_Kocg_Distributions;
+  distributions: Page_Brif_Distributions | Page_Pray_Distributions;
   id: SectionTypes;
 } & ITypeIndex) => {
   const { etfData } = useContext(EtfContext);
@@ -549,7 +554,7 @@ const Distributions = ({
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
-const filterMap = ["KOCG", "PRAY", "BRIF"];
+const filterMap = ["PRAY", "BRIF"];
 
 // eslint-disable-next-line
 const getTopHoldingsData = (holdings: any[], indexFilter: number) => {
@@ -573,7 +578,7 @@ const Holdings = ({
   typeIndex = 0,
   handleDownloadHoldings,
 }: {
-  holdings: Page_Kocg_Holdings;
+  holdings: Page_Brif_Holdings | Page_Pray_Holdings;
   id: SectionTypes;
   handleDownloadHoldings?: () => void;
 } & ITypeIndex) => {
@@ -648,7 +653,7 @@ const Documents = ({
   documents,
   id,
 }: {
-  documents: Page_Kocg_Documents;
+  documents: Page_Brif_Documents | Page_Pray_Documents;
   id: SectionTypes;
 }) => {
   const sections = [
@@ -727,13 +732,13 @@ export default function ETF({
   handleDownloadPrem,
   handleDownloadHoldings,
 }: {
-  overview: Page_Kocg_Overview;
-  pricing: Page_Kocg_Pricing;
-  performance: Page_Kocg_Performance;
-  distributions: Page_Kocg_Distributions;
-  holdings: Page_Kocg_Holdings;
-  documents: Page_Kocg_Documents;
-  dataReference: Page_Kocg_DataReference;
+  overview: Page_Brif_Overview | Page_Pray_Overview;
+  pricing: Page_Brif_Pricing | Page_Pray_Pricing;
+  performance: Page_Brif_Performance | Page_Pray_Performance;
+  distributions: Page_Brif_Distributions | Page_Pray_Distributions;
+  holdings: Page_Brif_Holdings | Page_Pray_Holdings;
+  documents: Page_Brif_Documents | Page_Pray_Documents;
+  dataReference: Page_Brif_DataReference | Page_Pray_DataReference;
   etfData: ETFDataType;
   handleDownloadPrem?: () => void;
   handleDownloadHoldings?: () => void;

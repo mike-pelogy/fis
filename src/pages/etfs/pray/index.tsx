@@ -7,15 +7,15 @@ import { API_REST } from "@/constants";
 import getGqlRequest from "@/data/getGqlRequest";
 import { prayPageQuery } from "@/data/prayPageQuery";
 import {
-  Page_Kocg_DataReference,
-  Page_Kocg_Distributions,
-  Page_Kocg_Documents,
-  Page_Kocg_Holdings,
-  Page_Kocg_Overview,
-  Page_Kocg_Performance,
-  Page_Kocg_Pricing,
   Page_Pray,
+  Page_Pray_DataReference,
+  Page_Pray_Distributions,
+  Page_Pray_Documents,
+  Page_Pray_Holdings,
   Page_Pray_Landing,
+  Page_Pray_Overview,
+  Page_Pray_Performance,
+  Page_Pray_Pricing,
 } from "@/gql/graphql";
 import useEtfData from "@/hooks/useEtfData";
 import { NextPageWithLayout } from "@/pages/_app";
@@ -115,14 +115,14 @@ const PrayPage: NextPageWithLayout<{
             etfData={etfData}
             handleDownloadPrem={handleDownloadPrem}
             handleDownloadHoldings={handleDownloadHoldings}
-            typeIndex={1}
-            overview={data.overview as Page_Kocg_Overview}
-            pricing={data.pricing as Page_Kocg_Pricing}
-            performance={data.performance as Page_Kocg_Performance}
-            distributions={data.distributions as Page_Kocg_Distributions}
-            holdings={data.distributionsCopy as Page_Kocg_Holdings}
-            documents={data.documents as Page_Kocg_Documents}
-            dataReference={data.dataReference as Page_Kocg_DataReference}
+            typeIndex={0}
+            overview={data.overview as Page_Pray_Overview}
+            pricing={data.pricing as Page_Pray_Pricing}
+            performance={data.performance as Page_Pray_Performance}
+            distributions={data.distributions as Page_Pray_Distributions}
+            holdings={data.distributionsCopy as Page_Pray_Holdings}
+            documents={data.documents as Page_Pray_Documents}
+            dataReference={data.dataReference as Page_Pray_DataReference}
           />
         )}
     </>

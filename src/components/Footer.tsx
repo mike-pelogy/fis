@@ -74,8 +74,7 @@ export default function Footer() {
             Investors should consider the investment objectives, risks, charges
             and expenses carefully before investing. A prospectus or summary
             prospectus with this and other information about the Funds can be
-            found here, <Link href="/etfs/pray">PRAY</Link>,{" "}
-            <Link href="/etfs/kocg">KOCG</Link>, or{" "}
+            found here, <Link href="/etfs/pray">PRAY</Link> or{" "}
             <Link href="/etfs/brif">BRIF</Link>. Read the prospectus or summary
             prospectus carefully before investing.
           </p>
