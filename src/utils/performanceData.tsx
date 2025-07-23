@@ -1,6 +1,7 @@
 import React from "react";
 
 const fundTickerMap = [
+  { nav: "KOCG NAV", market: "KOCG MKT", mwi: "NDUEACWF" },
   { nav: "PRAY NAV", market: "PRAY MKT", mwi: "NDDUWI" },
   { nav: "BRIF NAV", market: "BRIF MKT", mwi: "NDDUUS" },
 ];
@@ -53,6 +54,7 @@ interface IDateRow {
 }
 
 const msciTypeMap = [
+  "MSCI ACWI Index (Benchmark)",
   "MSCI World Index (Benchmark)",
   "MSCI USA Index (Benchmark)",
 ];
