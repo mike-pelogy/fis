@@ -57,7 +57,6 @@ export const menu: IMenuItem[] = [
     path: "/etfs/pray",
     children: [
       { title: "PRAY", path: "/etfs/pray" },
-      { title: "KOCG", path: "/etfs/kocg" },
       { title: "BRIF", path: "/etfs/brif" },
     ],
   },

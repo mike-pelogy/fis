@@ -51,9 +51,9 @@ type ETFIndexType = 0 | 1 | 2;
 
 interface ITypeIndex {
   /**
-   * 0 - KOCG
-   * 1 - PRAY
-   * 2 - BRIF
+   * 0 - PRAY
+   * 1 - BRIF
+   * 2 - (unused)
    */
   typeIndex: ETFIndexType;
 }
@@ -62,9 +62,9 @@ export const fancyNumberList =
   "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
-  0: 1,
-  1: 2,
-  2: 0,
+  0: 1, // PRAY
+  1: 2, // BRIF
+  2: 2, // unused
 };
 
 const formatter = Intl.NumberFormat("en-US", {
@@ -549,7 +549,7 @@ const Distributions = ({
 const radialBg =
   "bg-[radial-gradient(at_bottom_center,rgba(var(--blue)/0.15)_0%,rgba(256,256,256,1)_50%)]";
 
-const filterMap = ["KOCG", "PRAY", "BRIF"];
+const filterMap = ["PRAY", "BRIF"];
 
 // eslint-disable-next-line
 const getTopHoldingsData = (holdings: any[], indexFilter: number) => {
