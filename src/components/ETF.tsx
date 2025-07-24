@@ -69,7 +69,8 @@ export const fancyNumberList =
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
   0: 2,
-  1: 1,
+  1: 0,
+  2: 1,
 };
 
 const formatter = Intl.NumberFormat("en-US", {

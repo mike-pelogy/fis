@@ -106,7 +106,7 @@ const BrifPage: NextPageWithLayout<{
           <ETF
             etfData={etfData}
             handleDownloadHoldings={handleDownloadHoldings}
-            typeIndex={0}
+            typeIndex={1}
             overview={data.overview as Page_Brif_Overview}
             pricing={data.pricing as Page_Brif_Pricing}
             performance={data.performance as Page_Brif_Performance}
