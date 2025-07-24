@@ -54,7 +54,7 @@ const navBar: INavBar[] = [
   { title: "Documents" },
 ];
 
-type ETFIndexType = 0 | 1;
+type ETFIndexType = 0 | 1 | 2;
 
 interface ITypeIndex {
   /**
@@ -68,7 +68,7 @@ export const fancyNumberList =
   "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
-  0: 0,
+  0: 2,
   1: 1,
 };
 
