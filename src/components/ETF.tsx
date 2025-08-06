@@ -68,9 +68,9 @@ export const fancyNumberList =
   "[&>ol]:space-y-fis-1 [&>ol>li]:pl-fis-2 [&>ol>li]:relative [&>ol>li]:[counter-increment:section] [&>ol>li]:before:[content:counters(section,'.')] [&>ol>li]:before:text-fis-blue [&>ol>li]:before:text-3xl [&>ol>li]:before:absolute [&>ol>li]:before:left-0 [&>ol>li]:before:top-0 [&>ol>li]:before:font-bold";
 
 const typeToDailyMap: Record<number, ETFIndexType> = {
-  0: 2,
-  1: 0,
-  2: 1,
+  0: 1, // PRAY
+  1: 0, // BRIF
+  2: 1, // KOCG (Deprecated)
 };
 
 const formatter = Intl.NumberFormat("en-US", {
@@ -91,6 +91,11 @@ const Overview = ({
   const daily = etfData?.dailyRes;
 
   const data = daily[typeToDailyMap[typeIndex]];
+
+  // Debug logging to check CSV data structure
+  console.log('Daily data array:', daily);
+  console.log('TypeIndex:', typeIndex, 'Maps to array index:', typeToDailyMap[typeIndex]);
+  console.log('Data at index:', data);
 
   const { rateDate, fundTicker, CUSIP, netAssets, shares } = getDailyData(data);
 
@@ -217,6 +222,10 @@ const Pricing = ({
   }, [handleDownloadPrem]);
 
   const data = daily[typeToDailyMap[typeIndex]];
+
+  // Debug logging for pricing section
+  console.log('Pricing - TypeIndex:', typeIndex, 'Maps to array index:', typeToDailyMap[typeIndex]);
+  console.log('Pricing - Data at index:', data);
 
   const {
     rateDate,
@@ -472,6 +481,11 @@ const Distributions = ({
   const daily = etfData?.dailyRes;
 
   const d = daily[typeToDailyMap[typeIndex]];
+  
+  // Debug logging for distributions section
+  console.log('Distributions - TypeIndex:', typeIndex, 'Maps to array index:', typeToDailyMap[typeIndex]);
+  console.log('Distributions - Data at index:', d);
+  
   const { rateDate } = getDailyData(d);
 
   const distrubtionData = (distributions?.data?.perYear || [])?.reduce<
