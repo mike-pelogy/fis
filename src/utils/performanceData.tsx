@@ -54,8 +54,8 @@ interface IDateRow {
 
 const msciTypeMap = [
   "MSCI ACWI Index (Benchmark)",
-  "MSCI World Index (Benchmark)",
   "MSCI USA Index (Benchmark)",
+  "MSCI World Index (Benchmark)",
 ];
 
 const buildPerfData = ({
