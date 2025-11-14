@@ -143,7 +143,9 @@ const BusinessContinuityPage: NextPageWithLayout = () => {
           </h2>
           <p className="text-base md:text-lg text-slate-700 mb-8">
             Succession planning is more than a financial transaction — it&apos;s a deeply
-            personal process. We work with entrepreneurs, executives, and family business
+            personal process. 
+            <br />
+            We work with entrepreneurs, executives, and family business
             leaders to:
           </p>
         </div>
@@ -158,7 +160,7 @@ const BusinessContinuityPage: NextPageWithLayout = () => {
               description: "to preserve both your business and your legacy",
             },
             {
-              title: "Identify and prepare future leaders",
+              title: "Identify and prepare future leaders,",
               description: "whether internal or external",
             },
             {

@@ -46,10 +46,10 @@ export const menu: IMenuItem[] = [
           },
         ],
       },
-      // {
-      //   title: "Business Continuity & Exit Planning",
-      //   path: "/wealth-management/business-continuity",
-      // },
+      {
+        title: "Business Continuity & Exit Planning",
+        path: "/wealth-management/business-continuity",
+      },
       {
         title: "Separately Managed Accounts (SMA)",
         path: "/wealth-management/separately-managed-accounts",
