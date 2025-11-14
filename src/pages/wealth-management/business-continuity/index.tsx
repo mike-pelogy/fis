@@ -1,6 +1,4 @@
 import Button from "@/components/Button";
-import FunBackground from "@/components/FunBackground";
-import WhiteContainer from "@/components/WhiteContainer";
 import { NextPageWithLayout } from "@/pages/_app";
 import buildPageTitle from "@/utils/buildPageTitle";
 import ArrowRight from "@/svgs/ArrowRight";
