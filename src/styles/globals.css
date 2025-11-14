@@ -58,3 +58,7 @@ body {
   background: var(--background-primary);
   font-family: "Lato, sans-serif";
 }
+
+.bg-blue {
+  background-color: rgb(var(--blue));
+}
