@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { NavBar } from "@/components/NavBar";
 import { NextPageWithLayout } from "@/pages/_app";
 import buildPageTitle from "@/utils/buildPageTitle";
 import ArrowRight from "@/svgs/ArrowRight";
@@ -14,6 +15,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Checkmark from "@/svgs/checkmark";
 import TrendingDown from "@/svgs/TrendingDown";
+import { useRouter } from "next/router";
 
 export const radialBg =
   "bg-[radial-gradient(at_top_center,rgba(var(--blue)/0.12)_0%,rgba(256,256,256,1)_55%)]";
@@ -24,6 +26,13 @@ const BusinessContinuityPage: NextPageWithLayout = () => {
       <Head>
         <title>{buildPageTitle("Business Continuity & Exit Planning")}</title>
       </Head>
+      <div className="pt-fis-1" />
+      <div className="w-full bg-white sticky top-[79px] md:top-[100px] z-[1000] flex justify-center">
+        <div className="container w-full">
+          <Nav />
+        </div>
+      </div>
+      <div className="pb-fis-1" />
       <section
         className={classNames(
           "w-full flex justify-center",
@@ -303,6 +312,50 @@ const BusinessContinuityPage: NextPageWithLayout = () => {
       </section>
 
     </>
+  );
+};
+
+const Nav = () => {
+  const { asPath } = useRouter();
+
+  const asPathMap: Record<string, string> = {
+    "/wealth-management/individuals/financial-planning":
+      "/wealth-management/individuals/financial-planning",
+    "/wealth-management/individuals/investment-management":
+      "/wealth-management/individuals/financial-planning",
+    "/wealth-management/companies-not-for-profit-organizations/retirement-plans":
+      "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
+    "/wealth-management/companies-not-for-profit-organizations/endowments":
+      "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
+    "/wealth-management/separately-managed-accounts":
+      "/wealth-management/separately-managed-accounts",
+    "/wealth-management/business-continuity":
+      "/wealth-management/business-continuity",
+  };
+
+  return (
+    <NavBar
+      className="pt-0 pb-0"
+      active={asPathMap[asPath] as string}
+      navBar={[
+        {
+          title: "Individuals",
+          href: "/wealth-management/individuals/financial-planning",
+        },
+        {
+          title: "Companies & Not-For-Profit Organizations",
+          href: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
+        },
+        {
+          title: "Business Continuity & Exit Planning",
+          href: "/wealth-management/business-continuity",
+        },
+        {
+          title: "Separately Managed Accounts (SMA)",
+          href: "/wealth-management/separately-managed-accounts",
+        },
+      ]}
+    />
   );
 };
 

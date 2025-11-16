@@ -131,6 +131,10 @@ export const Nav = () => {
           href: "/wealth-management/companies-not-for-profit-organizations/retirement-plans",
         },
         {
+          title: "Business Continuity & Exit Planning",
+          href: "/wealth-management/business-continuity",
+        },
+        {
           title: "Separately Managed Accounts (SMA)",
           href: "/wealth-management/separately-managed-accounts",
         },
