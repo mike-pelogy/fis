@@ -1,12 +1,16 @@
 import gql from "graphql-tag";
 
 export const postsQuery = gql(`
-query postsQuery {
-  posts(first: 999) {
+query postsQuery($after: String) {
+  posts(first: 100, after: $after) {
     edges {
+      cursor
       node {
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
     }
   }
 }`);

@@ -31,17 +31,30 @@ interface ICategory {
 }
 
 export const getStaticPaths = (async () => {
-  const { data } = await getGqlRequest(postsQuery);
+  let hasNextPage = true;
+  let after: string | null = null;
+  const slugs: string[] = [];
 
-  // eslint-disable-next-line
-  const posts = data.posts.edges.map(({ node }: { node: any }) => {
-    return {
-      slug: node.slug,
-    };
-  });
+  while (hasNextPage) {
+    const { data } = await getGqlRequest(postsQuery, { after });
+
+    const edges = data.posts?.edges || [];
+
+    // eslint-disable-next-line
+    edges.forEach(({ node }: { node: any }) => {
+      if (node?.slug) {
+        slugs.push(node.slug as string);
+      }
+    });
+
+    hasNextPage = !!data.posts?.pageInfo?.hasNextPage;
+    after = edges.length ? edges[edges.length - 1].cursor : null;
+  }
+
+  const uniqueSlugs = Array.from(new Set(slugs));
 
   return {
-    paths: posts.map(({ slug }: { slug: string }) => ({
+    paths: uniqueSlugs.map((slug: string) => ({
       params: { postId: slug },
     })),
     fallback: false,
