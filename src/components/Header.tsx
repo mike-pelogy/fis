@@ -75,7 +75,7 @@ export const menu: IMenuItem[] = [
   },
   {
     title: "News and Insights",
-    path: "/news-and-insights/category/faith-retirement",
+    path: "/news-and-insights/category/articles",
   },
   {
     title: "Contact",
